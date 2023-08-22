@@ -4,6 +4,9 @@
 #include <unordered_map>
 #include <vector>
 
+#include "device_config.hpp"
+#include "server_device.hpp"
+
 
 namespace dashboard{
 
@@ -16,15 +19,16 @@ class Server{
 
 public:
     Server();
+    void create_devices();
 
 private:
     // DeviceManager m_dm;
     // ClientServerManager m_csm;
     // Logger m_logger;
-    // DeviceConfig m_device_config;
+    DeviceConfig m_device_config;
 
 private:
-    // std::unordered_map<int, std::vector<monitor>> m_rooms;
+   std::vector<std::unique_ptr<ServerDevice>> m_device_pointers;
 };
 
 

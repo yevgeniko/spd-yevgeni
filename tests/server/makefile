@@ -16,7 +16,7 @@ LDFLAGS = -L/usr/lib/x86_64-linux-gnu/ -lQt5Core -lQt5Gui -lQt5Widgets
 INCLUDES_DIR = ../../inc
 SOURCES_DIR = ../../src
 
-OBJS = server-utest.o $(SOURCES_DIR)/server.o
+OBJS = server-utest.o $(SOURCES_DIR)/server.o $(SOURCES_DIR)/device_config.o
 TARGET = qt_app
 
 # Add a rule for moc compilation
