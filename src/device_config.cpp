@@ -2,45 +2,41 @@
 
 #include <fstream>
 #include <stdexcept>
+#include <iostream>
+
+
+// #include <QSettings>
+// #include <QDebug>
+
 
 namespace dashboard{
 
 
+void DeviceConfig::read_from_file(const QString& a_config_file) {
+    QSettings settings(a_config_file, QSettings::IniFormat);
 
-DeviceConfig::DeviceConfig(const std::string& a_config_file) 
-{
-   read_from_file(a_config_file);
-}
+    QStringList sections = settings.childGroups();
 
-void DeviceConfig::read_from_file(const std::string& a_config_file)
-{
-    std::ifstream file(a_config_file);
-    if (!file.is_open()) {
-        throw std::runtime_error("Failed to open configuration file");
-    }
+    for (const QString& section : sections) {
+        settings.beginGroup(section);
 
-    DeviceStruct current_device;  
-    std::string line;
-    while (std::getline(file, line)) {
-        size_t delimiter_pos = line.find('=');
-        if (delimiter_pos != std::string::npos) {
-            std::string key = line.substr(0, delimiter_pos);
-            std::string value = line.substr(delimiter_pos + 1);
+        QString deviceID = settings.value("deviceID").toString();
+        QString type = settings.value("type").toString();
+        QString room = settings.value("room").toString();
+        QString configuration = settings.value("configuration").toString();
 
-            if (key == "deviceID") {
-                current_device.device_ID = value;
-            } else if (key == "type") {
-                current_device.type = value;
-            } else if (key == "room") {
-                current_device.room = value;
-            } else if (key == "configuration") {
-                current_device.configuration = value;
-            }
-            m_devices.push_back(current_device);
-            current_device = {}; 
-        }
+        DeviceStruct current_device;
+        current_device.device_ID = deviceID;
+        current_device.type = type;
+        current_device.room = room;
+        current_device.configuration = configuration;
+
+        m_devices.push_back(current_device);
+
+        settings.endGroup(); 
     }
 }
+
 
 
 } //namespace dashboard

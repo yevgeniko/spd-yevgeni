@@ -2,8 +2,8 @@
 
 namespace dashboard {
 
-ServerDevice::ServerDevice(const std::string& deviceID, const std::string& type,
-    const std::string& room, const std::string& configuration)
+ServerDevice::ServerDevice(const QString& deviceID, const QString& type,
+    const QString& room, const QString& configuration)
 : m_deviceID(deviceID)
 , m_type(type)
 , m_room(room)
@@ -11,5 +11,20 @@ ServerDevice::ServerDevice(const std::string& deviceID, const std::string& type,
 {
 }
 
+const QString& ServerDevice::getDeviceID() const {
+    return m_deviceID;
+}
+
+const QString& ServerDevice::getType() const {
+    return m_type;
+}
+
+const QString& ServerDevice::getRoom() const {
+    return m_room;
+}
+
+const QString& ServerDevice::getConfiguration() const {
+    return m_configuration;
+}
 
 } // namespace dashboard

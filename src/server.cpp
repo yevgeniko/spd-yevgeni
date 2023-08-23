@@ -6,7 +6,7 @@ namespace dashboard{
 
 
 Server::Server()
-:m_device_config("file_INI")
+:m_device_config("devices.ini")
 {
     create_devices();
 }
@@ -20,5 +20,8 @@ void Server::create_devices()
     }
 }
 
+const std::vector<std::unique_ptr<ServerDevice>>& Server::server_devices() const {
+    return m_device_pointers;
+}
 
 } // namespace dashboard

@@ -2,21 +2,27 @@
 #define SERVER_DEVICE_HPP
 
 #include <string>
+#include <QSettings>
+
 
 namespace dashboard {
 
 class ServerDevice {
 public:
     public:
-    ServerDevice(const std::string& a_device_ID, const std::string& a_type,
-        const std::string& a_room, const std::string& a_configuration);
+    ServerDevice(const QString& a_device_ID, const QString& a_type,
+        const QString& a_room, const QString& a_configuration);
 
+    const QString& getDeviceID() const;
+    const QString& getType() const;
+    const QString& getRoom() const;
+    const QString& getConfiguration() const;
 
 private:
-    std::string m_deviceID;
-    std::string m_type;
-    std::string m_room;
-    std::string m_configuration;
+    QString m_deviceID;
+    QString m_type;
+    QString m_room;
+    QString m_configuration;
 };
 
 } // namespace dashboard

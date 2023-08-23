@@ -11,12 +11,13 @@ CPPFLAGS += -I$(INCLUDES_DIR)
 CPPFLAGS += -I/usr/include/x86_64-linux-gnu/qt5/
 
 # Adjust the LDFLAGS
-LDFLAGS = -L/usr/lib/x86_64-linux-gnu/ -lQt5Core -lQt5Gui -lQt5Widgets
+LDFLAGS = -L/usr/lib/x86_64-linux-gnu/ -lQt5Core -lQt5Gui -lQt5Widgets -lQt5Network -lQt5Xml -lQt5PrintSupport
+#LDFLAGS += -lQt5Network -lQt5Xml -lQt5PrintSupport
 
 INCLUDES_DIR = ../../inc
 SOURCES_DIR = ../../src
 
-OBJS = server-utest.o $(SOURCES_DIR)/server.o $(SOURCES_DIR)/device_config.o
+OBJS = server-utest.o $(SOURCES_DIR)/server.o $(SOURCES_DIR)/device_config.o $(SOURCES_DIR)/server_device.o
 TARGET = qt_app
 
 # Add a rule for moc compilation

@@ -3,6 +3,7 @@
 
 #include <unordered_map>
 #include <vector>
+#include <memory>
 
 #include "device_config.hpp"
 #include "server_device.hpp"
@@ -20,6 +21,7 @@ class Server{
 public:
     Server();
     void create_devices();
+    const std::vector<std::unique_ptr<ServerDevice>>& server_devices() const;
 
 private:
     // DeviceManager m_dm;

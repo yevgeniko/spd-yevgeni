@@ -4,26 +4,29 @@
 #include <string>
 #include <vector>
 
-#include "server.hpp"
+#include <QSettings>
+#include <QDebug>
+#include <QCoreApplication>
+
 
 namespace dashboard {
 
 struct DeviceStruct {
-    std::string device_ID;
-    std::string type;
-    std::string room;
-    std::string configuration;
+    QString device_ID;
+    QString type;
+    QString room;
+    QString configuration;
 };
 
 class DeviceConfig {
 public:
 
-    DeviceConfig(const std::string& a_config_file);
+    DeviceConfig(const QString& a_config_file);
 
     friend class Server;
 
 private:
-    void read_from_file(const std::string& a_config_file);   
+    void read_from_file(const QString& a_config_file);   
 private:
 
     std::vector<DeviceStruct> m_devices;

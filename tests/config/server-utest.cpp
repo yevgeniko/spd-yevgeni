@@ -19,5 +19,6 @@ int main() {
     } catch (const std::exception& e) {
         std::cerr << "Error: " << e.what() << std::endl;
     }
+     std::cout << "Device ID: " << std::endl;
     return 0;
 }
