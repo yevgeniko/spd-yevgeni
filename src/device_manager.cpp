@@ -3,54 +3,48 @@
 #include <stdio.h>
 
 DeviceManager::DeviceManager()
+    : m_socket(new QTcpSocket(this))
+    , m_block_size(0)
 {
-    socket = new QTcpSocket(this);
-    blockSize = 0;
-
-    // Connect signals and slots
-    //connect(socket, &QTcpSocket::connected, this, &DeviceManager::onConnected);
-    connect(socket, &QTcpSocket::readyRead, this, &DeviceManager::onDataReceived); // To handle incoming data
-    //connect(socket, static_cast<void (QTcpSocket::*)(QAbstractSocket::SocketError)>(&QTcpSocket::error), this, &DeviceManager::onError);
+    connect(m_socket.data(), &QTcpSocket::readyRead, this, &DeviceManager::on_data_received);
 }
 
 DeviceManager::~DeviceManager()
 {
-    socket->close();
-    delete socket;
+    m_socket->close();
 }
 
-void DeviceManager::connectToServer(const QString &address, quint16 port)
+void DeviceManager::connect_to_server(const QString &a_address, quint16 a_port)
 {
-    socket->connectToHost(address, port);
+    m_socket->connectToHost(a_address, a_port);
 }
 
-void DeviceManager::sendEventToServer(Event* event)
+void DeviceManager::send_event_to_server(Event* a_event)
 {
     QByteArray block;
     QDataStream out(&block, QIODevice::WriteOnly);
 
     out << (quint16)0;
-    out << event->getTimestamp() << event->getEventType() << event->getEventData() << event->getEventLocation();
-
+    out << a_event->getTimestamp() << a_event->getEventType() << a_event->getEventData() << a_event->getEventLocation();
 
     out.device()->seek(0);
     out << (quint16)(block.size() - sizeof(quint16));
 
-    socket->write(block);
+    m_socket->write(block);
 }
 
-void DeviceManager::onDataReceived()
+void DeviceManager::on_data_received()
 {
-    QDataStream in(socket);
+    QDataStream in(m_socket.data());
 
-    if (blockSize == 0)
+    if (m_block_size == 0)
     {
-        if (socket->bytesAvailable() < (int)sizeof(quint16))
-            return; 
-        in >> blockSize;
+        if (m_socket->bytesAvailable() < (int)sizeof(quint16))
+            return;
+        in >> m_block_size;
     }
 
-    if (socket->bytesAvailable() < blockSize)
+    if (m_socket->bytesAvailable() < m_block_size)
     {
        return;
     }
@@ -61,13 +55,10 @@ void DeviceManager::onDataReceived()
     QString eventLocation;
     in >> timeStamp >> eventType >> eventData >> eventLocation;
 
-
-    blockSize = 0; // Reset block size for next message
+    m_block_size = 0;
 }
 
-
-void DeviceManager::receiveEvent(Event* event)
+void DeviceManager::receive_event(Event* a_event)
 {
-    sendEventToServer(event);
+    send_event_to_server(a_event);
 }
-

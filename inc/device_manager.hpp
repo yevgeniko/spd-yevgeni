@@ -6,6 +6,7 @@
 #include <QTcpSocket>
 #include <QDataStream>
 #include <QDateTime>
+#include <QScopedPointer>
 #include "event.hpp"
 
 class Device;
@@ -19,19 +20,19 @@ public:
     DeviceManager();
     ~DeviceManager();
 
-    void receiveEvent(Event* event);
-    void connectToServer(const QString &address, quint16 port);
-    void sendEventToServer(Event* event);
+    void receive_event(Event* a_event);
+    void connect_to_server(const QString &a_address, quint16 a_port);
+    void send_event_to_server(Event* a_event);
 
 private slots:
-    // void onConnected();
-    void onDataReceived();
-    // void onError(QAbstractSocket::SocketError socketError);
-
+    // void on_connected();
+    void on_data_received();
+    // void on_error(QAbstractSocket::SocketError socketError);
 
 private:
-    QTcpSocket *socket;
-    quint16 blockSize;
+    QScopedPointer<QTcpSocket> m_socket;
+    quint16 m_block_size;
 };
 
 #endif // DEVICE_MANAGER_HPP
+
