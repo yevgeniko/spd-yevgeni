@@ -114,3 +114,4 @@ dkms.conf
 utest
 main
 *.log
+.vscode
