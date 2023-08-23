@@ -1,0 +1,6 @@
+#ifndef CONST_AND_ENUMS
+#define CONST_AND_ENUMS
+
+
+
+#endif // CONST_AND_ENUMS

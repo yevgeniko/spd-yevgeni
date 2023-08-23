@@ -1,15 +1,18 @@
-#ifndef CLIENT_SERVER_MANAGER_HPP
+#ifndef CLIENT_MANAGER_HPP
 #define CLIENT_MANAGER_HPP
 
 #include <QObject>
 #include <QList>
+#include <QTcpServer>
 #include <QTcpSocket>
 #include <QDataStream>
 #include <QDateTime>
 #include <memory>
-#include "client.hpp"
 
 namespace spd {
+
+class Client; // forward declaration
+
 class ClientManager : public QObject {
 
     Q_OBJECT
@@ -26,6 +29,8 @@ public:
     // void receive_event_from_server();
 
     // void register_device();
+signals:
+    void newDataReceived(QDateTime, QString, QString, QString);
 
 private slots:
     void onDataReceived();
@@ -34,8 +39,10 @@ private slots:
 private:
     std::unique_ptr<QTcpSocket> m_socket;
     quint16 m_block_size;
+    QTcpServer *serverListener;
+    QTcpSocket *incomingSocket;
 };
 
 } // namespace name
 
-#endif //CLIENT_SERVER_MANAGER_HPP
+#endif //CLIENT_MANAGER_HPP
