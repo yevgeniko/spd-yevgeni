@@ -37,7 +37,7 @@ MOVE          = mv -f
 TAR           = tar -cf
 COMPRESS      = gzip -9f
 DISTNAME      = test1.0.0
-DISTDIR = /home/yonatan/smart-patient-dashboard/tests/server/.tmp/test1.0.0
+DISTDIR = /home/yonatan/smart-patient-dashboard/tests/config/.tmp/test1.0.0
 LINK          = g++
 LFLAGS        = -Wl,-O1
 LIBS          = $(SUBLIBS) -L/usr/lib/x86_64-linux-gnu/ /usr/lib/x86_64-linux-gnu/libQt5Widgets.so /usr/lib/x86_64-linux-gnu/libQt5Gui.so /usr/lib/x86_64-linux-gnu/libQt5Network.so /usr/lib/x86_64-linux-gnu/libQt5Core.so /usr/lib/x86_64-linux-gnu/libGL.so -lpthread   
@@ -55,11 +55,13 @@ OBJECTS_DIR   = ./
 SOURCES       = server-utest.cpp \
 		../../src/server.cpp \
 		../../src/device_config.cpp \
-		../../src/server_device.cpp 
+		../../src/agent.cpp \
+		../../src/logger.cpp 
 OBJECTS       = server-utest.o \
 		server.o \
 		device_config.o \
-		server_device.o
+		agent.o \
+		logger.o
 DIST          = /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_pre.prf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/common/unix.conf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/common/linux.conf \
@@ -137,10 +139,12 @@ DIST          = /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_pre.prf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/lex.prf \
 		test.pro ../../inc/server.hpp \
 		../../inc/device_config.hpp \
-		../../inc/server_device.hpp server-utest.cpp \
+		../../inc/agent.hpp \
+		../../inc/logger.hpp server-utest.cpp \
 		../../src/server.cpp \
 		../../src/device_config.cpp \
-		../../src/server_device.cpp
+		../../src/agent.cpp \
+		../../src/logger.cpp
 QMAKE_TARGET  = test
 DESTDIR       = 
 TARGET        = test
@@ -320,8 +324,8 @@ distdir: FORCE
 	@test -d $(DISTDIR) || mkdir -p $(DISTDIR)
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
 	$(COPY_FILE) --parents /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/data/dummy.cpp $(DISTDIR)/
-	$(COPY_FILE) --parents ../../inc/server.hpp ../../inc/device_config.hpp ../../inc/server_device.hpp $(DISTDIR)/
-	$(COPY_FILE) --parents server-utest.cpp ../../src/server.cpp ../../src/device_config.cpp ../../src/server_device.cpp $(DISTDIR)/
+	$(COPY_FILE) --parents ../../inc/server.hpp ../../inc/device_config.hpp ../../inc/agent.hpp ../../inc/logger.hpp $(DISTDIR)/
+	$(COPY_FILE) --parents server-utest.cpp ../../src/server.cpp ../../src/device_config.cpp ../../src/agent.cpp ../../src/logger.cpp $(DISTDIR)/
 
 
 clean: compiler_clean 
@@ -373,19 +377,27 @@ compiler_clean: compiler_moc_predefs_clean
 
 server-utest.o: server-utest.cpp ../../inc/server.hpp \
 		../../inc/device_config.hpp \
-		../../inc/server_device.hpp
+		../../inc/agent.hpp \
+		../../inc/logger.hpp
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o server-utest.o server-utest.cpp
 
 server.o: ../../src/server.cpp ../../inc/server.hpp \
 		../../inc/device_config.hpp \
-		../../inc/server_device.hpp
+		../../inc/agent.hpp \
+		../../inc/logger.hpp
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o server.o ../../src/server.cpp
 
 device_config.o: ../../src/device_config.cpp ../../inc/device_config.hpp
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o device_config.o ../../src/device_config.cpp
 
-server_device.o: ../../src/server_device.cpp ../../inc/server_device.hpp
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o server_device.o ../../src/server_device.cpp
+agent.o: ../../src/agent.cpp ../../inc/agent.hpp \
+		../../inc/logger.hpp \
+		../../inc/device_config.hpp
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o agent.o ../../src/agent.cpp
+
+logger.o: ../../src/logger.cpp ../../inc/logger.hpp \
+		../../inc/device_config.hpp
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o logger.o ../../src/logger.cpp
 
 ####### Install
 

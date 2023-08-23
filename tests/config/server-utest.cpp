@@ -15,10 +15,10 @@ int main() {
             std::cout << "Device Room: " << devicePtr->getRoom().toStdString() << std::endl;
             std::cout << "Device Configuration: " << devicePtr->getConfiguration().toStdString() << std::endl;
             std::cout << "----------------------------" << std::endl;
+            devicePtr->log_unNormal("Device Type: ", "Device Configuration: ");
         }
     } catch (const std::exception& e) {
         std::cerr << "Error: " << e.what() << std::endl;
     }
-     std::cout << "Device ID: " << std::endl;
     return 0;
 }

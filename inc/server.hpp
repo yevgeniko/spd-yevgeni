@@ -1,19 +1,18 @@
 #ifndef SERVER_HPP
 #define SERVER_HPP
 
-#include <unordered_map>
 #include <vector>
 #include <memory>
 
 #include "device_config.hpp"
-#include "server_device.hpp"
+#include "agent.hpp"
 
 
 namespace dashboard{
 
 class DeviceManager;
 class ClientServerManager;
-class Logger;
+// class Logger;
 class DeviceConfig;
 
 class Server{
@@ -21,7 +20,7 @@ class Server{
 public:
     Server();
     void create_devices();
-    const std::vector<std::unique_ptr<ServerDevice>>& server_devices() const;
+    const std::vector<std::unique_ptr<Agent>>& server_devices() const;
 
 private:
     // DeviceManager m_dm;
@@ -30,7 +29,7 @@ private:
     DeviceConfig m_device_config;
 
 private:
-   std::vector<std::unique_ptr<ServerDevice>> m_device_pointers;
+   std::vector<std::unique_ptr<Agent>> m_device_pointers;
 };
 
 
