@@ -8,13 +8,13 @@
 namespace spd {
 class Client {
 public:
-    explicit Client(QString const& aa_id, QString const& a_firstn, QString const& a_lastn, QList<QString> a_rooms);
+    Client();
+
+    
 
 private:
-    QString m_id;
-    QString m_first_name;
-    QString m_last_name;
-    QList<Event> m_rooms;
+    ClientManager m_manager;
+    //List User; <-id,name,password
 };
 
 } // namespace spd

@@ -22,16 +22,16 @@ public:
     ClientManager& operator=(ClientManager const& a_other) = delete;
 
     void connect_to_server(const QString &address, quint16 port);
-    void send_to_data_server();
-    void receive_event_from_server();
+    //void send_to_data_server();
+    // void receive_event_from_server();
 
-    void register_device();
+    // void register_device();
 
 private slots:
     void onDataReceived();
+    void onNewConnection();
 
 private:
-    QList<Client*> m_clients;
     std::unique_ptr<QTcpSocket> m_socket;
     quint16 m_block_size;
 };
