@@ -11,6 +11,11 @@
 
 namespace dashboard{
 
+DeviceConfig::DeviceConfig(const QString& a_config_file)
+{
+    read_from_file(a_config_file);
+}
+
 
 void DeviceConfig::read_from_file(const QString& a_config_file) {
     QSettings settings(a_config_file, QSettings::IniFormat);

@@ -6,14 +6,16 @@ QT += core gui widgets network
 HEADERS += \
     ../../inc/server.hpp \
     ../../inc/device_config.hpp \
-    ../../inc/server_device.hpp
+    ../../inc/agent.hpp \
+    ../../inc/logger.hpp
 
 # Sources
 SOURCES += \
     ./server-utest.cpp \
     ../../src/server.cpp \
     ../../src/device_config.cpp \
-    ../../src/server_device.cpp
+    ../../src/agent.cpp \
+    ../../src/logger.cpp
 
 # Libraries
 LIBS += -L/usr/lib/x86_64-linux-gnu/
