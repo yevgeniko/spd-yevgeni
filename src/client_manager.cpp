@@ -13,9 +13,6 @@ spd::ClientManager::ClientManager()
 ClientManager::~ClientManager()
 {
     m_socket->close();
-    for(auto &client: m_clients) {
-        delete client;
-    }
 }
 
 void ClientManager::onDataReceived() 
@@ -47,5 +44,7 @@ void ClientManager::connect_to_server(const QString &address, quint16 port)
 {
     m_socket.get()->connectToHost(address, port);
 }
+void ClientManager::onNewConnection()
+{
+}
 } // namespace spd
-
