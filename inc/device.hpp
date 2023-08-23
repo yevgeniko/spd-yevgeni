@@ -6,14 +6,13 @@
 
 class Device
 {
-
 public:
     Device(const QString &id, const QString &t, const QString &r, const QString &log, const QString &config);
     virtual ~Device();
 
-    void setManager(DeviceManager* mgr) { manager = mgr; }
     virtual void publishEvent(Event* event) { if (manager) manager->receiveEvent(event); }
 
+    DeviceManager* getManager() const { return manager; }
 
 protected:
     QString deviceID;
@@ -22,10 +21,8 @@ protected:
     QString logName;
     QString configuration;
 
-    DeviceManager* manager = nullptr;
+    DeviceManager* manager;
 
-
-    // Getters and Setter
 };
 
 #endif // DEVICE_HPP

@@ -19,7 +19,6 @@ public:
     DeviceManager();
     ~DeviceManager();
 
-    void registerDevice(Device* device);
     void receiveEvent(Event* event);
     void connectToServer(const QString &address, quint16 port);
     void sendEventToServer(Event* event);
@@ -31,7 +30,6 @@ private slots:
 
 
 private:
-    QList<Device*> devices;
     QTcpSocket *socket;
     quint16 blockSize;
 };
