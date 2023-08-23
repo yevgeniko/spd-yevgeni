@@ -65,20 +65,6 @@ void DeviceManager::onDataReceived()
     blockSize = 0; // Reset block size for next message
 }
 
-// void DeviceManager::onConnected()
-// {
-//     // Handle what you want to do once connected, like sending initial setup data
-// }
-
-// void DeviceManager::onError(QAbstractSocket::SocketError socketError)
-// {
-//     // void* temp = (QAbstractSocket::SocketError) socketError;
-// }
-
-// void DeviceManager::registerDevice(Device* device)
-// {
-//     devices.append(device);
-// }
 
 void DeviceManager::receiveEvent(Event* event)
 {

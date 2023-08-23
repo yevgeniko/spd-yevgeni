@@ -13,13 +13,17 @@ class SimpleServer : public QObject {
 
 public:
     SimpleServer();
+    void connectToClientManager(const QHostAddress &address, quint16 port);
 
 private slots:
     void onNewConnection();
     void onDataReceived();
 
+
 private:
     QTcpServer *server;
+    QTcpSocket *forwardingSocket;
+
 };
 
 #endif // SIMPLE_SERVER_HPP

@@ -10,7 +10,7 @@ class Client {
 public:
     Client();
 
-    
+    void connect_to_server(const QString &address, quint16 port);
 
 private:
     ClientManager m_manager;
