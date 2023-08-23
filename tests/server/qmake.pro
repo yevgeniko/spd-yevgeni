@@ -4,12 +4,14 @@ QT += core network
 
 # Headers
 HEADERS += \
-    ../../inc/simple_server.hpp
+    ../../inc/simple_server.hpp \
+    ../../inc/server_manager.hpp
 
 # Sources
 SOURCES += \
     ./main.cpp \
-    ../../src/simple_server.cpp
+    ../../src/simple_server.cpp \
+    ../../src/server_manager.cpp
 
 # Libraries
 LIBS += -L/usr/lib/x86_64-linux-gnu/
