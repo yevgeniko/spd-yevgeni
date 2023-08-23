@@ -75,10 +75,10 @@ void DeviceManager::onDataReceived()
 //     // void* temp = (QAbstractSocket::SocketError) socketError;
 // }
 
-void DeviceManager::registerDevice(Device* device)
-{
-    devices.append(device);
-}
+// void DeviceManager::registerDevice(Device* device)
+// {
+//     devices.append(device);
+// }
 
 void DeviceManager::receiveEvent(Event* event)
 {
