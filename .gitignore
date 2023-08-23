@@ -114,3 +114,12 @@ dkms.conf
 utest
 main
 *.log
+
+# Ignore qt
+moc_device_manager.cpp
+moc_predefs.h
+qmake
+
+.qmake.stash
+moc_simple_server.cpp
+Makefile
