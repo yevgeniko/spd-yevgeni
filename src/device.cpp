@@ -1,13 +1,20 @@
 // device.cpp
 #include "device.hpp"
 
-Device::Device(const QString &id, const QString &t, const QString &r, const QString &log, const QString &config)
-    : deviceID(id), type(t), room(r), logName(log), configuration(config) 
+Device::Device(const QString &a_id, const QString &a_t, const QString &a_r, const QString &a_log, const QString &a_config)
+    : m_deviceID(a_id), m_type(a_t), m_room(a_r), m_logName(a_log), m_configuration(a_config) 
 {
-    manager = new DeviceManager();
+    m_manager = std::make_unique<DeviceManager>();
 }
 
-Device::~Device()
+Device::~Device() = default;  // the unique_ptr will automatically delete the manager
+
+void Device::publish_event(Event* a_event)
 {
-    delete manager;
+    if (m_manager) m_manager->receive_event(a_event);
+}
+
+DeviceManager* Device::get_manager() const 
+{
+    return m_manager.get();
 }

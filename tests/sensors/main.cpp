@@ -14,12 +14,12 @@ int main(int argc, char *argv[])
 
     PulseSensor sensor("sensorID1", "roomA", "log1", "config1");
     
-    sensor.getManager()->connectToServer("127.0.0.1", 12345);
+    sensor.get_manager()->connect_to_server("127.0.0.1", 12345);
 
     QTimer timer;
     QObject::connect(&timer, &QTimer::timeout, [&sensor]() {
         qDebug() << "Monitoring pulse...";
-        sensor.monitorPulse();
+        sensor.monitor_pulse();
     });
     timer.start(1000);
 
