@@ -8,12 +8,16 @@
 #include <QDataStream>
 #include <QDateTime>
 
+#include "event.hpp"
+
+
 class SimpleServer : public QObject {
     Q_OBJECT
 
 public:
     SimpleServer();
     void connectToClientManager(const QHostAddress &address, quint16 port);
+    Event get_event() const;
 
 private slots:
     void onNewConnection();
@@ -23,6 +27,7 @@ private slots:
 private:
     QTcpServer *server;
     QTcpSocket *forwardingSocket;
+    Event m_event;
 
 };
 

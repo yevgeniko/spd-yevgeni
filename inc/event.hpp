@@ -15,12 +15,15 @@ public:
     QString getEventType() const;
     QString getEventData() const;
     QString getEventLocation() const;
+    QString getSenderID() const;
 
 protected:
     QDateTime timestamp;
     QString eventType;
     QString eventData;
     QString eventLocation;
+    QString m_event_ID;
+
 };
 
 class PulseEvent : public Event

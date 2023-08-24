@@ -1,4 +1,4 @@
-#include "server.hpp"
+#include "agent_manager.hpp"
 #include <iostream>
 
 #include <QCoreApplication>
@@ -7,9 +7,9 @@
 
 int main() {
     try {
-        dashboard::Server server;
+        dashboard::AgentManager Agent_Manager;
 
-        for (const auto& devicePtr : server.server_devices()) {
+        for (const auto& devicePtr : Agent_Manager.server_devices()) {
             std::cout << "Device ID: " << devicePtr->getDeviceID().toStdString() << std::endl;
             std::cout << "Device Type: " << devicePtr->getType().toStdString() << std::endl;
             std::cout << "Device Room: " << devicePtr->getRoom().toStdString() << std::endl;

@@ -23,6 +23,11 @@ QString Event::getEventLocation() const
     return eventLocation;
 }
 
+QString Event::getSenderID() const
+{
+    return m_event_ID;
+}
+
 PulseEvent::PulseEvent(const QString& pulseData, const QString& location)
     : Event("Pulse", pulseData, location)
     {}
