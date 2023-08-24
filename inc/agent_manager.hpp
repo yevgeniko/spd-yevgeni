@@ -15,10 +15,10 @@ class ClientServerManager;
 // class Logger;
 class DeviceConfig;
 
-class Server{
+class AgentManager{
 
 public:
-    Server();
+    AgentManager();
     void create_devices();
     const std::vector<std::unique_ptr<Agent>>& server_devices() const;
 

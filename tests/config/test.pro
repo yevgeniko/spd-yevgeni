@@ -4,7 +4,7 @@ QT += core gui widgets network
 
 # Headers
 HEADERS += \
-    ../../inc/server.hpp \
+    ../../inc/agent_manager.hpp \
     ../../inc/device_config.hpp \
     ../../inc/agent.hpp \
     ../../inc/logger.hpp
@@ -12,7 +12,7 @@ HEADERS += \
 # Sources
 SOURCES += \
     ./server-utest.cpp \
-    ../../src/server.cpp \
+    ../../src/agent_manager.cpp \
     ../../src/device_config.cpp \
     ../../src/agent.cpp \
     ../../src/logger.cpp

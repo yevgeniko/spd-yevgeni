@@ -1,6 +1,7 @@
 #include "simple_server.hpp"
 
 SimpleServer::SimpleServer()
+:m_event("dfdggg", "ggfgg", "fgffh")
 {
     server = new QTcpServer(this);
     forwardingSocket = new QTcpSocket(this);
@@ -37,6 +38,9 @@ void SimpleServer::onDataReceived()
     QString eventLocation;
     in >> timeStamp >> eventType >> eventData >> eventLocation;
 
+    Event event(eventType, eventData, eventLocation);
+    m_event = std::move(event);
+
     qDebug() << "Received Event in SERVER:";
     qDebug() << "Timestamp:" << timeStamp;
     qDebug() << "Event Type:" << eventType;
@@ -64,5 +68,10 @@ void SimpleServer::onDataReceived()
 void SimpleServer::connectToClientManager(const QHostAddress &address, quint16 port) {
     qDebug() << "Attempting to connect to ClientManager at" << address.toString() << "on port" << port;
     forwardingSocket->connectToHost(address, port);
+}
+
+Event SimpleServer::get_event() const
+{
+    return m_event;
 }
 

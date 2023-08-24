@@ -1,17 +1,17 @@
-#include "server.hpp"
+#include "agent_manager.hpp"
 
 #include <memory>
 
 namespace dashboard{
 
 
-Server::Server()
+AgentManager::AgentManager()
 :m_device_config("devices.ini")
 {
     create_devices();
 }
 
-void Server::create_devices()
+void AgentManager::create_devices()
 {
     for (const DeviceStruct& device_info : m_device_config.m_devices) {
         std::unique_ptr<Agent> device = std::make_unique<Agent>(device_info.device_ID,
@@ -20,7 +20,7 @@ void Server::create_devices()
     }
 }
 
-const std::vector<std::unique_ptr<Agent>>& Server::server_devices() const {
+const std::vector<std::unique_ptr<Agent>>& AgentManager::server_devices() const {
     return m_device_pointers;
 }
 

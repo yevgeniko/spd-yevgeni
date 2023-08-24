@@ -23,7 +23,7 @@ public:
 
     DeviceConfig(const QString& a_config_file);
 
-    friend class Server;
+    friend class AgentManager;
 
 private:
     void read_from_file(const QString& a_config_file);   
