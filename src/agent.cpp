@@ -34,7 +34,7 @@ void Agent::log_unNormal(const QString& a_even_type, const QString& a_event_mess
     m_logger.log_event(a_even_type, a_event_message);
 }
 
-ProcessResult Agent::procces_event(const Event& a_event)
+ProcessResult Agent::process_event(const Event& a_event)
 {
     if(!m_configuration_sent){
         m_configuration_sent = true;
@@ -52,8 +52,11 @@ ProcessResult Agent::procces_event(const Event& a_event)
     return ProcessResult::RegularMessage;
 }
 
-
-
+ServerEvent Agent::create_agent_event(const Event& a_event)
+{
+    ServerEvent event(m_agent_ID, m_room, m_type, a_event.getEventData(), a_event.getTimestamp());
+    return event;
+}
 
 
 } // namespace dashboard

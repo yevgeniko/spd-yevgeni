@@ -6,6 +6,7 @@
 
 #include "logger.hpp"
 #include "event.hpp"
+#include "event_from_server.hpp"
 
 // class Logger;
 
@@ -30,8 +31,9 @@ public:
     const QString& getRoom() const;
     const QString& getConfiguration() const;
 
-    ProcessResult procces_event(const Event& a_event);
+    ProcessResult process_event(const Event& a_event);
     void log_unNormal(const QString& a_even_type, const QString& a_event_message);
+    ServerEvent create_agent_event(const Event& a_event);
 
 
 private:
