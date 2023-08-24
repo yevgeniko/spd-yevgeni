@@ -7,6 +7,7 @@
 #include "simple_server.hpp"
 #include "device_config.hpp"
 #include "agent.hpp"
+#include "event_from_server.hpp"
 
 using namespace dashboard;
 
