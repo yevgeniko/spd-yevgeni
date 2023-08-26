@@ -3,7 +3,7 @@
 
 #include <QString>
 #include <memory>
-#include "client_manager.hpp"
+#include "client_TCP.hpp"
 
 namespace spd {
 class Client {
@@ -13,7 +13,7 @@ public:
     void connect_to_server(const QString &address, quint16 port);
 
 private:
-    ClientManager m_manager;
+    ClientTCP m_manager;
     //List User; <-id,name,password
 };
 
