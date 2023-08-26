@@ -27,7 +27,7 @@ private slots:
 private:
     QTcpServer *server;
     QTcpSocket *forwardingSocket;
-    Event m_event;
+    //Event m_event;
 
 };
 

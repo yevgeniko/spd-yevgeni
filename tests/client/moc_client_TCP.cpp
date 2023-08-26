@@ -1,16 +1,16 @@
 /****************************************************************************
-** Meta object code from reading C++ file 'client_manager.hpp'
+** Meta object code from reading C++ file 'client_TCP.hpp'
 **
 ** Created by: The Qt Meta Object Compiler version 67 (Qt 5.12.8)
 **
 ** WARNING! All changes made in this file will be lost!
 *****************************************************************************/
 
-#include "../../inc/client_manager.hpp"
+#include "../../inc/client_TCP.hpp"
 #include <QtCore/qbytearray.h>
 #include <QtCore/qmetatype.h>
 #if !defined(Q_MOC_OUTPUT_REVISION)
-#error "The header file 'client_manager.hpp' doesn't include <QObject>."
+#error "The header file 'client_TCP.hpp' doesn't include <QObject>."
 #elif Q_MOC_OUTPUT_REVISION != 67
 #error "This file was generated using the moc from 5.12.8. It"
 #error "cannot be used with the include files from this version of Qt."
@@ -20,30 +20,30 @@
 QT_BEGIN_MOC_NAMESPACE
 QT_WARNING_PUSH
 QT_WARNING_DISABLE_DEPRECATED
-struct qt_meta_stringdata_spd__ClientManager_t {
+struct qt_meta_stringdata_spd__ClientTCP_t {
     QByteArrayData data[5];
-    char stringdata0[67];
+    char stringdata0[63];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
-    qptrdiff(offsetof(qt_meta_stringdata_spd__ClientManager_t, stringdata0) + ofs \
+    qptrdiff(offsetof(qt_meta_stringdata_spd__ClientTCP_t, stringdata0) + ofs \
         - idx * sizeof(QByteArrayData)) \
     )
-static const qt_meta_stringdata_spd__ClientManager_t qt_meta_stringdata_spd__ClientManager = {
+static const qt_meta_stringdata_spd__ClientTCP_t qt_meta_stringdata_spd__ClientTCP = {
     {
-QT_MOC_LITERAL(0, 0, 18), // "spd::ClientManager"
-QT_MOC_LITERAL(1, 19, 15), // "newDataReceived"
-QT_MOC_LITERAL(2, 35, 0), // ""
-QT_MOC_LITERAL(3, 36, 14), // "onDataReceived"
-QT_MOC_LITERAL(4, 51, 15) // "onNewConnection"
+QT_MOC_LITERAL(0, 0, 14), // "spd::ClientTCP"
+QT_MOC_LITERAL(1, 15, 15), // "newDataReceived"
+QT_MOC_LITERAL(2, 31, 0), // ""
+QT_MOC_LITERAL(3, 32, 15), // "onNewConnection"
+QT_MOC_LITERAL(4, 48, 14) // "onDataReceived"
 
     },
-    "spd::ClientManager\0newDataReceived\0\0"
-    "onDataReceived\0onNewConnection"
+    "spd::ClientTCP\0newDataReceived\0\0"
+    "onNewConnection\0onDataReceived"
 };
 #undef QT_MOC_LITERAL
 
-static const uint qt_meta_data_spd__ClientManager[] = {
+static const uint qt_meta_data_spd__ClientTCP[] = {
 
  // content:
        8,       // revision
@@ -73,22 +73,22 @@ static const uint qt_meta_data_spd__ClientManager[] = {
        0        // eod
 };
 
-void spd::ClientManager::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void **_a)
+void spd::ClientTCP::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void **_a)
 {
     if (_c == QMetaObject::InvokeMetaMethod) {
-        auto *_t = static_cast<ClientManager *>(_o);
+        auto *_t = static_cast<ClientTCP *>(_o);
         Q_UNUSED(_t)
         switch (_id) {
         case 0: _t->newDataReceived((*reinterpret_cast< QDateTime(*)>(_a[1])),(*reinterpret_cast< QString(*)>(_a[2])),(*reinterpret_cast< QString(*)>(_a[3])),(*reinterpret_cast< QString(*)>(_a[4]))); break;
-        case 1: _t->onDataReceived(); break;
-        case 2: _t->onNewConnection(); break;
+        case 1: _t->onNewConnection(); break;
+        case 2: _t->onDataReceived(); break;
         default: ;
         }
     } else if (_c == QMetaObject::IndexOfMethod) {
         int *result = reinterpret_cast<int *>(_a[0]);
         {
-            using _t = void (ClientManager::*)(QDateTime , QString , QString , QString );
-            if (*reinterpret_cast<_t *>(_a[1]) == static_cast<_t>(&ClientManager::newDataReceived)) {
+            using _t = void (ClientTCP::*)(QDateTime , QString , QString , QString );
+            if (*reinterpret_cast<_t *>(_a[1]) == static_cast<_t>(&ClientTCP::newDataReceived)) {
                 *result = 0;
                 return;
             }
@@ -96,30 +96,30 @@ void spd::ClientManager::qt_static_metacall(QObject *_o, QMetaObject::Call _c, i
     }
 }
 
-QT_INIT_METAOBJECT const QMetaObject spd::ClientManager::staticMetaObject = { {
+QT_INIT_METAOBJECT const QMetaObject spd::ClientTCP::staticMetaObject = { {
     &QObject::staticMetaObject,
-    qt_meta_stringdata_spd__ClientManager.data,
-    qt_meta_data_spd__ClientManager,
+    qt_meta_stringdata_spd__ClientTCP.data,
+    qt_meta_data_spd__ClientTCP,
     qt_static_metacall,
     nullptr,
     nullptr
 } };
 
 
-const QMetaObject *spd::ClientManager::metaObject() const
+const QMetaObject *spd::ClientTCP::metaObject() const
 {
     return QObject::d_ptr->metaObject ? QObject::d_ptr->dynamicMetaObject() : &staticMetaObject;
 }
 
-void *spd::ClientManager::qt_metacast(const char *_clname)
+void *spd::ClientTCP::qt_metacast(const char *_clname)
 {
     if (!_clname) return nullptr;
-    if (!strcmp(_clname, qt_meta_stringdata_spd__ClientManager.stringdata0))
+    if (!strcmp(_clname, qt_meta_stringdata_spd__ClientTCP.stringdata0))
         return static_cast<void*>(this);
     return QObject::qt_metacast(_clname);
 }
 
-int spd::ClientManager::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
+int spd::ClientTCP::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
 {
     _id = QObject::qt_metacall(_c, _id, _a);
     if (_id < 0)
@@ -137,7 +137,7 @@ int spd::ClientManager::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
 }
 
 // SIGNAL 0
-void spd::ClientManager::newDataReceived(QDateTime _t1, QString _t2, QString _t3, QString _t4)
+void spd::ClientTCP::newDataReceived(QDateTime _t1, QString _t2, QString _t3, QString _t4)
 {
     void *_a[] = { nullptr, const_cast<void*>(reinterpret_cast<const void*>(&_t1)), const_cast<void*>(reinterpret_cast<const void*>(&_t2)), const_cast<void*>(reinterpret_cast<const void*>(&_t3)), const_cast<void*>(reinterpret_cast<const void*>(&_t4)) };
     QMetaObject::activate(this, &staticMetaObject, 0, _a);

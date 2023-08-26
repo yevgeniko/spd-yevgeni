@@ -25,7 +25,7 @@ public:
 private:
     SimpleServer m_simple_server_instance; //TCP SERVER FOR SENSORS
     // dashboard::AgentManager m_agent_manager;
-    dashboard::DeviceConfig m_device_config;
+    //dashboard::DeviceConfig m_device_config;
 
 private:
    std::vector<std::unique_ptr<Agent>> m_agents_pointers;
