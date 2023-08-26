@@ -4,7 +4,7 @@ ServerManager::ServerManager()
 //:m_device_config("devices.ini")
 {
     //create_devices();
-    m_simple_server_instance.connectToClientManager(QHostAddress::LocalHost, 5555); //random port
+    m_simple_server_instance.connect_to_client_manager(QHostAddress::LocalHost, 5555); //random port
 }
 
 // void ServerManager::create_devices()

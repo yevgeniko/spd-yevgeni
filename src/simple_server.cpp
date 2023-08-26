@@ -3,75 +3,72 @@
 SimpleServer::SimpleServer()
 //:m_event("dfdggg", "ggfgg", "fgffh")
 {
-    server = new QTcpServer(this);
-    forwardingSocket = new QTcpSocket(this);
+    m_server.reset(new QTcpServer(this));
+    m_forwarding_socket.reset(new QTcpSocket(this));
 
-
-    connect(server, &QTcpServer::newConnection, this, &SimpleServer::onNewConnection);
-    if (!server->listen(QHostAddress::LocalHost, 12345)) {
+    connect(m_server.data(), &QTcpServer::newConnection, this, &SimpleServer::on_new_connection);
+    if (!m_server->listen(QHostAddress::LocalHost, 12345)) {
         qCritical() << "Server could not start!";
     } else {
         qDebug() << "Server started!";
     }
 }
 
-void SimpleServer::onNewConnection()
+void SimpleServer::on_new_connection()
 {
-    QTcpSocket *clientSocket = server->nextPendingConnection();
-    connect(clientSocket, &QTcpSocket::readyRead, this, &SimpleServer::onDataReceived);
-    connect(clientSocket, &QTcpSocket::disconnected, clientSocket, &QTcpSocket::deleteLater);
+    QTcpSocket *client_socket = m_server->nextPendingConnection();
+    connect(client_socket, &QTcpSocket::readyRead, this, &SimpleServer::on_data_received);
+    connect(client_socket, &QTcpSocket::disconnected, client_socket, &QTcpSocket::deleteLater);
 }
 
-void SimpleServer::onDataReceived()
+void SimpleServer::on_data_received()
 {
-    QTcpSocket *clientSocket = qobject_cast<QTcpSocket *>(sender());
-    if (!clientSocket)
+    QTcpSocket *client_socket = qobject_cast<QTcpSocket *>(sender());
+    if (!client_socket)
         return;
 
-    QDataStream in(clientSocket);
-    quint16 blockSize;
-    in >> blockSize;
+    QDataStream in(client_socket);
+    quint16 block_size;
+    in >> block_size;
 
-    QDateTime timeStamp;
-    QString eventType;
-    QString eventData;
-    QString eventLocation;
-    in >> timeStamp >> eventType >> eventData >> eventLocation;
+    QDateTime time_stamp;
+    QString event_type;
+    QString event_data;
+    QString event_location;
+    in >> time_stamp >> event_type >> event_data >> event_location;
 
-    // Event event(eventType, eventData, eventLocation);
+    // Event event(event_type, event_data, event_location);
     // m_event = std::move(event);
 
     qDebug() << "Received Event in SERVER:";
-    qDebug() << "Timestamp:" << timeStamp;
-    qDebug() << "Event Type:" << eventType;
-    qDebug() << "Event Data:" << eventData;
-    qDebug() << "Event Location:" << eventLocation;
+    qDebug() << "Timestamp:" << time_stamp;
+    qDebug() << "Event Type:" << event_type;
+    qDebug() << "Event Data:" << event_data;
+    qDebug() << "Event Location:" << event_location;
 
     // forwarding the data to the client manager - TODO make as function
     QByteArray block;
     QDataStream out(&block, QIODevice::WriteOnly);
 
     out << (quint16)0;
-    out << timeStamp << eventType << eventData << eventLocation;
+    out << time_stamp << event_type << event_data << event_location;
 
     out.device()->seek(0);
     out << (quint16)(block.size() - sizeof(quint16));
 
-    if(forwardingSocket->state() == QTcpSocket::ConnectedState) {
-    forwardingSocket->write(block);
+    if(m_forwarding_socket->state() == QTcpSocket::ConnectedState) {
+    m_forwarding_socket->write(block);
     } else {
-        qDebug() << "Failed to forward data because forwardingSocket is not connected.";
+        qDebug() << "Failed to forward data because m_forwarding_socket is not connected.";
     }
-
 }
 
-void SimpleServer::connectToClientManager(const QHostAddress &address, quint16 port) {
-    qDebug() << "Attempting to connect to ClientManager at" << address.toString() << "on port" << port;
-    forwardingSocket->connectToHost(address, port);
+void SimpleServer::connect_to_client_manager(const QHostAddress &a_address, quint16 a_port) {
+    qDebug() << "Attempting to connect to ClientManager at" << a_address.toString() << "on port" << a_port;
+    m_forwarding_socket->connectToHost(a_address, a_port);
 }
 
 // Event SimpleServer::get_event() const
 // {
 //     return m_event;
 // }
-
