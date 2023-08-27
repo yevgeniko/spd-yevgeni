@@ -9,6 +9,8 @@ class Event
 public:
     Event(const QString& type, const QString& data, const QString& location);
     virtual ~Event() = default;
+    Event& operator=(const Event& other);
+
 
     // Getters
     QDateTime getTimestamp() const;

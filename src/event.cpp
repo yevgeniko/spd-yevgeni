@@ -1,7 +1,25 @@
 #include "event.hpp"
 
 Event::Event(const QString& type, const QString& data, const QString& location)
-    : timestamp(QDateTime::currentDateTime()), eventType(type), eventData(data), eventLocation(location) {}
+    : timestamp(QDateTime::currentDateTime()),
+    eventType(type),
+    eventData(data),
+    eventLocation(location)
+    {}
+
+Event& Event::operator=(const Event& other) 
+{
+    if (this != &other)
+    {
+        timestamp = other.timestamp;
+        eventType = other.eventType;
+        eventData = other.eventData;
+        eventLocation = other.eventLocation;
+        m_event_ID = other.m_event_ID;
+    }
+    return *this;
+}
+
 
 QDateTime Event::getTimestamp() const
 {

@@ -14,6 +14,11 @@ DeviceManager::~DeviceManager()
     m_socket->close();
 }
 
+void DeviceManager::receive_event(Event* a_event)
+{
+    send_event_to_server(a_event);
+}
+
 void DeviceManager::connect_to_server(const QString &a_address, quint16 a_port)
 {
     m_socket->connectToHost(a_address, a_port);
@@ -58,7 +63,4 @@ void DeviceManager::on_data_received()
     m_block_size = 0;
 }
 
-void DeviceManager::receive_event(Event* a_event)
-{
-    send_event_to_server(a_event);
-}
+
