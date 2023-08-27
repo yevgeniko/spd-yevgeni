@@ -28,7 +28,7 @@ void UI::initwindow()
     m_window.resize(800, 600);
     m_window.setWindowTitle("Simple example");
     m_event.reset(new QTextBrowser(&m_window));
-    m_event.get()->setGeometry(10, 10, 120, 80);
+    m_event.get()->setGeometry(10, 10, 220, 110);
     m_window.show();
 }
 
