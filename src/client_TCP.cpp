@@ -40,7 +40,8 @@ void ClientTCP::startListening(const QString &address, quint16 port)
     }
 }
 
-void ClientTCP::onDataReceived() {
+void ClientTCP::onDataReceived()
+{
     QDataStream in(m_socket);
     quint16 blockSize = 0;
 
