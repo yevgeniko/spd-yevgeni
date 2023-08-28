@@ -5,6 +5,7 @@
 #include <memory>
 #include <QTextBrowser>
 #include <QDateTime>
+#include <QList>
 
 namespace spd {
     
@@ -20,8 +21,8 @@ private:
     void initwindow();
 
 private:
-    QWidget m_window;
-    QScopedPointer<QTextBrowser> m_event;
+    QMainWindow m_window;
+    QList<QScopedPointer<QTextBrowser>> m_rooms;
 };
     
 } // namespace spd
