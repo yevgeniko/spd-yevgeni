@@ -1,4 +1,6 @@
 #include "simple_server.hpp"
+#include "sensors.hpp"
+#include "pulse_event_handler.hpp"
 
 SimpleServer::SimpleServer()
 //:m_event("dfdggg", "ggfgg", "fgffh")
@@ -37,14 +39,16 @@ void SimpleServer::on_data_received()
     QString event_location;
     in >> time_stamp >> event_type >> event_data >> event_location;
 
-    // Event event(event_type, event_data, event_location);
-    // m_event = std::move(event);
 
     qDebug() << "Received Event in SERVER:";
     qDebug() << "Timestamp:" << time_stamp;
     qDebug() << "Event Type:" << event_type;
     qDebug() << "Event Data:" << event_data;
     qDebug() << "Event Location:" << event_location;
+
+    // creating a signal for ServerManager that there is a new event
+    Event event(time_stamp, event_type, event_data, event_location);
+    emit eventReceived(event);
 
     // forwarding the data to the client manager - TODO make as function
     QByteArray block;
