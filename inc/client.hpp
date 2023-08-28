@@ -10,7 +10,7 @@
 namespace spd {
 
 class Client : public QObject {
-    Q_OBJECT // <-- This macro is important
+    Q_OBJECT
 
 public:
     Client();

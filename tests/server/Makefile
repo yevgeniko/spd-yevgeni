@@ -37,7 +37,7 @@ MOVE          = mv -f
 TAR           = tar -cf
 COMPRESS      = gzip -9f
 DISTNAME      = qmake1.0.0
-DISTDIR = /home/amir/spd-amir/tests/server/.tmp/qmake1.0.0
+DISTDIR = /home/linuxos/spd-yevgeni/tests/server/.tmp/qmake1.0.0
 LINK          = g++
 LFLAGS        = -Wl,-O1
 LIBS          = $(SUBLIBS) -L/usr/lib/x86_64-linux-gnu/ /usr/lib/x86_64-linux-gnu/libQt5Gui.so /usr/lib/x86_64-linux-gnu/libQt5Network.so /usr/lib/x86_64-linux-gnu/libQt5Core.so /usr/lib/x86_64-linux-gnu/libGL.so -lpthread   
@@ -54,11 +54,17 @@ OBJECTS_DIR   = ./
 
 SOURCES       = main.cpp \
 		../../src/simple_server.cpp \
-		../../src/server_manager.cpp moc_simple_server.cpp \
+		../../src/event.cpp \
+		../../src/server_manager.cpp \
+		../../src/pulse_event_handler.cpp \
+		../../src/room_handler.cpp moc_simple_server.cpp \
 		moc_server_manager.cpp
 OBJECTS       = main.o \
 		simple_server.o \
+		event.o \
 		server_manager.o \
+		pulse_event_handler.o \
+		room_handler.o \
 		moc_simple_server.o \
 		moc_server_manager.o
 DIST          = /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_pre.prf \
@@ -136,9 +142,15 @@ DIST          = /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_pre.prf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/yacc.prf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/lex.prf \
 		qmake.pro ../../inc/simple_server.hpp \
-		../../inc/server_manager.hpp main.cpp \
+		../../inc/event.hpp \
+		../../inc/server_manager.hpp \
+		../../inc/pulse_event_handler.hpp \
+		../../inc/room_handler.hpp main.cpp \
 		../../src/simple_server.cpp \
-		../../src/server_manager.cpp
+		../../src/event.cpp \
+		../../src/server_manager.cpp \
+		../../src/pulse_event_handler.cpp \
+		../../src/room_handler.cpp
 QMAKE_TARGET  = qmake
 DESTDIR       = 
 TARGET        = qmake
@@ -311,8 +323,8 @@ distdir: FORCE
 	@test -d $(DISTDIR) || mkdir -p $(DISTDIR)
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
 	$(COPY_FILE) --parents /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/data/dummy.cpp $(DISTDIR)/
-	$(COPY_FILE) --parents ../../inc/simple_server.hpp ../../inc/server_manager.hpp $(DISTDIR)/
-	$(COPY_FILE) --parents main.cpp ../../src/simple_server.cpp ../../src/server_manager.cpp $(DISTDIR)/
+	$(COPY_FILE) --parents ../../inc/simple_server.hpp ../../inc/event.hpp ../../inc/server_manager.hpp ../../inc/pulse_event_handler.hpp ../../inc/room_handler.hpp $(DISTDIR)/
+	$(COPY_FILE) --parents main.cpp ../../src/simple_server.cpp ../../src/event.cpp ../../src/server_manager.cpp ../../src/pulse_event_handler.cpp ../../src/room_handler.cpp $(DISTDIR)/
 
 
 clean: compiler_clean 
@@ -351,18 +363,20 @@ moc_simple_server.cpp: ../../inc/simple_server.hpp \
 		../../inc/event.hpp \
 		moc_predefs.h \
 		/usr/lib/qt5/bin/moc
-	/usr/lib/qt5/bin/moc $(DEFINES) --include /home/amir/spd-amir/tests/server/moc_predefs.h -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++ -I/home/amir/spd-amir/tests/server -I/home/amir/spd-amir/inc -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtNetwork -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I/usr/include/c++/9 -I/usr/include/x86_64-linux-gnu/c++/9 -I/usr/include/c++/9/backward -I/usr/lib/gcc/x86_64-linux-gnu/9/include -I/usr/local/include -I/usr/include/x86_64-linux-gnu -I/usr/include ../../inc/simple_server.hpp -o moc_simple_server.cpp
+	/usr/lib/qt5/bin/moc $(DEFINES) --include /home/linuxos/spd-yevgeni/tests/server/moc_predefs.h -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++ -I/home/linuxos/spd-yevgeni/tests/server -I/home/linuxos/spd-yevgeni/inc -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtNetwork -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I/usr/include/c++/9 -I/usr/include/x86_64-linux-gnu/c++/9 -I/usr/include/c++/9/backward -I/usr/lib/gcc/x86_64-linux-gnu/9/include -I/usr/local/include -I/usr/include/x86_64-linux-gnu -I/usr/include ../../inc/simple_server.hpp -o moc_simple_server.cpp
 
 moc_server_manager.cpp: ../../inc/server_manager.hpp \
 		../../inc/simple_server.hpp \
 		../../inc/event.hpp \
+		../../inc/room_handler.hpp \
+		../../inc/pulse_event_handler.hpp \
 		../../inc/device_config.hpp \
 		../../inc/agent.hpp \
 		../../inc/logger.hpp \
 		../../inc/event_from_server.hpp \
 		moc_predefs.h \
 		/usr/lib/qt5/bin/moc
-	/usr/lib/qt5/bin/moc $(DEFINES) --include /home/amir/spd-amir/tests/server/moc_predefs.h -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++ -I/home/amir/spd-amir/tests/server -I/home/amir/spd-amir/inc -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtNetwork -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I/usr/include/c++/9 -I/usr/include/x86_64-linux-gnu/c++/9 -I/usr/include/c++/9/backward -I/usr/lib/gcc/x86_64-linux-gnu/9/include -I/usr/local/include -I/usr/include/x86_64-linux-gnu -I/usr/include ../../inc/server_manager.hpp -o moc_server_manager.cpp
+	/usr/lib/qt5/bin/moc $(DEFINES) --include /home/linuxos/spd-yevgeni/tests/server/moc_predefs.h -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++ -I/home/linuxos/spd-yevgeni/tests/server -I/home/linuxos/spd-yevgeni/inc -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtNetwork -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I/usr/include/c++/9 -I/usr/include/x86_64-linux-gnu/c++/9 -I/usr/include/c++/9/backward -I/usr/lib/gcc/x86_64-linux-gnu/9/include -I/usr/local/include -I/usr/include/x86_64-linux-gnu -I/usr/include ../../inc/server_manager.hpp -o moc_server_manager.cpp
 
 compiler_moc_objc_header_make_all:
 compiler_moc_objc_header_clean:
@@ -381,6 +395,8 @@ compiler_clean: compiler_moc_predefs_clean compiler_moc_header_clean
 main.o: main.cpp ../../inc/server_manager.hpp \
 		../../inc/simple_server.hpp \
 		../../inc/event.hpp \
+		../../inc/room_handler.hpp \
+		../../inc/pulse_event_handler.hpp \
 		../../inc/device_config.hpp \
 		../../inc/agent.hpp \
 		../../inc/logger.hpp \
@@ -388,17 +404,36 @@ main.o: main.cpp ../../inc/server_manager.hpp \
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o main.o main.cpp
 
 simple_server.o: ../../src/simple_server.cpp ../../inc/simple_server.hpp \
-		../../inc/event.hpp
+		../../inc/event.hpp \
+		../../inc/sensors.hpp \
+		../../inc/device.hpp \
+		../../inc/device_manager.hpp \
+		../../inc/pulse_event_handler.hpp
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o simple_server.o ../../src/simple_server.cpp
+
+event.o: ../../src/event.cpp ../../inc/event.hpp
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o event.o ../../src/event.cpp
 
 server_manager.o: ../../src/server_manager.cpp ../../inc/server_manager.hpp \
 		../../inc/simple_server.hpp \
 		../../inc/event.hpp \
+		../../inc/room_handler.hpp \
+		../../inc/pulse_event_handler.hpp \
 		../../inc/device_config.hpp \
 		../../inc/agent.hpp \
 		../../inc/logger.hpp \
 		../../inc/event_from_server.hpp
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o server_manager.o ../../src/server_manager.cpp
+
+pulse_event_handler.o: ../../src/pulse_event_handler.cpp ../../inc/pulse_event_handler.hpp \
+		../../inc/event.hpp \
+		../../inc/room_handler.hpp
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o pulse_event_handler.o ../../src/pulse_event_handler.cpp
+
+room_handler.o: ../../src/room_handler.cpp ../../inc/room_handler.hpp \
+		../../inc/pulse_event_handler.hpp \
+		../../inc/event.hpp
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o room_handler.o ../../src/room_handler.cpp
 
 moc_simple_server.o: moc_simple_server.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_simple_server.o moc_simple_server.cpp

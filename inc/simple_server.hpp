@@ -22,6 +22,9 @@ private slots:
     void on_new_connection();
     void on_data_received();
 
+signals:
+    void eventReceived(const Event &event);
+
 private:
     QScopedPointer<QTcpServer> m_server;
     QScopedPointer<QTcpSocket> m_forwarding_socket;
