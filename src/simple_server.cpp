@@ -9,7 +9,8 @@ SimpleServer::SimpleServer()
     m_forwarding_socket.reset(new QTcpSocket(this));
 
     connect(m_server.data(), &QTcpServer::newConnection, this, &SimpleServer::on_new_connection);
-    if (!m_server->listen(QHostAddress::LocalHost, 12345)) {
+    connect(m_forwarding_socket.data(), &QTcpSocket::readyRead, this, &SimpleServer::on_request_received);
+        if (!m_server->listen(QHostAddress::LocalHost, 12345)) {
         qCritical() << "Server could not start!";
     } else {
         qDebug() << "Server started!";
@@ -22,6 +23,8 @@ void SimpleServer::on_new_connection()
     connect(client_socket, &QTcpSocket::readyRead, this, &SimpleServer::on_data_received);
     connect(client_socket, &QTcpSocket::disconnected, client_socket, &QTcpSocket::deleteLater);
 }
+
+
 
 void SimpleServer::on_data_received()
 {
@@ -46,56 +49,37 @@ void SimpleServer::on_data_received()
     qDebug() << "Event Data:" << event_data;
     qDebug() << "Event Location:" << event_location;
 
-    // creating a signal for ServerManager that there is a new event
+
     Event event(time_stamp, event_type, event_data, event_location);
     emit eventReceived(event);
-
-    // forwarding the data to the client manager - TODO make as function
-    // QByteArray block;
-    // QDataStream out(&block, QIODevice::WriteOnly);
-
-    // out << (quint16)0;
-    // out << timeStamp << eventType << eventData << eventLocation;
-
-    // out.device()->seek(0);
-    // out << (quint16)(block.size() - sizeof(quint16));
-
-    if(forwardingSocket->state() == QTcpSocket::ConnectedState) {
-    forwardingSocket->write(block);
-    } else {
-        qDebug() << "Failed to forward data because m_forwarding_socket is not connected.";
-    }
-
+    
 }
 
-void SimpleServer::connectToClientManager(const QHostAddress &address, quint16 port) {
-    qDebug() << "Attempting to connect to ClientManager at" << address.toString() << "on port" << port;
-    forwardingSocket->connectToHost(address, port);
-}
 
-Event SimpleServer::get_event()
+
+void SimpleServer::connect_to_client_manager(const QHostAddress &address, quint16 port) 
 {
-    Event event = m_events.front();
-    m_events.pop();
-    return event;
+    qDebug() << "Attempting to connect to ClientManager at" << address.toString() << "on port" << port;
+    m_forwarding_socket->connectToHost(address, port);
 }
 
-void SimpleServer::forward_event_to_client()
+// Event SimpleServer::get_event()
+// {
+//     Event event = m_events.front();
+//     m_events.pop();
+//     return event;
+// }
+
+void SimpleServer::forward_event_to_client(const Event& a_dequeued_Event)
 {
     
     QByteArray block;
     QDataStream out(&block, QIODevice::WriteOnly);
 
-
-    if (roomEventQueues.find(room_number) != roomEventQueues.end() && !roomEventQueues[room_number].empty()) {
-        Event dequeued_Event = roomEventQueues[room_number].front();
-        roomEventQueues[room_number].pop();
-    }
-
-    QDateTime timeStamp = dequeued_Event.getTimestamp();
-    QString eventType = dequeued_Event.getEventType(); 
-    QString eventData = dequeued_Event.getEventData();
-    QString eventLocation = dequeued_Event.getEventLocation();
+    QDateTime time_stamp = a_dequeued_Event.getTimestamp();
+    QString event_type = a_dequeued_Event.getEventType(); 
+    QString event_data = a_dequeued_Event.getEventData();
+    QString event_location = a_dequeued_Event.getEventLocation();
 
 
     out << (quint16)0;
@@ -111,12 +95,21 @@ void SimpleServer::forward_event_to_client()
     }
 }
 
-void SimpleServer::connect_to_client_manager(const QHostAddress &a_address, quint16 a_port) {
-    qDebug() << "Attempting to connect to ClientManager at" << a_address.toString() << "on port" << a_port;
-    m_forwarding_socket->connectToHost(a_address, a_port);
-}
+void SimpleServer::on_request_received()
+{
+    QTcpSocket *client_socket = qobject_cast<QTcpSocket *>(sender());
+    if (!client_socket)
+        return;
 
-// Event SimpleServer::get_event() const
-// {
-//     return m_event;
-// }
+    QDataStream in(client_socket);
+    quint16 block_size;
+    in >> block_size;
+
+    Request request;
+    in >> request.request_type >> request.room_number;
+
+    qDebug() << "Received Request from Client Manager:";
+    qDebug() << "Room Number:" << request.room_number;
+    
+    emit requestReceived(request.room_number);
+}

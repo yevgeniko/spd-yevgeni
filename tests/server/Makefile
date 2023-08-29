@@ -37,7 +37,7 @@ MOVE          = mv -f
 TAR           = tar -cf
 COMPRESS      = gzip -9f
 DISTNAME      = qmake1.0.0
-DISTDIR = /home/linuxos/spd-yevgeni/tests/server/.tmp/qmake1.0.0
+DISTDIR = /home/yonatan/smart-patient-dashboard/tests/server/.tmp/qmake1.0.0
 LINK          = g++
 LFLAGS        = -Wl,-O1
 LIBS          = $(SUBLIBS) -L/usr/lib/x86_64-linux-gnu/ /usr/lib/x86_64-linux-gnu/libQt5Gui.so /usr/lib/x86_64-linux-gnu/libQt5Network.so /usr/lib/x86_64-linux-gnu/libQt5Core.so /usr/lib/x86_64-linux-gnu/libGL.so -lpthread   
@@ -363,7 +363,7 @@ moc_simple_server.cpp: ../../inc/simple_server.hpp \
 		../../inc/event.hpp \
 		moc_predefs.h \
 		/usr/lib/qt5/bin/moc
-	/usr/lib/qt5/bin/moc $(DEFINES) --include /home/linuxos/spd-yevgeni/tests/server/moc_predefs.h -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++ -I/home/linuxos/spd-yevgeni/tests/server -I/home/linuxos/spd-yevgeni/inc -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtNetwork -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I/usr/include/c++/9 -I/usr/include/x86_64-linux-gnu/c++/9 -I/usr/include/c++/9/backward -I/usr/lib/gcc/x86_64-linux-gnu/9/include -I/usr/local/include -I/usr/include/x86_64-linux-gnu -I/usr/include ../../inc/simple_server.hpp -o moc_simple_server.cpp
+	/usr/lib/qt5/bin/moc $(DEFINES) --include /home/yonatan/smart-patient-dashboard/tests/server/moc_predefs.h -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++ -I/home/yonatan/smart-patient-dashboard/tests/server -I/home/yonatan/smart-patient-dashboard/inc -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtNetwork -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I/usr/include/c++/9 -I/usr/include/x86_64-linux-gnu/c++/9 -I/usr/include/c++/9/backward -I/usr/lib/gcc/x86_64-linux-gnu/9/include -I/usr/local/include -I/usr/include/x86_64-linux-gnu -I/usr/include ../../inc/simple_server.hpp -o moc_simple_server.cpp
 
 moc_server_manager.cpp: ../../inc/server_manager.hpp \
 		../../inc/simple_server.hpp \
@@ -371,12 +371,13 @@ moc_server_manager.cpp: ../../inc/server_manager.hpp \
 		../../inc/room_handler.hpp \
 		../../inc/pulse_event_handler.hpp \
 		../../inc/device_config.hpp \
+		../../inc/server_manager.hpp \
 		../../inc/agent.hpp \
 		../../inc/logger.hpp \
 		../../inc/event_from_server.hpp \
 		moc_predefs.h \
 		/usr/lib/qt5/bin/moc
-	/usr/lib/qt5/bin/moc $(DEFINES) --include /home/linuxos/spd-yevgeni/tests/server/moc_predefs.h -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++ -I/home/linuxos/spd-yevgeni/tests/server -I/home/linuxos/spd-yevgeni/inc -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtNetwork -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I/usr/include/c++/9 -I/usr/include/x86_64-linux-gnu/c++/9 -I/usr/include/c++/9/backward -I/usr/lib/gcc/x86_64-linux-gnu/9/include -I/usr/local/include -I/usr/include/x86_64-linux-gnu -I/usr/include ../../inc/server_manager.hpp -o moc_server_manager.cpp
+	/usr/lib/qt5/bin/moc $(DEFINES) --include /home/yonatan/smart-patient-dashboard/tests/server/moc_predefs.h -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++ -I/home/yonatan/smart-patient-dashboard/tests/server -I/home/yonatan/smart-patient-dashboard/inc -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtNetwork -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I/usr/include/c++/9 -I/usr/include/x86_64-linux-gnu/c++/9 -I/usr/include/c++/9/backward -I/usr/lib/gcc/x86_64-linux-gnu/9/include -I/usr/local/include -I/usr/include/x86_64-linux-gnu -I/usr/include ../../inc/server_manager.hpp -o moc_server_manager.cpp
 
 compiler_moc_objc_header_make_all:
 compiler_moc_objc_header_clean:

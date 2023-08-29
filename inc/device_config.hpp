@@ -32,7 +32,7 @@ private:
 
     std::vector<DeviceStruct> m_devices;
 
-    friend ServerManager;
+    friend class ServerManager;
 };
 
 } // namespace dashboard

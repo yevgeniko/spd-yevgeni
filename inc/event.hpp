@@ -34,4 +34,13 @@ public:
     PulseEvent(const QDateTime& time, const QString& pulseData, const QString& location);
 };
 
+
+struct Request {
+    
+    QString request_type;
+    int room_number;
+
+};
+
+
 #endif // EVENT_HPP
