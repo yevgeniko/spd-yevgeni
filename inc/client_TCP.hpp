@@ -9,6 +9,8 @@
 #include <QPointer>
 #include <memory>
 
+#include "event.hpp"
+
 namespace spd {
 
 class ClientTCP : public QObject
@@ -23,6 +25,7 @@ public:
     ClientTCP& operator=(ClientTCP const& a_other) = delete;
 
     void startListening(const QString &address, quint16 port);
+    void send_request(const Request& a_request);
 
 signals:
     void newDataReceived(QDateTime, QString, QString, QString);
