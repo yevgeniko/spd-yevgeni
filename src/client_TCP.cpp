@@ -72,4 +72,23 @@ void ClientTCP::onDataReceived()
     emit newDataReceived(timeStamp, eventType, eventData, eventLocation);
 }
 
+
+void ClientTCP::send_request(const Request& a_request)
+{
+    if (!m_socket) {
+        qDebug() << "Socket not connected.";
+        return;
+    }
+
+    QByteArray data;
+    QDataStream out(&data, QIODevice::WriteOnly);
+
+    out << a_request.request_type << a_request.room_number;
+
+    quint16 blockSize = data.size();
+    m_socket->write(reinterpret_cast<const char*>(&blockSize), sizeof(quint16));
+    m_socket->write(data);
+}
+
+
 } // namespace spd
