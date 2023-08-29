@@ -6,7 +6,9 @@ ServerManager::ServerManager()
 {
     m_simple_server_instance.connect_to_client_manager(QHostAddress::LocalHost, 5555); //random port
     connect(&m_simple_server_instance, &SimpleServer::eventReceived, this, &ServerManager::handleReceivedEvent);
+    connect(&m_simple_server_instance, &SimpleServer::requestReceived, this, &ServerManager::send_event);
 }
+
 
 
 void ServerManager::start_services()
@@ -58,3 +60,16 @@ void ServerManager::updateEventToRoomMap(int room_number, const Event& event)
     qDebug() << "enqueued to event_to_room_map : " << event.getEventData();
     m_event_to_room_map[room_number].enqueue(event);
 }
+    //other sensor types as needed.
+
+
+
+void ServerManager::send_event(int room_number) 
+{
+    if (m_event_to_room_map.contains(room_number) && !m_event_to_room_map.value(room_number).empty()) {
+        Event dequeued_Event = m_event_to_room_map[room_number].dequeue();
+        m_simple_server_instance.forward_event_to_client(dequeued_Event);
+    }
+}
+
+

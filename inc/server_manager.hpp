@@ -7,7 +7,6 @@
 #include <QQueue>
 #include <QString>
 #include <QDebug>
-
 #include "simple_server.hpp"
 #include "room_handler.hpp"
 #include "device_config.hpp"
@@ -27,6 +26,7 @@ public:
     ServerManager();
     void start_services();
     void EventRouter(const Event &event);
+    void send_event(int room_number); 
 
 private slots:
     void handleReceivedEvent(const Event &event);
