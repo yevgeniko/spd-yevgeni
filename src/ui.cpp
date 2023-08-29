@@ -5,9 +5,11 @@
 #include <iostream>
 #include <QDebug>
 #include <QPainter>
+#include <QResizeEvent>
+
 #include "const_and_enums.hpp"
 #include "ui_main_window.hpp"
-#include <QResizeEvent>
+#include "ui_room_bt.hpp"
 
 namespace spd {
 
@@ -16,6 +18,7 @@ UI::UI()
 {
     init_window();
     init_room();
+    connect(m_rooms[0], SIGNAL(button_clicked()), this, SLOT(onButtonClicked()));
     m_window.show();
 }
 
@@ -27,6 +30,11 @@ void UI::show_event(QDateTime const& a_timeStamp, QString const& a_eventType, QS
                          + a_eventData + "\n" 
                          + a_eventLocation + "\n";
     m_rooms[0]->setText(message);
+}
+
+void UI::onButtonClicked() 
+{
+    qDebug() << "Button Clicked!";
 }
 
 void UI::resizeEvent(QResizeEvent *event)
@@ -45,8 +53,9 @@ void UI::init_window()
 
 void UI::init_room()
 {
-    m_rooms.append(new QPushButton("Room 1", &m_window));
-    m_rooms[0]->setGeometry(360, 45, 80, 80);
+    m_rooms.append(new UIRoomBt(&m_window));
+    m_rooms[0]->setText("Room 1");
+    m_rooms[0]->setGeometry(320, 45, 80, 80);
 }
 
 } // namespace spd

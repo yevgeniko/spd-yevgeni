@@ -15,6 +15,9 @@ class UI : public QMainWindow {
 
 Q_OBJECT
 
+private slots:
+    void onButtonClicked();
+
 public:
     UI();
 
