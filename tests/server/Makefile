@@ -57,16 +57,22 @@ SOURCES       = main.cpp \
 		../../src/event.cpp \
 		../../src/server_manager.cpp \
 		../../src/pulse_event_handler.cpp \
-		../../src/room_handler.cpp moc_simple_server.cpp \
-		moc_server_manager.cpp
+		../../src/room_handler.cpp \
+		../../src/event_handler_base.cpp moc_simple_server.cpp \
+		moc_server_manager.cpp \
+		moc_pulse_event_handler.cpp \
+		moc_event_handler_base.cpp
 OBJECTS       = main.o \
 		simple_server.o \
 		event.o \
 		server_manager.o \
 		pulse_event_handler.o \
 		room_handler.o \
+		event_handler_base.o \
 		moc_simple_server.o \
-		moc_server_manager.o
+		moc_server_manager.o \
+		moc_pulse_event_handler.o \
+		moc_event_handler_base.o
 DIST          = /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_pre.prf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/common/unix.conf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/common/linux.conf \
@@ -145,12 +151,14 @@ DIST          = /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_pre.prf \
 		../../inc/event.hpp \
 		../../inc/server_manager.hpp \
 		../../inc/pulse_event_handler.hpp \
-		../../inc/room_handler.hpp main.cpp \
+		../../inc/room_handler.hpp \
+		../../inc/event_handler_base.hpp main.cpp \
 		../../src/simple_server.cpp \
 		../../src/event.cpp \
 		../../src/server_manager.cpp \
 		../../src/pulse_event_handler.cpp \
-		../../src/room_handler.cpp
+		../../src/room_handler.cpp \
+		../../src/event_handler_base.cpp
 QMAKE_TARGET  = qmake
 DESTDIR       = 
 TARGET        = qmake
@@ -323,8 +331,8 @@ distdir: FORCE
 	@test -d $(DISTDIR) || mkdir -p $(DISTDIR)
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
 	$(COPY_FILE) --parents /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/data/dummy.cpp $(DISTDIR)/
-	$(COPY_FILE) --parents ../../inc/simple_server.hpp ../../inc/event.hpp ../../inc/server_manager.hpp ../../inc/pulse_event_handler.hpp ../../inc/room_handler.hpp $(DISTDIR)/
-	$(COPY_FILE) --parents main.cpp ../../src/simple_server.cpp ../../src/event.cpp ../../src/server_manager.cpp ../../src/pulse_event_handler.cpp ../../src/room_handler.cpp $(DISTDIR)/
+	$(COPY_FILE) --parents ../../inc/simple_server.hpp ../../inc/event.hpp ../../inc/server_manager.hpp ../../inc/pulse_event_handler.hpp ../../inc/room_handler.hpp ../../inc/event_handler_base.hpp $(DISTDIR)/
+	$(COPY_FILE) --parents main.cpp ../../src/simple_server.cpp ../../src/event.cpp ../../src/server_manager.cpp ../../src/pulse_event_handler.cpp ../../src/room_handler.cpp ../../src/event_handler_base.cpp $(DISTDIR)/
 
 
 clean: compiler_clean 
@@ -356,9 +364,9 @@ compiler_moc_predefs_clean:
 moc_predefs.h: /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/data/dummy.cpp
 	g++ -pipe -pedantic -Wall -Wextra -Wno-deprecated-copy -O2 -std=gnu++1z -Wall -W -dM -E -o moc_predefs.h /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/data/dummy.cpp
 
-compiler_moc_header_make_all: moc_simple_server.cpp moc_server_manager.cpp
+compiler_moc_header_make_all: moc_simple_server.cpp moc_server_manager.cpp moc_pulse_event_handler.cpp moc_event_handler_base.cpp
 compiler_moc_header_clean:
-	-$(DEL_FILE) moc_simple_server.cpp moc_server_manager.cpp
+	-$(DEL_FILE) moc_simple_server.cpp moc_server_manager.cpp moc_pulse_event_handler.cpp moc_event_handler_base.cpp
 moc_simple_server.cpp: ../../inc/simple_server.hpp \
 		../../inc/event.hpp \
 		moc_predefs.h \
@@ -370,6 +378,8 @@ moc_server_manager.cpp: ../../inc/server_manager.hpp \
 		../../inc/event.hpp \
 		../../inc/room_handler.hpp \
 		../../inc/pulse_event_handler.hpp \
+		../../inc/event_handler_base.hpp \
+		../../inc/server_manager.hpp \
 		../../inc/device_config.hpp \
 		../../inc/agent.hpp \
 		../../inc/logger.hpp \
@@ -377,6 +387,19 @@ moc_server_manager.cpp: ../../inc/server_manager.hpp \
 		moc_predefs.h \
 		/usr/lib/qt5/bin/moc
 	/usr/lib/qt5/bin/moc $(DEFINES) --include /home/linuxos/spd-yevgeni/tests/server/moc_predefs.h -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++ -I/home/linuxos/spd-yevgeni/tests/server -I/home/linuxos/spd-yevgeni/inc -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtNetwork -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I/usr/include/c++/9 -I/usr/include/x86_64-linux-gnu/c++/9 -I/usr/include/c++/9/backward -I/usr/lib/gcc/x86_64-linux-gnu/9/include -I/usr/local/include -I/usr/include/x86_64-linux-gnu -I/usr/include ../../inc/server_manager.hpp -o moc_server_manager.cpp
+
+moc_pulse_event_handler.cpp: ../../inc/pulse_event_handler.hpp \
+		../../inc/event_handler_base.hpp \
+		../../inc/event.hpp \
+		moc_predefs.h \
+		/usr/lib/qt5/bin/moc
+	/usr/lib/qt5/bin/moc $(DEFINES) --include /home/linuxos/spd-yevgeni/tests/server/moc_predefs.h -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++ -I/home/linuxos/spd-yevgeni/tests/server -I/home/linuxos/spd-yevgeni/inc -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtNetwork -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I/usr/include/c++/9 -I/usr/include/x86_64-linux-gnu/c++/9 -I/usr/include/c++/9/backward -I/usr/lib/gcc/x86_64-linux-gnu/9/include -I/usr/local/include -I/usr/include/x86_64-linux-gnu -I/usr/include ../../inc/pulse_event_handler.hpp -o moc_pulse_event_handler.cpp
+
+moc_event_handler_base.cpp: ../../inc/event_handler_base.hpp \
+		../../inc/event.hpp \
+		moc_predefs.h \
+		/usr/lib/qt5/bin/moc
+	/usr/lib/qt5/bin/moc $(DEFINES) --include /home/linuxos/spd-yevgeni/tests/server/moc_predefs.h -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++ -I/home/linuxos/spd-yevgeni/tests/server -I/home/linuxos/spd-yevgeni/inc -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtNetwork -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I/usr/include/c++/9 -I/usr/include/x86_64-linux-gnu/c++/9 -I/usr/include/c++/9/backward -I/usr/lib/gcc/x86_64-linux-gnu/9/include -I/usr/local/include -I/usr/include/x86_64-linux-gnu -I/usr/include ../../inc/event_handler_base.hpp -o moc_event_handler_base.cpp
 
 compiler_moc_objc_header_make_all:
 compiler_moc_objc_header_clean:
@@ -397,6 +420,7 @@ main.o: main.cpp ../../inc/server_manager.hpp \
 		../../inc/event.hpp \
 		../../inc/room_handler.hpp \
 		../../inc/pulse_event_handler.hpp \
+		../../inc/event_handler_base.hpp \
 		../../inc/device_config.hpp \
 		../../inc/agent.hpp \
 		../../inc/logger.hpp \
@@ -408,7 +432,8 @@ simple_server.o: ../../src/simple_server.cpp ../../inc/simple_server.hpp \
 		../../inc/sensors.hpp \
 		../../inc/device.hpp \
 		../../inc/device_manager.hpp \
-		../../inc/pulse_event_handler.hpp
+		../../inc/pulse_event_handler.hpp \
+		../../inc/event_handler_base.hpp
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o simple_server.o ../../src/simple_server.cpp
 
 event.o: ../../src/event.cpp ../../inc/event.hpp
@@ -419,6 +444,7 @@ server_manager.o: ../../src/server_manager.cpp ../../inc/server_manager.hpp \
 		../../inc/event.hpp \
 		../../inc/room_handler.hpp \
 		../../inc/pulse_event_handler.hpp \
+		../../inc/event_handler_base.hpp \
 		../../inc/device_config.hpp \
 		../../inc/agent.hpp \
 		../../inc/logger.hpp \
@@ -426,20 +452,37 @@ server_manager.o: ../../src/server_manager.cpp ../../inc/server_manager.hpp \
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o server_manager.o ../../src/server_manager.cpp
 
 pulse_event_handler.o: ../../src/pulse_event_handler.cpp ../../inc/pulse_event_handler.hpp \
-		../../inc/event.hpp \
-		../../inc/room_handler.hpp
+		../../inc/event_handler_base.hpp \
+		../../inc/event.hpp
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o pulse_event_handler.o ../../src/pulse_event_handler.cpp
 
 room_handler.o: ../../src/room_handler.cpp ../../inc/room_handler.hpp \
 		../../inc/pulse_event_handler.hpp \
-		../../inc/event.hpp
+		../../inc/event_handler_base.hpp \
+		../../inc/event.hpp \
+		../../inc/server_manager.hpp \
+		../../inc/simple_server.hpp \
+		../../inc/device_config.hpp \
+		../../inc/agent.hpp \
+		../../inc/logger.hpp \
+		../../inc/event_from_server.hpp
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o room_handler.o ../../src/room_handler.cpp
+
+event_handler_base.o: ../../src/event_handler_base.cpp ../../inc/event_handler_base.hpp \
+		../../inc/event.hpp
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o event_handler_base.o ../../src/event_handler_base.cpp
 
 moc_simple_server.o: moc_simple_server.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_simple_server.o moc_simple_server.cpp
 
 moc_server_manager.o: moc_server_manager.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_server_manager.o moc_server_manager.cpp
+
+moc_pulse_event_handler.o: moc_pulse_event_handler.cpp 
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_pulse_event_handler.o moc_pulse_event_handler.cpp
+
+moc_event_handler_base.o: moc_event_handler_base.cpp 
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_event_handler_base.o moc_event_handler_base.cpp
 
 ####### Install
 

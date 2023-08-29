@@ -3,14 +3,22 @@
 
 #include <vector>
 #include <memory>
+#include <QMap>
+#include <QQueue>
+#include <QString>
+#include <QDebug>
 
 #include "simple_server.hpp"
 #include "room_handler.hpp"
 #include "device_config.hpp"
 #include "agent.hpp"
 #include "event_from_server.hpp"
+#include "event.hpp"
 
 using namespace dashboard;
+
+class EventHandlerBase;
+class RoomHandler;
 
 class ServerManager : public QObject 
 {
@@ -23,12 +31,16 @@ public:
 private slots:
     void handleReceivedEvent(const Event &event);
 
-private:
-    SimpleServer m_simple_server_instance; //TCP SERVER FOR SENSORS
+public slots:
+    void addAlert(const Event& event);
+    void updateEventToRoomMap(int room_number, const Event& event);
 
-
 private:
-   std::map<int, RoomHandler> m_room_to_handlers_map;
+    SimpleServer m_simple_server_instance;
+
+    QMap<int, std::shared_ptr<RoomHandler>> m_room_to_handlers_map;
+    QMap<int, QQueue<Event>> m_event_to_room_map;
+    QQueue<Event> m_alerts;
 };
 
 #endif // SERVER_MANAGER_HPP
