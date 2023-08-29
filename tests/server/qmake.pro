@@ -5,13 +5,19 @@ QT += core network
 # Headers
 HEADERS += \
     ../../inc/simple_server.hpp \
-    ../../inc/server_manager.hpp
+    ../../inc/event.hpp \
+    ../../inc/server_manager.hpp \
+    ../../inc/pulse_event_handler.hpp \
+    ../../inc/room_handler.hpp
 
 # Sources
 SOURCES += \
     ./main.cpp \
     ../../src/simple_server.cpp \
-    ../../src/server_manager.cpp
+    ../../src/event.cpp \
+    ../../src/server_manager.cpp \
+    ../../src/pulse_event_handler.cpp \
+    ../../src/room_handler.cpp
 
 # Libraries
 LIBS += -L/usr/lib/x86_64-linux-gnu/

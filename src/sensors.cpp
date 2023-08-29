@@ -11,6 +11,6 @@ int PulseSensor::generate_pulse_reading()
 void PulseSensor::monitor_pulse()
 {
     int pulse = generate_pulse_reading();
-    PulseEvent* event = new PulseEvent(QString::number(pulse), m_room);
+    PulseEvent* event = new PulseEvent(QDateTime::currentDateTime(), QString::number(pulse), m_room);
     publish_event(event);
 }

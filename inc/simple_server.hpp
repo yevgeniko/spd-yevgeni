@@ -7,30 +7,28 @@
 #include <QDebug>
 #include <QDataStream>
 #include <QDateTime>
-
-#include <queue>
-
+#include <QScopedPointer>
 #include "event.hpp"
-
 
 class SimpleServer : public QObject {
     Q_OBJECT
 
 public:
     SimpleServer();
-    void connectToClientManager(const QHostAddress &address, quint16 port);
-    void forward_event_to_client();
-    Event get_event();
+    void connect_to_client_manager(const QHostAddress &a_address, quint16 a_port);
+    Event get_event() const;
 
 private slots:
-    void onNewConnection();
-    void onDataReceived();
+    void on_new_connection();
+    void on_data_received();
 
+signals:
+    void eventReceived(const Event &event);
 
 private:
-    QTcpServer *server;
-    QTcpSocket *forwardingSocket;   
-    std::queue<Event> m_events;
+    QScopedPointer<QTcpServer> m_server;
+    QScopedPointer<QTcpSocket> m_forwarding_socket;
+    //Event m_event;
 };
 
 #endif // SIMPLE_SERVER_HPP

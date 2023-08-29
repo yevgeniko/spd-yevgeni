@@ -7,8 +7,10 @@
 class Event
 {
 public:
-    Event(const QString& type, const QString& data, const QString& location);
+    Event(const QDateTime& time, const QString& type, const QString& data, const QString& location);
     virtual ~Event() = default;
+    Event& operator=(const Event& other);
+
 
     // Getters
     QDateTime getTimestamp() const;
@@ -29,7 +31,7 @@ protected:
 class PulseEvent : public Event
 {
 public:
-    PulseEvent(const QString& pulseData, const QString& location);
+    PulseEvent(const QDateTime& time, const QString& pulseData, const QString& location);
 };
 
 #endif // EVENT_HPP

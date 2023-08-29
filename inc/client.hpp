@@ -3,21 +3,28 @@
 
 #include <QString>
 #include <memory>
-#include "client_manager.hpp"
+#include "client_TCP.hpp"
+#include "ui.hpp"
+#include <QObject>
 
 namespace spd {
-class Client {
+
+class Client : public QObject {
+    Q_OBJECT
+
 public:
     Client();
 
     void connect_to_server(const QString &address, quint16 port);
 
+private slots:
+    void handleNewData(QDateTime const& timeStamp, QString const& eventType, QString const& eventData, QString const& eventLocation);
+
 private:
-    ClientManager m_manager;
-    //List User; <-id,name,password
+    ClientTCP m_manager;
+    UI m_ui;
 };
 
 } // namespace spd
 
 #endif //CLIENT_HPP
-

@@ -5,31 +5,30 @@
 #include <memory>
 
 #include "simple_server.hpp"
+#include "room_handler.hpp"
 #include "device_config.hpp"
 #include "agent.hpp"
 #include "event_from_server.hpp"
 
 using namespace dashboard;
 
-class ServerManager : public QObject {
+class ServerManager : public QObject 
+{
     Q_OBJECT
 public:
     ServerManager();
     void start_services();
-    void create_devices();
-    const std::vector<std::unique_ptr<Agent>>& server_devices() const;
-    void connect_to_agent();
+    void EventRouter(const Event &event);
     void send_event(const QString& room_number); 
-
+private slots:
+    void handleReceivedEvent(const Event &event);
 
 private:
     SimpleServer m_simple_server_instance; //TCP SERVER FOR SENSORS
-    // dashboard::AgentManager m_agent_manager;
-    dashboard::DeviceConfig m_device_config;
+
 
 private:
-   std::vector<std::unique_ptr<Agent>> m_agents_pointers;
-
+   std::map<int, RoomHandler> m_room_to_handlers_map;
 };
 
 #endif // SERVER_MANAGER_HPP

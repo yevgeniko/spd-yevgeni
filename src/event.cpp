@@ -1,7 +1,25 @@
 #include "event.hpp"
 
-Event::Event(const QString& type, const QString& data, const QString& location)
-    : timestamp(QDateTime::currentDateTime()), eventType(type), eventData(data), eventLocation(location) {}
+Event::Event(const QDateTime& time, const QString& type, const QString& data, const QString& location)
+    : timestamp(time),
+      eventType(type),
+      eventData(data),
+      eventLocation(location)
+    {}
+
+Event& Event::operator=(const Event& other) 
+{
+    if (this != &other)
+    {
+        timestamp = other.timestamp;
+        eventType = other.eventType;
+        eventData = other.eventData;
+        eventLocation = other.eventLocation;
+        m_event_ID = other.m_event_ID;
+    }
+    return *this;
+}
+
 
 QDateTime Event::getTimestamp() const
 {
@@ -28,6 +46,6 @@ QString Event::getSenderID() const
     return m_event_ID;
 }
 
-PulseEvent::PulseEvent(const QString& pulseData, const QString& location)
-    : Event("Pulse", pulseData, location)
-    {}
+PulseEvent::PulseEvent(const QDateTime& time, const QString& pulseData, const QString& location)
+    : Event(time, "Pulse", pulseData, location)
+{}

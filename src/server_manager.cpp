@@ -1,24 +1,13 @@
 #include "server_manager.hpp"
+#include "room_handler.hpp"
+#include "pulse_event_handler.hpp"
 
 ServerManager::ServerManager()
-:m_device_config("devices.ini")
 {
-    create_devices();
-    m_simple_server_instance.connectToClientManager(QHostAddress::LocalHost, 5555); //random port
+    m_simple_server_instance.connect_to_client_manager(QHostAddress::LocalHost, 5555); //random port
+    connect(&m_simple_server_instance, &SimpleServer::eventReceived, this, &ServerManager::handleReceivedEvent);
 }
 
-void ServerManager::create_devices()
-{
-    for (const DeviceStruct& device_info : m_device_config.m_devices) {
-        std::unique_ptr<Agent> device = std::make_unique<Agent>(device_info.device_ID,
-            device_info.type, device_info.room, device_info.configuration);
-        m_agents_pointers.push_back(std::move(device));
-    }
-}
-
-const std::vector<std::unique_ptr<Agent>>& ServerManager::server_devices() const {
-    return m_agents_pointers;
-}
 
 void ServerManager::start_services()
 {
@@ -27,38 +16,27 @@ void ServerManager::start_services()
 
 }
 
-// void ServerManager::connect_to_agent() 
-// {
-//     Event event = m_simple_server_instance.get_event();
-//     // ProcessResult response;
-//     std::unique_ptr<Agent> agent = nullptr;
-    
-//     for (auto& agent_ptr : m_agents_pointers) {
-//         if (event.getSenderID() == agent_ptr->getAgentID()) {
-//             agent = std::move(agent_ptr); 
-//             break;
-//         }
-//     }
-//     if (agent) {
-//             ProcessResult response = agent->process_event(event);
-//         if (response == ProcessResult::ConfigurationSent){
-//             // m_simple_server_instance.send_configoration(agent->getAgentID(), agent->getConfiguration());
-//             // need to write send_configoration() function in SimpleServerClass
-//         }
-//         else if(response == ProcessResult::RegularMessage){
-//             // ServerEvent server_event = agent->create_agent_event(event);
-//             // m_simple_server_instance.send_to_client(event);
+void ServerManager::handleReceivedEvent(const Event &event)
+{
+    EventRouter(event);
+}
 
-//             // need to write send_to_client() function in SimpleServerClass
-//         }
-//     }
-// }
+void ServerManager::EventRouter(const Event &event)
+{
+    // extraction of room number and sensor type from the event.
+    int room_number = event.getEventLocation().toInt();
+    QString sensor_type = event.getEventType();
 
-// void ServerManager::send_event(const QString& room_number) 
-// {
-//     if (roomEventQueues.find(room_number) != roomEventQueues.end() && !roomEventQueues[room_number].empty()) {
-//         Event dequeued_Event = roomEventQueues[room_number].front();
-//         roomEventQueues[room_number].pop();
-//         m_simple_server_instance.forward_event_to_client(dequeued_Event);
-//     }
-// }
+    RoomHandler &handlers = m_room_to_handlers_map[room_number];
+
+    if (sensor_type == "Pulse")
+    {
+        handlers.pulseHandler->handleEvent(event);
+    }
+    // else if (sensorType == "BloodPressure")
+    // {
+    //     handlers.pulseHandler->handleEvent(event);
+    // }
+
+    //other sensor types as needed.
+}

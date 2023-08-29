@@ -20,9 +20,9 @@ public:
     DeviceManager();
     ~DeviceManager();
 
-    void receive_event(Event* a_event);
-    void connect_to_server(const QString &a_address, quint16 a_port);
-    void send_event_to_server(Event* a_event);
+    void receive_event(Event* a_event); // Process and event 
+    void connect_to_server(const QString &a_address, quint16 a_port); // connect to server 
+    void send_event_to_server(Event* a_event); // send event to server
 
 private slots:
     // void on_connected();
