@@ -7,7 +7,8 @@ HEADERS += \
     ../../inc/client_TCP.hpp \
     ../../inc/client.hpp \
     ../../inc/ui.hpp \
-    ../../inc/ui_main_window.hpp
+    ../../inc/ui_main_window.hpp \
+    ../../inc/ui_room_bt.hpp
 
 # Sources
 SOURCES += \
@@ -15,7 +16,8 @@ SOURCES += \
     ../../src/client_TCP.cpp \
     ../../src/client.cpp \
     ../../src/ui.cpp \
-    ../../src/ui_main_window.cpp
+    ../../src/ui_main_window.cpp \
+    ../../src/ui_room_bt.cpp
 
 # Libraries
 LIBS += -L/usr/lib/x86_64-linux-gnu/
