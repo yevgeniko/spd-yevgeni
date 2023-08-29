@@ -8,7 +8,8 @@ HEADERS += \
     ../../inc/event.hpp \
     ../../inc/server_manager.hpp \
     ../../inc/pulse_event_handler.hpp \
-    ../../inc/room_handler.hpp
+    ../../inc/room_handler.hpp \
+    ../../inc/event_handler_base.hpp
 
 # Sources
 SOURCES += \
@@ -17,7 +18,8 @@ SOURCES += \
     ../../src/event.cpp \
     ../../src/server_manager.cpp \
     ../../src/pulse_event_handler.cpp \
-    ../../src/room_handler.cpp
+    ../../src/room_handler.cpp \
+    ../../src/event_handler_base.cpp
 
 # Libraries
 LIBS += -L/usr/lib/x86_64-linux-gnu/
