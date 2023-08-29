@@ -8,6 +8,8 @@
 #include <QDataStream>
 #include <QDateTime>
 
+#include <queue>
+
 #include "event.hpp"
 
 
@@ -17,7 +19,8 @@ class SimpleServer : public QObject {
 public:
     SimpleServer();
     void connectToClientManager(const QHostAddress &address, quint16 port);
-    Event get_event() const;
+    void forward_event_to_client();
+    Event get_event();
 
 private slots:
     void onNewConnection();
@@ -26,9 +29,8 @@ private slots:
 
 private:
     QTcpServer *server;
-    QTcpSocket *forwardingSocket;
-    Event m_event;
-
+    QTcpSocket *forwardingSocket;   
+    std::queue<Event> m_events;
 };
 
 #endif // SIMPLE_SERVER_HPP

@@ -27,29 +27,38 @@ void ServerManager::start_services()
 
 }
 
-void ServerManager::connect_to_agent() 
-{
-    Event event = m_simple_server_instance.get_event();
-    // ProcessResult response;
-    std::unique_ptr<Agent> agent = nullptr;
+// void ServerManager::connect_to_agent() 
+// {
+//     Event event = m_simple_server_instance.get_event();
+//     // ProcessResult response;
+//     std::unique_ptr<Agent> agent = nullptr;
     
-    for (auto& agent_ptr : m_agents_pointers) {
-        if (event.getSenderID() == agent_ptr->getAgentID()) {
-            agent = std::move(agent_ptr); 
-            break;
-        }
-    }
-    if (agent) {
-            ProcessResult response = agent->process_event(event);
-        if (response == ProcessResult::ConfigurationSent){
-            m_simple_server_instance.send_configoration(agent->getAgentID(), agent->getConfiguration());
-            // need to write send_configoration() function in SimpleServerClass
-        }
-        else if(response == ProcessResult::RegularMessage){
-            ServerEvent server_event = agent->create_agent_event(event);
-            m_simple_server_instance.send_to_client(server_event);
+//     for (auto& agent_ptr : m_agents_pointers) {
+//         if (event.getSenderID() == agent_ptr->getAgentID()) {
+//             agent = std::move(agent_ptr); 
+//             break;
+//         }
+//     }
+//     if (agent) {
+//             ProcessResult response = agent->process_event(event);
+//         if (response == ProcessResult::ConfigurationSent){
+//             // m_simple_server_instance.send_configoration(agent->getAgentID(), agent->getConfiguration());
+//             // need to write send_configoration() function in SimpleServerClass
+//         }
+//         else if(response == ProcessResult::RegularMessage){
+//             // ServerEvent server_event = agent->create_agent_event(event);
+//             // m_simple_server_instance.send_to_client(event);
 
-            // need to write send_to_client() function in SimpleServerClass
-        }
-    }
-}
+//             // need to write send_to_client() function in SimpleServerClass
+//         }
+//     }
+// }
+
+// void ServerManager::send_event(const QString& room_number) 
+// {
+//     if (roomEventQueues.find(room_number) != roomEventQueues.end() && !roomEventQueues[room_number].empty()) {
+//         Event dequeued_Event = roomEventQueues[room_number].front();
+//         roomEventQueues[room_number].pop();
+//         m_simple_server_instance.forward_event_to_client(dequeued_Event);
+//     }
+// }

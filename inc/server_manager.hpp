@@ -19,7 +19,7 @@ public:
     void create_devices();
     const std::vector<std::unique_ptr<Agent>>& server_devices() const;
     void connect_to_agent();
-
+    void send_event(const QString& room_number); 
 
 
 private:
@@ -29,6 +29,7 @@ private:
 
 private:
    std::vector<std::unique_ptr<Agent>> m_agents_pointers;
+
 };
 
 #endif // SERVER_MANAGER_HPP

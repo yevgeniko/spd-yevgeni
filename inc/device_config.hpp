@@ -8,6 +8,8 @@
 #include <QDebug>
 #include <QCoreApplication>
 
+#include "server_manager.hpp"
+
 
 namespace dashboard {
 
@@ -23,13 +25,14 @@ public:
 
     DeviceConfig(const QString& a_config_file);
 
-    friend class AgentManager;
 
 private:
     void read_from_file(const QString& a_config_file);   
 private:
 
     std::vector<DeviceStruct> m_devices;
+
+    friend ServerManager;
 };
 
 } // namespace dashboard
