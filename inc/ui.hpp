@@ -31,6 +31,7 @@ private:
 
 private:
     QMainWindow m_window;
+    // QList<QSharedPointer<QTextBrowser>> m_rooms;
     UIMainWindow m_main_window;
     QList<QPushButton*> m_rooms;
 };
