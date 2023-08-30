@@ -26,15 +26,17 @@ UIEventWindow::~UIEventWindow()
 
 void UIEventWindow::add_event(Event const &a_event)
 {
-    m_list_data.append(new UIEventData(this, "123", "name"
-                        , a_event.getTimestamp().toString("hh:mm:ss")
-                        , a_event.getEventType()
+    m_list_data[0]->change_data("123", "name", a_event.getTimestamp().toString("hh:mm:ss") , a_event.getEventType()
                         , a_event.getEventData()
-                        , a_event.getEventLocation()));
-    for(auto &data: m_list_data) {
-        m_vlayout->addWidget(data);
-    }
-    m_list_data.pop_back();
+                        , a_event.getEventLocation());
+    // m_list_data.append(new UIEventData(this, "123", "name"
+    //                     , a_event.getTimestamp().toString("hh:mm:ss")
+    //                     , a_event.getEventType()
+    //                     , a_event.getEventData()
+    //                     , a_event.getEventLocation()));
+    // for(auto &data: m_list_data) {
+    //     m_vlayout->addWidget(data);
+    // }
 }
 
 void UIEventWindow::init_window()
@@ -45,6 +47,10 @@ void UIEventWindow::init_window()
     connect(m_back_bt, &QPushButton::clicked, [this]() {
         emit on_button_click();
     });
+    m_list_data.append(new UIEventData());
+    for(auto &data: m_list_data) {
+        m_vlayout->addWidget(data);
+    }
     
 }
 

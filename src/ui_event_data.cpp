@@ -29,9 +29,14 @@ spd::UIEventData::~UIEventData()
     delete m_vlayout;
 }
 
-void UIEventData::change_data(QString const &a_data)
+void UIEventData::change_data(QString const& a_id, QString const& a_name, QString const& a_timet, QString const& a_type, QString const& a_data, QString const& a_location)
 {
-    m_data->setText(a_data);
+    m_id->setText("ID: " + a_id);
+    m_name->setText("Name: " + a_name);
+    m_time_stamp->setText("Timestamp: " + a_timet);
+    m_type->setText("Event Type: " + a_type);
+    m_data->setText("Event Data: " + a_data);
+    m_location->setText("Event Location: " + a_location);
 }
 
 void spd::UIEventData::init_event(QString const &a_id, QString const &a_name, QString const &a_timet, QString const &a_type, QString const &a_data, QString const &a_location)

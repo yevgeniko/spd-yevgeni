@@ -51,6 +51,7 @@ void UI::add_event(Event const &a_event)
 
 void UI::switch_to_main_screen() 
 {
+    emit set_room_num(0);
     m_stacked_widget->setCurrentIndex(0);
 }
 
