@@ -34,6 +34,7 @@ void UIEventWindow::add_event(Event const &a_event)
     for(auto &data: m_list_data) {
         m_vlayout->addWidget(data);
     }
+    m_list_data.pop_back();
 }
 
 void UIEventWindow::init_window()

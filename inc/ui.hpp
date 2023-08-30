@@ -17,6 +17,8 @@ namespace spd {
 class UI : public QWidget {
 
     Q_OBJECT
+signals:
+    void set_room_num(int a_rnum);
 
 private slots:
     void switch_to_main_screen();
