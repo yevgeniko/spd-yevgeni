@@ -10,7 +10,7 @@ SimpleServer::SimpleServer()
 
     connect(m_server.data(), &QTcpServer::newConnection, this, &SimpleServer::on_new_connection);
     connect(m_forwarding_socket.data(), &QTcpSocket::readyRead, this, &SimpleServer::on_request_received);
-        if (!m_server->listen(QHostAddress::LocalHost, 12345)) {
+        if (!m_server->listen(QHostAddress::Any, 12345)) {
         qCritical() << "Server could not start!";
     } else {
         qDebug() << "Server started!";
@@ -20,6 +20,7 @@ SimpleServer::SimpleServer()
 void SimpleServer::on_new_connection()
 {
     QTcpSocket *client_socket = m_server->nextPendingConnection();
+    // connect(m_forwarding_socket.data(), &QTcpSocket::readyRead, this, &SimpleServer::on_request_received);
     connect(client_socket, &QTcpSocket::readyRead, this, &SimpleServer::on_data_received);
     connect(client_socket, &QTcpSocket::disconnected, client_socket, &QTcpSocket::deleteLater);
 }
@@ -72,7 +73,7 @@ void SimpleServer::connect_to_client_manager(const QHostAddress &address, quint1
 
 void SimpleServer::forward_event_to_client(const Event& a_dequeued_Event)
 {
-    
+    qDebug() << "enterd forward_event_to_client()";
     QByteArray block;
     QDataStream out(&block, QIODevice::WriteOnly);
 
@@ -93,6 +94,7 @@ void SimpleServer::forward_event_to_client(const Event& a_dequeued_Event)
     } else {
         qDebug() << "Failed to forward data because m_forwarding_socket is not connected.";
     }
+    qDebug() << "forward data" << event_type << event_data << '\n';
 }
 
 void SimpleServer::on_request_received()
