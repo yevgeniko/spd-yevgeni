@@ -120,6 +120,13 @@ main
 moc_device_manager.cpp
 moc_predefs.h
 moc_simple_server.cpp
+moc_client_TCP.cpp
+moc_client.cpp
+moc_ui_room_bt.cpp
+moc_ui.cpp
+moc_ui_event_window.cpp
+moc_ui_main_window.cpp
+moc_server_manager.cpp
 .qmake.stash
 qmake
 

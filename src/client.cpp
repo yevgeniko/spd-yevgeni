@@ -8,6 +8,7 @@ namespace spd {
 Client::Client()
 {
     connect(&m_manager, &ClientTCP::newDataReceived, this, &Client::handleNewData);
+    connect(&m_ui, &UI::set_room_num, this, &Client::update_room_num);
     QDateTime currentDateTime = QDateTime::currentDateTime();
     Event e(currentDateTime, "a_eventType", "a_eventData", "a_eventLocation");
     Event e1(currentDateTime, "a_eventType", "a_eventData", "a_eventLocation");
@@ -40,10 +41,16 @@ void Client::create_requests()
 {
         Request request;
         request.request_type = "Send Data";
-        request.room_number = 1;
+        request.room_number = m_roomn;
 
         m_manager.send_request(request);
         qDebug() << "created request\n";    
+}
+
+void Client::update_room_num(int num)
+{
+    qDebug() << "1\n";
+    m_roomn = num;
 }
 
 // connect(&clientManagerInstance, &ClientManager::newDataReceived, this, [&](QDateTime timeStamp, QString eventType, QString eventData, QString eventLocation) {
