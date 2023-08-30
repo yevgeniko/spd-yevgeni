@@ -1,21 +1,30 @@
 #include "client.hpp"
 
+#include "event.hpp"
+#include <QDateTime>
+
 namespace spd {
 
 Client::Client()
 {
     connect(&m_manager, &ClientTCP::newDataReceived, this, &Client::handleNewData);
+    QDateTime currentDateTime = QDateTime::currentDateTime();
+    Event e(currentDateTime, "a_eventType", "a_eventData", "a_eventLocation");
+    Event e1(currentDateTime, "a_eventType", "a_eventData", "a_eventLocation");
+    m_ui.add_event(e);
+    m_ui.add_event(e1);
 }
 
-void Client::connect_to_server(const QString &address, quint16 port) 
+void Client::connect_to_server(const QString &a_address, quint16 a_port) 
 {
-    m_manager.startListening(address, port);
+    m_manager.startListening(a_address, a_port);
     interval_requests();
 }
 
-void Client::handleNewData(QDateTime const& timeStamp, QString const& eventType, QString const& eventData, QString const& eventLocation) 
+void Client::handleNewData(QDateTime const& a_timeStamp, QString const& a_eventType, QString const& a_eventData, QString const& a_eventLocation) 
 {
-    m_ui.show_event(timeStamp, eventType, eventData, eventLocation);
+    Event e(a_timeStamp, a_eventType, a_eventData, a_eventLocation);
+    m_ui.add_event(e);
 }
 
 
