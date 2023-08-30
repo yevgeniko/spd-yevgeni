@@ -27,6 +27,7 @@ void ServerManager::handleReceivedEvent(const Event &event)
 void ServerManager::EventRouter(const Event &event)
 {
     int room_number = event.getEventLocation().toInt();
+    // int room_number = 1;
     QString sensor_type = event.getEventType();
 
     if (!m_room_to_handlers_map.contains(room_number))
@@ -72,11 +73,12 @@ void ServerManager::send_event(int room_number)
         m_simple_server_instance.forward_event_to_client(dequeued_Event);
     }else{
         qDebug() << " sent event function: not found. sending other one.  ";
-        QString eventType = "Temperature";  // Event type, e.g., Temperature
-        QString eventData = "25.5";  // Event data, e.g., temperature value
-        QString eventLocation = "Living Room";  // Location where the event occurred
+        
+        QString eventType = "ERROR";  
+        QString eventData = "0"; 
+        QString eventLocation = "NoWhere";  
 
-        QDateTime timestamp = QDateTime::currentDateTime();  // Current date and time
+        QDateTime timestamp = QDateTime::currentDateTime();  
 
         Event newEvent(timestamp, eventType, eventData, eventLocation);
 

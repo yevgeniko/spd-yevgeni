@@ -12,7 +12,7 @@ int main(int argc, char *argv[])
 
     qDebug() << "Starting Sensor...";
 
-    PulseSensor sensor("sensorID1", "roomA", "log1", "config1");
+    PulseSensor sensor("sensorID1", "1", "log1", "config1");
     
     sensor.get_manager()->connect_to_server("127.0.0.1", 12345);
 
