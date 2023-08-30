@@ -3,9 +3,11 @@
 
 #include <qmainwindow.h>
 #include <memory>
-#include <QTextBrowser>
+#include <QPushButton>
 #include <QDateTime>
 #include <QList>
+#include <QDebug>
+#include "ui_main_window.hpp"
 
 namespace spd {
     
@@ -13,16 +15,25 @@ class UI : public QMainWindow {
 
 Q_OBJECT
 
+private slots:
+    void onButtonClicked();
+
 public:
     UI();
 
     void show_event(QDateTime const& a_timeStamp, QString const& a_eventType, QString const& a_eventData, QString const& a_eventLocation);
+    void resizeEvent(QResizeEvent *event) override;
+
 private:
-    void initwindow();
+    void init_window();
+    void init_room();
+
 
 private:
     QMainWindow m_window;
-    QList<QSharedPointer<QTextBrowser>> m_rooms;
+    // QList<QSharedPointer<QTextBrowser>> m_rooms;
+    UIMainWindow m_main_window;
+    QList<QPushButton*> m_rooms;
 };
     
 } // namespace spd
