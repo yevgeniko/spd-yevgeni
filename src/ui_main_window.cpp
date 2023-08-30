@@ -1,36 +1,41 @@
 #include "ui_main_window.hpp"
 #include "const_and_enums.hpp"
 #include <QPixmap>
+#include <QDebug>
 #include "const_and_enums.hpp"
 
 namespace spd {
     
-spd::UIMainWindow::UIMainWindow(QMainWindow &a_main_win)
-: m_window{initwindow(a_main_win)}
+spd::UIMainWindow::UIMainWindow(QWidget* parent)
+: QWidget(parent)
 {
+    resize(parent->size());
+    init_window();
+    init_rooms();
 }
 
-void UIMainWindow::resizeEvent(QMainWindow &a_main_win)
+void UIMainWindow::init_window()
 {
-    backgroundImage = backgroundImage.scaled(a_main_win.size(), Qt::IgnoreAspectRatio, Qt::SmoothTransformation);  
     QPalette palette;
+    QPixmap backgroundImage(WIN_BACKGROUND_PATH);
+        
+    backgroundImage = backgroundImage.scaled(this->size(), Qt::IgnoreAspectRatio, Qt::SmoothTransformation);  
     palette.setBrush(QPalette::Background, backgroundImage);
     setAutoFillBackground(true);
     setPalette(palette);
 }
 
-QWidget *UIMainWindow::initwindow(QMainWindow &a_main_win)
+void UIMainWindow::init_rooms()
 {
-    QWidget* mainwindow (new QWidget(&a_main_win));
-    mainwindow->resize(WINDOW_WIDTH, WINDOW_HEIGHT);
-    QPixmap backgroundImage(WIN_BACKGROUND_PATH); // Replace with your image path
-        
-    QPalette palette;
-    backgroundImage = backgroundImage.scaled(mainwindow->size(), Qt::IgnoreAspectRatio, Qt::SmoothTransformation);  
-    palette.setBrush(QPalette::Background, backgroundImage);
-    mainwindow->setAutoFillBackground(true);
-    mainwindow->setPalette(palette);
-    return mainwindow;
+    m_room = new UIRoomBt(this);
+    m_room->setText("Room 1");
+    m_room->setGeometry(360, 45, 80, 80);
+    connect(m_room, SIGNAL(button_clicked()), this, SLOT(on_button_click()));
+}
+
+void UIMainWindow::on_button_click()
+{
+    emit event_screen();
 }
 
 } // namespace spd
