@@ -2,36 +2,43 @@
 #define UI_HPP
 
 #include <qmainwindow.h>
-#include <memory>
 #include <QPushButton>
 #include <QDateTime>
 #include <QList>
 #include <QDebug>
+#include <QStackedWidget>
+#include <QWidget>
 #include "ui_main_window.hpp"
+#include "ui_events_window.hpp"
+#include "event.hpp"
 
 namespace spd {
     
-class UI : public QMainWindow {
+class UI : public QWidget {
 
-Q_OBJECT
+    Q_OBJECT
 
 private slots:
-    void onButtonClicked();
+    void switch_to_main_screen();
+    void switch_to_event_screen();
 
 public:
-    UI();
+    UI(QWidget* parent = nullptr);
+    ~UI();
 
     void show_event(QDateTime const& a_timeStamp, QString const& a_eventType, QString const& a_eventData, QString const& a_eventLocation);
-    void resizeEvent(QResizeEvent *event) override;
+    void add_event(Event const& a_event);
 
 private:
+    void init_screens();
     void init_window();
     void init_room();
 
 
 private:
-    QMainWindow m_window;
-    UIMainWindow m_main_window;
+    QStackedWidget* m_stacked_widget;
+    UIMainWindow* m_main_window;
+    UIEventWindow* m_event_window;
     QList<QPushButton*> m_rooms;
 };
     
