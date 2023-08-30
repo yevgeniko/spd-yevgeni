@@ -8,7 +8,10 @@ HEADERS += \
     ../../inc/client.hpp \
     ../../inc/ui.hpp \
     ../../inc/ui_main_window.hpp \
-    ../../inc/ui_room_bt.hpp
+    ../../inc/ui_room_bt.hpp \
+    ../../inc/ui_events_window.hpp \
+    ../../inc/ui_event_data.hpp \
+    ../../inc/event.hpp
 
 # Sources
 SOURCES += \
@@ -17,7 +20,10 @@ SOURCES += \
     ../../src/client.cpp \
     ../../src/ui.cpp \
     ../../src/ui_main_window.cpp \
-    ../../src/ui_room_bt.cpp
+    ../../src/ui_room_bt.cpp \
+    ../../src/ui_events_window.cpp \
+    ../../src/ui_event_data.cpp \
+    ../../src/event.cpp
 
 # Libraries
 LIBS += -L/usr/lib/x86_64-linux-gnu/
