@@ -27,6 +27,7 @@ void ServerManager::handleReceivedEvent(const Event &event)
 void ServerManager::EventRouter(const Event &event)
 {
     int room_number = event.getEventLocation().toInt();
+    // int room_number = 1;
     QString sensor_type = event.getEventType();
 
     if (!m_room_to_handlers_map.contains(room_number))
@@ -68,7 +69,20 @@ void ServerManager::send_event(int room_number)
 {
     if (m_event_to_room_map.contains(room_number) && !m_event_to_room_map.value(room_number).empty()) {
         Event dequeued_Event = m_event_to_room_map[room_number].dequeue();
+        qDebug() << " sent event" << dequeued_Event.getEventType() << dequeued_Event.getEventType() << '\n'; 
         m_simple_server_instance.forward_event_to_client(dequeued_Event);
+    }else{
+        qDebug() << " sent event function: not found. sending other one.  ";
+        
+        QString eventType = "ERROR";  
+        QString eventData = "0"; 
+        QString eventLocation = "NoWhere";  
+
+        QDateTime timestamp = QDateTime::currentDateTime();  
+
+        Event newEvent(timestamp, eventType, eventData, eventLocation);
+
+        m_simple_server_instance.forward_event_to_client(newEvent);
     }
 }
 
