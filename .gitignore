@@ -119,9 +119,9 @@ main
 # Ignore qt
 moc_device_manager.cpp
 moc_predefs.h
+moc_simple_server.cpp
+.qmake.stash
 qmake
 
-.qmake.stash
-moc_simple_server.cpp
 Makefile
 

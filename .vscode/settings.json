@@ -47,7 +47,13 @@
         "sstream": "cpp",
         "stdexcept": "cpp",
         "streambuf": "cpp",
-        "typeinfo": "cpp"
+        "typeinfo": "cpp",
+        "qdebug": "cpp",
+        "qtextbrowser": "cpp",
+        "qresizeevent": "cpp",
+        "qwidget": "cpp",
+        "qstackedwidget": "cpp",
+        "qdatetime": "cpp"
     },
     "C_Cpp.errorSquiggles": "enabled"
 }

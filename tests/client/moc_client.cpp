@@ -22,7 +22,7 @@ QT_WARNING_PUSH
 QT_WARNING_DISABLE_DEPRECATED
 struct qt_meta_stringdata_spd__Client_t {
     QByteArrayData data[7];
-    char stringdata0[71];
+    char stringdata0[79];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -34,14 +34,14 @@ static const qt_meta_stringdata_spd__Client_t qt_meta_stringdata_spd__Client = {
 QT_MOC_LITERAL(0, 0, 11), // "spd::Client"
 QT_MOC_LITERAL(1, 12, 13), // "handleNewData"
 QT_MOC_LITERAL(2, 26, 0), // ""
-QT_MOC_LITERAL(3, 27, 9), // "timeStamp"
-QT_MOC_LITERAL(4, 37, 9), // "eventType"
-QT_MOC_LITERAL(5, 47, 9), // "eventData"
-QT_MOC_LITERAL(6, 57, 13) // "eventLocation"
+QT_MOC_LITERAL(3, 27, 11), // "a_timeStamp"
+QT_MOC_LITERAL(4, 39, 11), // "a_eventType"
+QT_MOC_LITERAL(5, 51, 11), // "a_eventData"
+QT_MOC_LITERAL(6, 63, 15) // "a_eventLocation"
 
     },
-    "spd::Client\0handleNewData\0\0timeStamp\0"
-    "eventType\0eventData\0eventLocation"
+    "spd::Client\0handleNewData\0\0a_timeStamp\0"
+    "a_eventType\0a_eventData\0a_eventLocation"
 };
 #undef QT_MOC_LITERAL
 
