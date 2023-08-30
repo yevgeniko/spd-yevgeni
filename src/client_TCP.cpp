@@ -88,6 +88,8 @@ void ClientTCP::send_request(const Request& a_request)
     quint16 blockSize = data.size();
     m_socket->write(reinterpret_cast<const char*>(&blockSize), sizeof(quint16));
     m_socket->write(data);
+    qDebug() << " request is sent \n";    
+
 }
 
 

@@ -22,7 +22,7 @@ private:
 
 private:
     QMainWindow m_window;
-    QList<QScopedPointer<QTextBrowser>> m_rooms;
+    QList<QSharedPointer<QTextBrowser>> m_rooms;
 };
     
 } // namespace spd

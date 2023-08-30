@@ -29,15 +29,12 @@ void Client::interval_requests()
 
 void Client::create_requests()
 {
-    while (true) {
         Request request;
         request.request_type = "Send Data";
         request.room_number = 1;
 
         m_manager.send_request(request);
-
-        QThread::msleep(1000); 
-    }
+        qDebug() << "created request\n";    
 }
 
 // connect(&clientManagerInstance, &ClientManager::newDataReceived, this, [&](QDateTime timeStamp, QString eventType, QString eventData, QString eventLocation) {
