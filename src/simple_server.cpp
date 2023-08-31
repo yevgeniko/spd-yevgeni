@@ -81,10 +81,11 @@ void SimpleServer::forward_event_to_client(const Event& a_dequeued_Event)
     QString event_type = a_dequeued_Event.getEventType(); 
     QString event_data = a_dequeued_Event.getEventData();
     QString event_location = a_dequeued_Event.getEventLocation();
+    QString event_ID = a_dequeued_Event.get_event_ID();
 
 
     out << (quint16)0;
-    out << time_stamp << event_type << event_data << event_location;
+    out << time_stamp << event_type << event_data << event_location << event_ID;
 
     out.device()->seek(0);
     out << (quint16)(block.size() - sizeof(quint16));

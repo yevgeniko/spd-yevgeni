@@ -86,6 +86,10 @@ void ServerManager::send_event(int room_number)
             m_simple_server_instance.forward_event_to_client(newEvent);
         }
     }
+    if (!m_alerts.isEmpty()) {
+        Event alert_event = m_alerts.dequeue();
+        m_simple_server_instance.forward_event_to_client(alert_event);
+    }
 }
 
 
