@@ -6,6 +6,7 @@ QT += core network
 HEADERS += \
     ../../inc/simple_server.hpp \
     ../../inc/event.hpp \
+    ../../inc/logger.hpp \
     ../../inc/server_manager.hpp \
     ../../inc/pulse_event_handler.hpp \
     ../../inc/room_handler.hpp \
@@ -19,6 +20,7 @@ SOURCES += \
     ../../src/server_manager.cpp \
     ../../src/pulse_event_handler.cpp \
     ../../src/room_handler.cpp \
+    ../../src/logger.cpp \
     ../../src/event_handler_base.cpp
 
 # Libraries
