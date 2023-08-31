@@ -2,6 +2,7 @@
 #include "const_and_enums.hpp"
 #include <QPixmap>
 #include <QDebug>
+#include <QString>
 #include "const_and_enums.hpp"
 
 namespace spd {
@@ -12,6 +13,13 @@ spd::UIMainWindow::UIMainWindow(QWidget* parent)
     resize(parent->size());
     init_window();
     init_rooms();
+}
+
+UIMainWindow::~UIMainWindow()
+{
+    for(auto &room: m_rooms) {
+        delete room;
+    }
 }
 
 void UIMainWindow::init_window()
@@ -27,15 +35,21 @@ void UIMainWindow::init_window()
 
 void UIMainWindow::init_rooms()
 {
-    m_room = new UIRoomBt(this);
-    m_room->setText("Room 1");
-    m_room->setGeometry(360, 45, 80, 80);
-    connect(m_room, SIGNAL(button_clicked()), this, SLOT(on_button_click()));
+    int distance = 100;
+    for(size_t index = 0; index < NUM_OF_ROOMS; ++index) {
+        m_rooms[index] = new UIRoomBt(this, index + 1);
+        m_rooms[index]->setText(("room " + QString::number(index + 1)));
+        m_rooms[index]->setGeometry(360 + (index*distance), 45, 80, 80);
+        connect(m_rooms[index], &UIRoomBt::button_clicked, this, &UIMainWindow::on_button_click);
+        if(index == 1) {
+            distance = 105;
+        }
+    }
 }
 
-void UIMainWindow::on_button_click()
+void UIMainWindow::on_button_click(size_t const& a_roomn)
 {
-    emit event_screen();
+    emit event_screen_main(a_roomn);
 }
 
 } // namespace spd

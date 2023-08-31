@@ -5,23 +5,26 @@
 #include <QMainWindow>
 #include <QSharedPointer>
 #include <QPixmap>
+#include <QList>
 #include "ui_room_bt.hpp"
 
 namespace spd {
 class UIMainWindow : public QWidget {
     Q_OBJECT
 signals:
-    void event_screen();
+    void event_screen_main(size_t const& a_roomn);
 private slots:
-    void on_button_click();
+    void on_button_click(size_t const& a_roomn);
 
 public:
     UIMainWindow(QWidget* parent = nullptr);
+    ~UIMainWindow();
+
 private:
    void init_window();
    void init_rooms();
 private:
-    UIRoomBt *m_room;
+    QList<UIRoomBt*> m_rooms;
 };
     
 } // namespace spd

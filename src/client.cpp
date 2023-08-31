@@ -46,6 +46,7 @@ void Client::create_requests()
 
 void Client::update_room_num(int num)
 {
+    qDebug() << num << "\n";
     m_roomn = num;
 }
 
