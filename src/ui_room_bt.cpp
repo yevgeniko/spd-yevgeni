@@ -9,6 +9,14 @@ spd::UIRoomBt::UIRoomBt(QWidget *parent)
     connect(this, &QPushButton::clicked, this, &UIRoomBt::emit_button_clicked);
 }
 
+UIRoomBt::UIRoomBt(QWidget *parent, size_t const &a_roomn)
+: QPushButton(parent)
+, m_room_num(a_roomn)
+{
+    setAttribute(Qt::WA_TranslucentBackground);
+    connect(this, &QPushButton::clicked, this, &UIRoomBt::emit_button_clicked);
+}
+
 void spd::UIRoomBt::paintEvent(QPaintEvent *event)
 {
     QPainter painter(this);
@@ -36,7 +44,7 @@ void spd::UIRoomBt::leaveEvent(QEvent *event)
 
 void spd::UIRoomBt::emit_button_clicked()
 {    
-    emit button_clicked();   
+    emit button_clicked(m_room_num);   
 }
 
 } // namespace spd
