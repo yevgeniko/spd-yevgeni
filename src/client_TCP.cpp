@@ -61,13 +61,16 @@ void ClientTCP::onDataReceived()
     QString eventType;
     QString eventData;
     QString eventLocation;
-    in >> timeStamp >> eventType >> eventData >> eventLocation;
+    QString event_ID;
+    in >> timeStamp >> eventType >> eventData >> eventLocation >> event_ID;
 
     qDebug() << "Received Event in CLIENT:";
     qDebug() << "Timestamp:" << timeStamp;
     qDebug() << "Event Type:" << eventType;
     qDebug() << "Event Data:" << eventData;
     qDebug() << "Event Location:" << eventLocation;
+    qDebug() << "Event ID:" << event_ID;
+
 
     emit newDataReceived(timeStamp, eventType, eventData, eventLocation);
 }
