@@ -10,10 +10,7 @@ Client::Client()
     connect(&m_manager, &ClientTCP::newDataReceived, this, &Client::handleNewData);
     connect(&m_ui, &UI::set_room_num, this, &Client::update_room_num);
     QDateTime currentDateTime = QDateTime::currentDateTime();
-    Event e(currentDateTime, "a_eventType", "a_eventData", "a_eventLocation");
-    Event e1(currentDateTime, "a_eventType", "a_eventData", "a_eventLocation");
-    m_ui.add_event(e);
-    m_ui.add_event(e1);
+    m_roomn = 0;
 }
 
 void Client::connect_to_server(const QString &a_address, quint16 a_port) 
@@ -49,7 +46,6 @@ void Client::create_requests()
 
 void Client::update_room_num(int num)
 {
-    qDebug() << "1\n";
     m_roomn = num;
 }
 

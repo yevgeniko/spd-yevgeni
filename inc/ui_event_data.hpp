@@ -15,7 +15,7 @@ public:
     UIEventData(QWidget* parent, QString const& a_id, QString const& a_name, QString const& a_timet, QString const& a_type, QString const& a_data, QString const& a_location);
     ~UIEventData();
 
-    void change_data(QString const& a_data);
+    void change_data(QString const& a_id, QString const& a_name, QString const& a_timet, QString const& a_type, QString const& a_data, QString const& a_location);
     
 private:
     void init_event(QString const& a_id, QString const& a_name, QString const& a_timet, QString const& a_type, QString const& a_data, QString const& a_location);
