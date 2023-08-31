@@ -2,12 +2,13 @@
 #include <QDebug>
 
 PulseEventHandler::PulseEventHandler(qint16 lower_limit, qint16 higher_limit)
-    : EventHandlerBase(lower_limit, higher_limit) {}
+    : EventHandlerBase(lower_limit, higher_limit, "Pulse_Sensor") {}
 
 void PulseEventHandler::handleEvent(Event event)
 {
     qDebug() << "IN Pulse Event Handler with data:" << event.getEventData();
     int room_number = event.getEventLocation().toInt();
+    m_logger.log_event(event.getEventType(), event.getEventData(), event.getEventLocation());
     // int room_number = 1;
 
     if (event.getEventData().toInt() < m_lower_limit || event.getEventData().toInt() > m_higher_limit) {

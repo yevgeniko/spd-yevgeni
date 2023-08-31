@@ -1,0 +1,23 @@
+[Thu Aug 31 13:29:43 2023] Room: 1Pulse: 115
+[Thu Aug 31 14:27:42 2023] Room: 1  Pulse: 110
+[Thu Aug 31 14:27:43 2023] Room: 1  Pulse: 84
+[Thu Aug 31 14:27:44 2023] Room: 1  Pulse: 85
+[Thu Aug 31 14:27:45 2023] Room: 1  Pulse: 109
+[Thu Aug 31 14:27:46 2023] Room: 1  Pulse: 106
+[Thu Aug 31 14:27:47 2023] Room: 1  Pulse: 105
+[Thu Aug 31 14:27:48 2023] Room: 1  Pulse: 118
+[Thu Aug 31 14:27:49 2023] Room: 1  Pulse: 90
+[Thu Aug 31 14:27:50 2023] Room: 1  Pulse: 102
+[Thu Aug 31 14:27:51 2023] Room: 1  Pulse: 119
+[Thu Aug 31 14:27:52 2023] Room: 1  Pulse: 94
+[Thu Aug 31 14:27:53 2023] Room: 1  Pulse: 95
+[Thu Aug 31 14:27:54 2023] Room: 1  Pulse: 112
+[Thu Aug 31 14:27:55 2023] Room: 1  Pulse: 103
+[Thu Aug 31 14:27:56 2023] Room: 1  Pulse: 81
+[Thu Aug 31 14:27:57 2023] Room: 1  Pulse: 108
+[Thu Aug 31 14:27:58 2023] Room: 1  Pulse: 100
+[Thu Aug 31 14:27:59 2023] Room: 1  Pulse: 112
+[Thu Aug 31 14:28:00 2023] Room: 1  Pulse: 89
+[Thu Aug 31 14:28:01 2023] Room: 1  Pulse: 104
+[Thu Aug 31 14:28:02 2023] Room: 1  Pulse: 82
+[Thu Aug 31 14:28:03 2023] Room: 1  Pulse: 102

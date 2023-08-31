@@ -9,8 +9,6 @@
 #include <QDebug>
 #include "simple_server.hpp"
 #include "room_handler.hpp"
-#include "device_config.hpp"
-#include "agent.hpp"
 #include "event_from_server.hpp"
 #include "event.hpp"
 
