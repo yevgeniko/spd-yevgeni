@@ -1,17 +1,14 @@
-#ifndef CLIENT_TCP
-#define CLIENT_TCP
 
-#include <QObject>
-#include <QTcpServer>
+#ifndef CLIENT_TCP_HPP
+#define CLIENT_TCP_HPP
+
 #include <QTcpSocket>
+#include <QCoreApplication>
+#include <QDebug>
 #include <QDataStream>
 #include <QDateTime>
-#include <QPointer>
-#include <memory>
-
+#include <QHostAddress>
 #include "event.hpp"
-
-namespace spd {
 
 class ClientTCP : public QObject
 {
@@ -19,26 +16,31 @@ class ClientTCP : public QObject
 
 public:
     ClientTCP();
-    ~ClientTCP();
 
     ClientTCP(ClientTCP const& a_other) = delete;
     ClientTCP& operator=(ClientTCP const& a_other) = delete;
 
-    void startListening(const QString &address, quint16 port);
-    void send_request(const Request& a_request);
+    void connectToServer(const QHostAddress &a_address, quint16 a_port);
+
+    void sendRoomRequest(const Event &requestEvent);
+    bool get_is_connected();
 
 signals:
     void newDataReceived(QDateTime, QString, QString, QString);
 
+    // void initialRoomRequestReady();
+
 private slots:
-    void onNewConnection();
-    void onDataReceived();
+    void on_data_received();
+    void on_connected();
+    void on_disconnected();
+
+    // void requestInitialRoomEvents();
+
 
 private:
-    std::unique_ptr<QTcpServer> m_server;
-    QPointer<QTcpSocket> m_socket;
+    QScopedPointer<QTcpSocket> m_socket;
+    bool m_is_connected;
 };
 
-} // namespace spd
-
-#endif //CLIENT_TCP
+#endif // CLIENT_TCP_HPP

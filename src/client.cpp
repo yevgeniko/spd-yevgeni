@@ -1,57 +1,49 @@
 #include "client.hpp"
 
-#include "event.hpp"
-#include <QDateTime>
-
 namespace spd {
 
-Client::Client()
+Client::Client() :
+m_room_number {-1}
 {
     connect(&m_manager, &ClientTCP::newDataReceived, this, &Client::handleNewData);
+    //connect(&m_manager, &ClientTCP::initialRoomRequestReady, this, &Client::requestRoomEvents);
     connect(&m_ui, &UI::set_room_num, this, &Client::update_room_num);
-    QDateTime currentDateTime = QDateTime::currentDateTime();
-    m_roomn = 0;
 }
 
-void Client::connect_to_server(const QString &a_address, quint16 a_port) 
+void Client::connect_to_server(const QHostAddress &address, quint16 port) 
 {
-    m_manager.startListening(a_address, a_port);
-    interval_requests();
+    m_manager.connectToServer(address, port);
 }
+
 
 void Client::handleNewData(QDateTime const& a_timeStamp, QString const& a_eventType, QString const& a_eventData, QString const& a_eventLocation) 
 {
-    Event e(a_timeStamp, a_eventType, a_eventData, a_eventLocation);
+    Event e(a_timeStamp, a_eventType, a_eventData, a_eventLocation); // object dies?
     m_ui.add_event(e);
 }
 
-
-void Client::interval_requests()
+void Client::requestRoomEvents()
 {
-    m_request_timer = std::make_unique<QTimer>();
-    connect(m_request_timer.get(), &QTimer::timeout, this, &Client::create_requests);
-
-    m_request_timer->start(1000);
+    qDebug() << "IN Client::requestRoomEvents ";
+    if (m_room_number != -1) {
+        QDateTime currentTime = QDateTime::currentDateTime();
+        Event requestEvent(currentTime, "ROOM_REQ", QString::number(m_room_number), "");
+        m_manager.sendRoomRequest(requestEvent);
+    }
 }
 
-void Client::create_requests()
+void Client::update_room_num(const int a_num)
 {
-        Request request;
-        request.request_type = "Send Data";
-        request.room_number = m_roomn;
-
-        m_manager.send_request(request);
-        qDebug() << "created request\n";    
+    m_room_number = a_num;
+    checkAndRequestRoomEvents();
 }
 
-void Client::update_room_num(int num)
+void Client::checkAndRequestRoomEvents()
 {
-    qDebug() << num << "\n";
-    m_roomn = num;
+    if (m_manager.get_is_connected() && m_room_number != -1)
+    {
+        requestRoomEvents();
+    }
 }
-
-// connect(&clientManagerInstance, &ClientManager::newDataReceived, this, [&](QDateTime timeStamp, QString eventType, QString eventData, QString eventLocation) {
-//     // Handle the data in the Client, e.g., update the UI.
-// });
 
 }

@@ -7,8 +7,12 @@
 #include <QQueue>
 #include <QString>
 #include <QDebug>
+#include <QTimer>
+
 #include "simple_server.hpp"
 #include "room_handler.hpp"
+#include "device_config.hpp"
+#include "agent.hpp"
 #include "event_from_server.hpp"
 #include "event.hpp"
 
@@ -24,10 +28,12 @@ public:
     ServerManager();
     void start_services();
     void EventRouter(const Event &event);
-    void send_event(int room_number); 
+    void handleStopRequest();
+    void pollEvents();
 
 private slots:
     void handleReceivedEvent(const Event &event);
+    void handleRoomRequest(int room_number);  // This is the new method
 
 public slots:
     void addAlert(const Event& event);
@@ -39,6 +45,10 @@ private:
     QMap<int, std::shared_ptr<RoomHandler>> m_room_to_handlers_map;
     QMap<int, QQueue<Event>> m_event_to_room_map;
     QQueue<Event> m_alerts;
+
+    QTimer *m_event_polling_timer;
+    int m_current_subscribed_room = -1;
+
 };
 
 #endif // SERVER_MANAGER_HPP

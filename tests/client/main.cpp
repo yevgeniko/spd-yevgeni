@@ -10,7 +10,7 @@ int main(int argc, char *argv[])
 
     spd::Client client;
     
-    client.connect_to_server("127.0.0.1", 5555);
+    client.connect_to_server(QHostAddress::LocalHost, 5555);
 
     return a.exec();
 }
