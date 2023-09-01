@@ -1,6 +1,6 @@
 #include "logger.hpp"
 
-// namespace dashboard{
+namespace dashboard {
 
 
 Logger::Logger(const QString& a_device_name)
@@ -18,4 +18,4 @@ void Logger::log_event(const QString& a_event_type, const QString& a_event_messa
 }
 
 
-// } //namespace dashboard
+} //namespace dashboard

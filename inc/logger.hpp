@@ -7,9 +7,11 @@
 #include <QDateTime>
 
 
-// namespace dashboard{
+namespace dashboard {
 
-class Logger {
+class Logger
+{
+
 public:
 
     Logger(const QString& a_file_name);
@@ -21,7 +23,7 @@ private:
     QString m_log_file_name;
 };
 
-// } // namespace dashboard
+} // namespace dashboard
 
 
 #endif // LOGGER_HPP

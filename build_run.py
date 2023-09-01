@@ -23,21 +23,22 @@ def main():
     root_dir = os.getcwd()
     # The order of directories
     dirs = [
-        'tests/client',
-        'tests/server',
-        'tests/sensors'
+        'tests/server',  # Start with server
+        'tests/sensors',  # Then sensors
+        'tests/client'   # Finally, client
     ]
 
     for directory in dirs:
         full_dir = os.path.join(root_dir, directory)
         build(full_dir)
 
-    client_process = run(os.path.join(root_dir, dirs[0]))
+    server_process = run(os.path.join(root_dir, dirs[0]))
     time.sleep(2)
-    run(os.path.join(root_dir, dirs[1]))
+    sensor_process = run(os.path.join(root_dir, dirs[1]))  # Now sensors are started after the server
     time.sleep(2)
-    run(os.path.join(root_dir, dirs[2]))
+    client_process = run(os.path.join(root_dir, dirs[2]))  # Client is started last
 
+    # Wait for the client to finish before killing other processes
     client_process.wait()
     kill_qmake_processes()
 

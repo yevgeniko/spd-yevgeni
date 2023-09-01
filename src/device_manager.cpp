@@ -62,5 +62,3 @@ void DeviceManager::on_data_received()
 
     m_block_size = 0;
 }
-
-

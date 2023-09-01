@@ -17,16 +17,16 @@ public:
     QString getEventType() const;
     QString getEventData() const;
     QString getEventLocation() const;
-    QString get_event_ID() const;
 
-    void set_ID(const QString& ID);
+    // QString get_event_ID() const;
+    // void set_ID(const QString& ID);
 
 protected:
     QDateTime timestamp;
     QString eventType;
     QString eventData;
     QString eventLocation;
-    QString m_event_ID;
+    // QString m_event_ID;
 
 };
 
@@ -34,14 +34,6 @@ class PulseEvent : public Event
 {
 public:
     PulseEvent(const QDateTime& time, const QString& pulseData, const QString& location);
-};
-
-
-struct Request {
-    
-    QString request_type;
-    int room_number;
-
 };
 
 
