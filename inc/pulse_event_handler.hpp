@@ -9,7 +9,7 @@ class PulseEventHandler : public EventHandlerBase
     Q_OBJECT
 public:
     PulseEventHandler(qint16 lower_limit = 60, qint16 higher_limit = 100);
-    void handleEvent(const Event& event) override;
+    void handleEvent(Event& event) override;
 
 signals:
     void alertGenerated(const Event& event);

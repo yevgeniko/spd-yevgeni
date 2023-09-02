@@ -17,6 +17,7 @@ public:
     QString getEventType() const;
     QString getEventData() const;
     QString getEventLocation() const;
+    void setEventType(const QString& type);
 
     // QString get_event_ID() const;
     // void set_ID(const QString& ID);

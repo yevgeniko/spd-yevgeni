@@ -16,13 +16,13 @@ void ServerManager::start_services()
 
 }
 
-void ServerManager::handleReceivedEvent(const Event &event)
+void ServerManager::handleReceivedEvent(Event &event)
 {
     EventRouter(event);
 }
 
 
-void ServerManager::EventRouter(const Event &event)
+void ServerManager::EventRouter(Event &event)
 {
     int room_number = event.getEventLocation().toInt();
     QString sensor_type = event.getEventType();
@@ -50,7 +50,10 @@ void ServerManager::addAlert(const Event& event)
 {
     qDebug() << "enqueued to alerts: " << event.getEventData();
     m_alerts.enqueue(event);
+
+    forwardAlertToAllSubscribers(event);
 }
+
 
 void ServerManager::updateEventToRoomMap(int room_number, const Event& event) 
 {
@@ -64,16 +67,15 @@ void ServerManager::updateEventToRoomMap(int room_number, const Event& event)
 
 void ServerManager::handleRoomRequest(int room_number, QTcpSocket* clientSocket)
 {
-    // If the client is already subscribed to another room, remove it from that room's list of subscribers
     if (m_client_to_room_map.contains(clientSocket)) {
         int previousRoom = m_client_to_room_map[clientSocket];
-        m_subscribed_clients[previousRoom].removeOne(clientSocket);  // remove the client from the old room's list
+        m_subscribed_clients[previousRoom].removeOne(clientSocket);
     }
     
-    // Update the client's current room
+
     m_client_to_room_map[clientSocket] = room_number;
     
-    // Add the client to the new room's list of subscribers
+
     if (!m_subscribed_clients.contains(room_number)) {
         m_subscribed_clients[room_number] = QList<QTcpSocket*>();
     }
@@ -102,6 +104,35 @@ void ServerManager::forwardProcessedEventToSubscribers(int room_number, const Ev
                     m_simple_server_instance.forward_data(storedEvent.getTimestamp(), storedEvent.getEventType(), storedEvent.getEventData(), storedEvent.getEventLocation(), subscriber);
                 }
             }
+        }
+    }
+}
+
+
+QList<QTcpSocket*> ServerManager::getAllUniqueClients()
+{
+    QSet<QTcpSocket*> uniqueClients;
+
+    for(const auto& roomSubscribers : m_subscribed_clients)
+    {
+        for(QTcpSocket* subscriber : roomSubscribers)
+        {
+            uniqueClients.insert(subscriber);
+        }
+    }
+
+    return uniqueClients.toList();
+}
+
+void ServerManager::forwardAlertToAllSubscribers(const Event &event)
+{
+    QList<QTcpSocket*> allClients = getAllUniqueClients();
+
+    for(QTcpSocket* client : allClients)
+    {
+        if(client->state() == QTcpSocket::ConnectedState)
+        {
+            m_simple_server_instance.forward_data(event.getTimestamp(), event.getEventType(), event.getEventData(), event.getEventLocation(), client);
         }
     }
 }

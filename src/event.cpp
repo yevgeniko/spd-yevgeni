@@ -42,15 +42,20 @@ QString Event::getEventLocation() const
     return eventLocation;
 }
 
-// QString Event::getSenderID() const
-// {
-//     return m_event_ID;
-// }
+void Event::setEventType(const QString& type)
+{
+    eventType = type;
+}
+
 
 PulseEvent::PulseEvent(const QDateTime& time, const QString& pulseData, const QString& location)
     : Event(time, "Pulse", pulseData, location)
 {}
 
+// QString Event::getSenderID() const
+// {
+//     return m_event_ID;
+// }
 
 // QString Event::get_event_ID() const
 // {
