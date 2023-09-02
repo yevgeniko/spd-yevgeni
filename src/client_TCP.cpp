@@ -9,7 +9,6 @@ m_is_connected(false)
     connect(m_socket.data(), &QTcpSocket::readyRead, this, &ClientTCP::on_data_received);
     connect(m_socket.data(), &QTcpSocket::connected, this, &ClientTCP::on_connected);
     connect(m_socket.data(), &QTcpSocket::disconnected, this, &ClientTCP::on_disconnected);
-    //connect(m_socket.data(), &QTcpSocket::connected, this, &ClientTCP::requestInitialRoomEvents);
 }
 
 void ClientTCP::connectToServer(const QHostAddress &a_address, quint16 a_port)

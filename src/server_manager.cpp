@@ -6,9 +6,6 @@ ServerManager::ServerManager()
 {
     connect(&m_simple_server_instance, &SimpleServer::eventReceived, this, &ServerManager::handleReceivedEvent);
     connect(&m_simple_server_instance, &SimpleServer::roomRequestReceived, this, &ServerManager::handleRoomRequest);
-    m_event_polling_timer = new QTimer(this);
-    connect(m_event_polling_timer, &QTimer::timeout, this, &ServerManager::pollEvents);
-    m_event_polling_timer->start(1000);  // adjust the interval as needed
 }
 
 
@@ -19,13 +16,13 @@ void ServerManager::start_services()
 
 }
 
-void ServerManager::handleReceivedEvent(const Event &event)
+void ServerManager::handleReceivedEvent(Event &event)
 {
     EventRouter(event);
 }
 
 
-void ServerManager::EventRouter(const Event &event)
+void ServerManager::EventRouter(Event &event)
 {
     int room_number = event.getEventLocation().toInt();
     QString sensor_type = event.getEventType();
@@ -39,8 +36,7 @@ void ServerManager::EventRouter(const Event &event)
 
     if (sensor_type == "Pulse")
     {
-        if (!m_room_to_handlers_map[room_number]->get_pulse_handler_flag())
-        {
+        if (!m_room_to_handlers_map[room_number]->get_pulse_handler_flag()) {
             connect(handlers->pulseHandler.get(), &PulseEventHandler::alertGenerated, this, &ServerManager::addAlert);
             connect(handlers->pulseHandler.get(), &PulseEventHandler::eventProcessed, this, &ServerManager::updateEventToRoomMap);
             m_room_to_handlers_map[room_number]->set_pulse_handler_flag(true);
@@ -54,49 +50,89 @@ void ServerManager::addAlert(const Event& event)
 {
     qDebug() << "enqueued to alerts: " << event.getEventData();
     m_alerts.enqueue(event);
+
+    forwardAlertToAllSubscribers(event);
 }
+
 
 void ServerManager::updateEventToRoomMap(int room_number, const Event& event) 
 {
     qDebug() << "enqueued to event_to_room_map : " << event.getEventData();
     m_event_to_room_map[room_number].enqueue(event);
+
+    forwardProcessedEventToSubscribers(room_number, event);
 }
 
-// void ServerManager::handleRoomRequest(int room_number) // Parameter changed to int
-// {
-//     // Retrieve the events based on the room number.
-//     if (m_event_to_room_map.contains(room_number)) {
-//         QQueue<Event>& roomEvents = m_event_to_room_map[room_number];
-        
-//         // For each event in the room's queue, send it back to the client.
-//         while (!roomEvents.isEmpty()) {
-//             Event e = roomEvents.dequeue();
-//             m_simple_server_instance.forward_data(e.getTimestamp(), e.getEventType(), e.getEventData(), e.getEventLocation());
-//         }
-//     } else {
-//         qDebug() << "No events found for room number:" << room_number;
-//     }
-// }
 
-void ServerManager::handleRoomRequest(int room_number) {
-    m_current_subscribed_room = room_number;
+
+void ServerManager::handleRoomRequest(int room_number, QTcpSocket* clientSocket)
+{
+    if (m_client_to_room_map.contains(clientSocket)) {
+        int previousRoom = m_client_to_room_map[clientSocket];
+        m_subscribed_clients[previousRoom].removeOne(clientSocket);
+    }
+    
+
+    m_client_to_room_map[clientSocket] = room_number;
+    
+
+    if (!m_subscribed_clients.contains(room_number)) {
+        m_subscribed_clients[room_number] = QList<QTcpSocket*>();
+    }
+    
+    m_subscribed_clients[room_number].append(clientSocket);
 }
 
 void ServerManager::handleStopRequest()
 {
-    m_current_subscribed_room = -1;  // reset to no room
+    m_current_subscribed_room = -1;
 }
 
-void ServerManager::pollEvents()
-{
-    if (m_current_subscribed_room == -1) return;
 
-    if (m_event_to_room_map.contains(m_current_subscribed_room)) {
-        QQueue<Event>& roomEvents = m_event_to_room_map[m_current_subscribed_room];
-        
-        while (!roomEvents.isEmpty()) {
-            Event e = roomEvents.dequeue();
-            m_simple_server_instance.forward_data(e.getTimestamp(), e.getEventType(), e.getEventData(), e.getEventLocation());
+void ServerManager::forwardProcessedEventToSubscribers(int room_number, const Event &event)
+{
+    Q_UNUSED(event);
+
+    if (m_event_to_room_map.contains(room_number)) {
+        Event storedEvent = m_event_to_room_map[room_number].dequeue();
+
+        if (m_subscribed_clients.contains(room_number)) {
+            QList<QTcpSocket*>& subscribers = m_subscribed_clients[room_number];
+
+            for (QTcpSocket* subscriber : subscribers) {
+                if (subscriber->state() == QTcpSocket::ConnectedState) {
+                    m_simple_server_instance.forward_data(storedEvent.getTimestamp(), storedEvent.getEventType(), storedEvent.getEventData(), storedEvent.getEventLocation(), subscriber);
+                }
+            }
+        }
+    }
+}
+
+
+QList<QTcpSocket*> ServerManager::getAllUniqueClients()
+{
+    QSet<QTcpSocket*> uniqueClients;
+
+    for(const auto& roomSubscribers : m_subscribed_clients)
+    {
+        for(QTcpSocket* subscriber : roomSubscribers)
+        {
+            uniqueClients.insert(subscriber);
+        }
+    }
+
+    return uniqueClients.toList();
+}
+
+void ServerManager::forwardAlertToAllSubscribers(const Event &event)
+{
+    QList<QTcpSocket*> allClients = getAllUniqueClients();
+
+    for(QTcpSocket* client : allClients)
+    {
+        if(client->state() == QTcpSocket::ConnectedState)
+        {
+            m_simple_server_instance.forward_data(event.getTimestamp(), event.getEventType(), event.getEventData(), event.getEventLocation(), client);
         }
     }
 }

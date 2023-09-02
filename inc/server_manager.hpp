@@ -8,6 +8,7 @@
 #include <QString>
 #include <QDebug>
 #include <QTimer>
+#include <QSet> // Added for the QSet in our helper function
 
 #include "simple_server.hpp"
 #include "room_handler.hpp"
@@ -27,13 +28,13 @@ class ServerManager : public QObject
 public:
     ServerManager();
     void start_services();
-    void EventRouter(const Event &event);
+    void EventRouter(Event &event);
     void handleStopRequest();
-    void pollEvents();
 
 private slots:
-    void handleReceivedEvent(const Event &event);
-    void handleRoomRequest(int room_number);  // This is the new method
+    void handleReceivedEvent(Event &event);
+    void handleRoomRequest(int room_number, QTcpSocket* clientSocket);
+    void forwardProcessedEventToSubscribers(int room_number, const Event &event);
 
 public slots:
     void addAlert(const Event& event);
@@ -46,8 +47,12 @@ private:
     QMap<int, QQueue<Event>> m_event_to_room_map;
     QQueue<Event> m_alerts;
 
-    QTimer *m_event_polling_timer;
+    QMap<int, QList<QTcpSocket*>> m_subscribed_clients;
+    QMap<QTcpSocket*, int> m_client_to_room_map;
     int m_current_subscribed_room = -1;
+
+    void forwardAlertToAllSubscribers(const Event &event);
+    QList<QTcpSocket*> getAllUniqueClients();
 
 };
 

@@ -44,7 +44,8 @@ void SimpleServer::on_client_connected() {
     qDebug() << "Client connected for forwarding!";
 }
 
-void SimpleServer::forward_data(const QDateTime &time_stamp, const QString &event_type, const QString &event_data, const QString &event_location) {
+void SimpleServer::forward_data(const QDateTime &time_stamp, const QString &event_type, const QString &event_data, const QString &event_location, QTcpSocket *socket)
+{
     QByteArray block;
     QDataStream out(&block, QIODevice::WriteOnly);
 
@@ -54,12 +55,13 @@ void SimpleServer::forward_data(const QDateTime &time_stamp, const QString &even
     out.device()->seek(0);
     out << (quint16)(block.size() - sizeof(quint16));
 
-    if(m_forwarding_socket->state() == QTcpSocket::ConnectedState) {
-        m_forwarding_socket->write(block);
+    if(socket->state() == QTcpSocket::ConnectedState) {
+        socket->write(block);
     } else {
-        qDebug() << "Failed to forward data because m_forwarding_socket is not connected.";
+        qDebug() << "Failed to forward data because socket is not connected.";
     }
 }
+
 
 void SimpleServer::on_sensor_data_received()
 {
@@ -121,9 +123,8 @@ void SimpleServer::on_client_data_received()
 
     if(event_type == "ROOM_REQ") {
         int room_number = event_data.toInt();
-        emit roomRequestReceived(room_number); // Emit the room request signal
+        emit roomRequestReceived(room_number, client_socket); // Emit the room request signal with the socket
         return;
     }
 
-    // Optionally, handle any other client-specific event types as necessary.
 }

@@ -18,17 +18,18 @@ public:
     SimpleServer();
     void start_client_listener(const QHostAddress &a_address, quint16 a_port); 
     Event get_event() const;
-    void forward_data(const QDateTime &time_stamp, const QString &event_type, const QString &event_data, const QString &event_location);
+    void forward_data(const QDateTime &time_stamp, const QString &event_type, const QString &event_data, const QString &event_location, QTcpSocket *socket);
 
 private slots:
     void on_new_connection();
-    void on_sensor_data_received(); // Added slot
-    void on_client_data_received(); // Added slot
+    void on_sensor_data_received();
+    void on_client_data_received(); 
     void on_client_connected(); 
 
 signals:
-    void eventReceived(const Event &event);
-    void roomRequestReceived(int roomNumber);
+    void eventReceived(Event &event);
+    void roomRequestReceived(int roomNumber, QTcpSocket* clientSocket);
+
 
 private:
     QScopedPointer<QTcpServer> m_server;
