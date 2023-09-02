@@ -33,7 +33,7 @@ public:
 
 private slots:
     void handleReceivedEvent(const Event &event);
-    void handleRoomRequest(int room_number);  // This is the new method
+    void handleRoomRequest(int room_number);
 
 public slots:
     void addAlert(const Event& event);

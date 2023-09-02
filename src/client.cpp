@@ -6,7 +6,6 @@ Client::Client() :
 m_room_number {-1}
 {
     connect(&m_manager, &ClientTCP::newDataReceived, this, &Client::handleNewData);
-    //connect(&m_manager, &ClientTCP::initialRoomRequestReady, this, &Client::requestRoomEvents);
     connect(&m_ui, &UI::set_room_num, this, &Client::update_room_num);
 }
 

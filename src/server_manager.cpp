@@ -8,7 +8,7 @@ ServerManager::ServerManager()
     connect(&m_simple_server_instance, &SimpleServer::roomRequestReceived, this, &ServerManager::handleRoomRequest);
     m_event_polling_timer = new QTimer(this);
     connect(m_event_polling_timer, &QTimer::timeout, this, &ServerManager::pollEvents);
-    m_event_polling_timer->start(1000);  // adjust the interval as needed
+    m_event_polling_timer->start(1000);
 }
 
 
@@ -62,21 +62,6 @@ void ServerManager::updateEventToRoomMap(int room_number, const Event& event)
     m_event_to_room_map[room_number].enqueue(event);
 }
 
-// void ServerManager::handleRoomRequest(int room_number) // Parameter changed to int
-// {
-//     // Retrieve the events based on the room number.
-//     if (m_event_to_room_map.contains(room_number)) {
-//         QQueue<Event>& roomEvents = m_event_to_room_map[room_number];
-        
-//         // For each event in the room's queue, send it back to the client.
-//         while (!roomEvents.isEmpty()) {
-//             Event e = roomEvents.dequeue();
-//             m_simple_server_instance.forward_data(e.getTimestamp(), e.getEventType(), e.getEventData(), e.getEventLocation());
-//         }
-//     } else {
-//         qDebug() << "No events found for room number:" << room_number;
-//     }
-// }
 
 void ServerManager::handleRoomRequest(int room_number) {
     m_current_subscribed_room = room_number;
@@ -84,7 +69,7 @@ void ServerManager::handleRoomRequest(int room_number) {
 
 void ServerManager::handleStopRequest()
 {
-    m_current_subscribed_room = -1;  // reset to no room
+    m_current_subscribed_room = -1;
 }
 
 void ServerManager::pollEvents()
