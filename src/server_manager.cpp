@@ -79,40 +79,26 @@ void ServerManager::EventRouter(const Event &event)
     }
 }
 
-
 void ServerManager::addAlert(const Event& event) 
 {
-    qDebug() << "enqueued to alerts: " << event.getEventData();
-    m_alerts.enqueue(event);
+    if (m_current_client_socket && m_current_client_socket->state() == QTcpSocket::ConnectedState) 
+    {
+        m_simple_server_instance.forward_data(event.getTimestamp(), event.getEventType(), event.getEventData(), event.getEventLocation(), m_current_client_socket);
+    }
 }
 
 void ServerManager::updateEventToRoomMap(int room_number, const Event& event) 
 {
-    qDebug() << "enqueued to event_to_room_map : " << event.getEventData();
-    m_event_to_room_map[room_number].enqueue(event);
-
-    forwardProcessedEventToSubscribers(room_number, event);
+    if (m_current_subscribed_room == room_number && m_current_client_socket && m_current_client_socket->state() == QTcpSocket::ConnectedState) 
+    {
+        m_simple_server_instance.forward_data(event.getTimestamp(), event.getEventType(), event.getEventData(), event.getEventLocation(), m_current_client_socket);
+    }
 }
-
-
 
 void ServerManager::handleRoomRequest(int room_number, QTcpSocket* clientSocket)
 {
-    // If the client is already subscribed to another room, remove it from that room's list of subscribers
-    if (m_client_to_room_map.contains(clientSocket)) {
-        int previousRoom = m_client_to_room_map[clientSocket];
-        m_subscribed_clients[previousRoom].removeOne(clientSocket);  // remove the client from the old room's list
-    }
-    
-    // Update the client's current room
-    m_client_to_room_map[clientSocket] = room_number;
-    
-    // Add the client to the new room's list of subscribers
-    if (!m_subscribed_clients.contains(room_number)) {
-        m_subscribed_clients[room_number] = QList<QTcpSocket*>();
-    }
-    
-    m_subscribed_clients[room_number].append(clientSocket);
+    m_current_client_socket = clientSocket;
+    m_current_subscribed_room = room_number;
 }
 
 void ServerManager::handleStopRequest()
@@ -121,21 +107,3 @@ void ServerManager::handleStopRequest()
 }
 
 
-void ServerManager::forwardProcessedEventToSubscribers(int room_number, const Event &event)
-{
-    Q_UNUSED(event);
-
-    if (m_event_to_room_map.contains(room_number)) {
-        Event storedEvent = m_event_to_room_map[room_number].dequeue();
-
-        if (m_subscribed_clients.contains(room_number)) {
-            QList<QTcpSocket*>& subscribers = m_subscribed_clients[room_number];
-
-            for (QTcpSocket* subscriber : subscribers) {
-                if (subscriber->state() == QTcpSocket::ConnectedState) {
-                    m_simple_server_instance.forward_data(storedEvent.getTimestamp(), storedEvent.getEventType(), storedEvent.getEventData(), storedEvent.getEventLocation(), subscriber);
-                }
-            }
-        }
-    }
-}

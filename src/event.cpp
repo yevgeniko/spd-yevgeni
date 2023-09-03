@@ -5,7 +5,8 @@ Event::Event(const QDateTime& time, const QString& type, const QString& data, co
     : timestamp(time),
       eventType(type),
       eventData(data),
-      eventLocation(location)
+      eventLocation(location),
+      m_is_abnormal(false)
     {}
 
 Event& Event::operator=(const Event& other) 
@@ -39,6 +40,16 @@ QString Event::getEventData() const
 QString Event::getEventLocation() const
 {
     return eventLocation;
+}
+
+bool Event::is_abnormal() const
+{
+    return m_is_abnormal;
+}
+
+void Event::set_abnormal(bool a_value)
+{
+    m_is_abnormal = a_value;
 }
 
 PulseEvent::PulseEvent(const QDateTime& time, const QString& pulseData, const QString& location)
