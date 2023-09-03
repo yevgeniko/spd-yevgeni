@@ -17,7 +17,6 @@ public:
 protected:
     qint16 m_lower_limit;
     qint16 m_higher_limit;
-    //dashboard::Logger m_logger;
 };
 
 #endif // EVENT_HANDLER_BASE_HPP

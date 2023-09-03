@@ -17,16 +17,11 @@ public:
     QString getEventType() const;
     QString getEventData() const;
     QString getEventLocation() const;
-
-    // QString get_event_ID() const;
-    // void set_ID(const QString& ID);
-
 protected:
     QDateTime timestamp;
     QString eventType;
     QString eventData;
     QString eventLocation;
-    // QString m_event_ID;
 
 };
 
@@ -34,6 +29,24 @@ class PulseEvent : public Event
 {
 public:
     PulseEvent(const QDateTime& time, const QString& pulseData, const QString& location);
+};
+
+class PressureEvent : public Event
+{
+public:
+    PressureEvent(const QDateTime& time, const QString& pressureData, const QString& location);
+};
+
+class SaturationEvent : public Event
+{
+public:
+    SaturationEvent(const QDateTime& time, const QString& saturationData, const QString& location);
+};
+
+class TemperatureEvent : public Event
+{
+public:
+    TemperatureEvent(const QDateTime& time, const QString& temperatureData, const QString& location);
 };
 
 

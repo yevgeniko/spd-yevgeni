@@ -16,7 +16,6 @@ Event& Event::operator=(const Event& other)
         eventType = other.eventType;
         eventData = other.eventData;
         eventLocation = other.eventLocation;
-        // m_event_ID = other.m_event_ID;
     }
     return *this;
 }
@@ -42,24 +41,18 @@ QString Event::getEventLocation() const
     return eventLocation;
 }
 
-// QString Event::getSenderID() const
-// {
-//     return m_event_ID;
-// }
-
 PulseEvent::PulseEvent(const QDateTime& time, const QString& pulseData, const QString& location)
-    : Event(time, "Pulse", pulseData, location)
+    : Event(time, "PULSE", pulseData, location)
 {}
 
+PressureEvent::PressureEvent(const QDateTime& time, const QString& pressureData, const QString& location)
+    : Event(time, "BP", pressureData, location)
+{}
 
-// QString Event::get_event_ID() const
-// {
-//     return m_event_ID;
-// }
+SaturationEvent::SaturationEvent(const QDateTime& time, const QString& saturationData, const QString& location)
+    : Event(time, "SAT", saturationData, location)
+{}
 
-
-
-// void Event::set_ID(const QString& ID)
-// {
-//     m_event_ID = ID;
-// }
+TemperatureEvent::TemperatureEvent(const QDateTime& time, const QString& temperatureData, const QString& location)
+    : Event(time, "TEMP", temperatureData, location)
+{}
