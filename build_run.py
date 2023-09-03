@@ -20,6 +20,9 @@ def main():
     dirs = [
         'tests/server', 
         'tests/sensors',
+        'tests/sensors2',
+        'tests/sensors3',
+        'tests/sensors4',
         'tests/client'
     ]
 

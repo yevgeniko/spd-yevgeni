@@ -83,7 +83,7 @@ void ServerManager::addAlert(const Event& event)
 {
     if (m_current_client_socket && m_current_client_socket->state() == QTcpSocket::ConnectedState) 
     {
-        m_simple_server_instance.forward_data(event.getTimestamp(), event.getEventType(), event.getEventData(), event.getEventLocation(), m_current_client_socket);
+       // m_simple_server_instance.forward_data(event.getTimestamp(), event.getEventType(), event.getEventData(), event.getEventLocation(), m_current_client_socket);
     }
 }
 
