@@ -15,11 +15,15 @@ def clean(directory):
     os.chdir(directory)
     subprocess.run(['make', 'clean'])
 
+
 def main():
     root_dir = os.getcwd()
     dirs = [
         'tests/server', 
         'tests/sensors',
+        'tests/sensors2',
+        'tests/sensors3',
+        'tests/sensors4',
         'tests/client'
     ]
 
@@ -39,3 +43,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+###

@@ -16,13 +16,13 @@ void ServerManager::start_services()
 
 }
 
-void ServerManager::handleReceivedEvent(Event &event)
+void ServerManager::handleReceivedEvent(const Event &event)
 {
     EventRouter(event);
 }
 
 
-void ServerManager::EventRouter(Event &event)
+void ServerManager::EventRouter(const Event &event)
 {
     int room_number = event.getEventLocation().toInt();
     QString sensor_type = event.getEventType();
@@ -34,53 +34,71 @@ void ServerManager::EventRouter(Event &event)
 
     std::shared_ptr<RoomHandler>& handlers = m_room_to_handlers_map[room_number];
 
-    if (sensor_type == "Pulse")
+    // Handling Pulse Events
+    if (sensor_type == "PULSE")
     {
-        if (!m_room_to_handlers_map[room_number]->get_pulse_handler_flag()) {
+        if (!handlers->get_pulse_handler_flag()) {
             connect(handlers->pulseHandler.get(), &PulseEventHandler::alertGenerated, this, &ServerManager::addAlert);
             connect(handlers->pulseHandler.get(), &PulseEventHandler::eventProcessed, this, &ServerManager::updateEventToRoomMap);
-            m_room_to_handlers_map[room_number]->set_pulse_handler_flag(true);
+            handlers->set_pulse_handler_flag(true);
         }
         handlers->pulseHandler->handleEvent(event);
     }
 
+    // Handling BloodPressure Events
+    if (sensor_type == "BP")
+    {
+        if (!handlers->get_bloodpressure_handler_flag()) {
+            connect(handlers->bloodPressureHandler.get(), &BloodPressureEventHandler::alertGenerated, this, &ServerManager::addAlert);
+            connect(handlers->bloodPressureHandler.get(), &BloodPressureEventHandler::eventProcessed, this, &ServerManager::updateEventToRoomMap);
+            handlers->set_bloodpressure_handler_flag(true);
+        }
+        handlers->bloodPressureHandler->handleEvent(event);
+    }
+
+    // Handling Saturation Events
+    if (sensor_type == "SAT")
+    {
+        if (!handlers->get_saturation_handler_flag()) {
+            connect(handlers->saturationHandler.get(), &SaturationEventHandler::alertGenerated, this, &ServerManager::addAlert);
+            connect(handlers->saturationHandler.get(), &SaturationEventHandler::eventProcessed, this, &ServerManager::updateEventToRoomMap);
+            handlers->set_saturation_handler_flag(true);
+        }
+        handlers->saturationHandler->handleEvent(event);
+    }
+
+    // Handling Temperature Events
+    if (sensor_type == "TEMP")
+    {
+        if (!handlers->get_temperature_handler_flag()) {
+            connect(handlers->temperatureHandler.get(), &TemperatureEventHandler::alertGenerated, this, &ServerManager::addAlert);
+            connect(handlers->temperatureHandler.get(), &TemperatureEventHandler::eventProcessed, this, &ServerManager::updateEventToRoomMap);
+            handlers->set_temperature_handler_flag(true);
+        }
+        handlers->temperatureHandler->handleEvent(event);
+    }
 }
 
 void ServerManager::addAlert(const Event& event) 
 {
-    qDebug() << "enqueued to alerts: " << event.getEventData();
-    m_alerts.enqueue(event);
-
-    forwardAlertToAllSubscribers(event);
+    if (m_current_client_socket && m_current_client_socket->state() == QTcpSocket::ConnectedState) 
+    {
+       // m_simple_server_instance.forward_data(event.getTimestamp(), event.getEventType(), event.getEventData(), event.getEventLocation(), m_current_client_socket);
+    }
 }
-
 
 void ServerManager::updateEventToRoomMap(int room_number, const Event& event) 
 {
-    qDebug() << "enqueued to event_to_room_map : " << event.getEventData();
-    m_event_to_room_map[room_number].enqueue(event);
-
-    forwardProcessedEventToSubscribers(room_number, event);
+    if (m_current_subscribed_room == room_number && m_current_client_socket && m_current_client_socket->state() == QTcpSocket::ConnectedState) 
+    {
+        m_simple_server_instance.forward_data(event.getTimestamp(), event.getEventType(), event.getEventData(), event.getEventLocation(), m_current_client_socket);
+    }
 }
-
-
 
 void ServerManager::handleRoomRequest(int room_number, QTcpSocket* clientSocket)
 {
-    if (m_client_to_room_map.contains(clientSocket)) {
-        int previousRoom = m_client_to_room_map[clientSocket];
-        m_subscribed_clients[previousRoom].removeOne(clientSocket);
-    }
-    
-
-    m_client_to_room_map[clientSocket] = room_number;
-    
-
-    if (!m_subscribed_clients.contains(room_number)) {
-        m_subscribed_clients[room_number] = QList<QTcpSocket*>();
-    }
-    
-    m_subscribed_clients[room_number].append(clientSocket);
+    m_current_client_socket = clientSocket;
+    m_current_subscribed_room = room_number;
 }
 
 void ServerManager::handleStopRequest()
@@ -89,50 +107,3 @@ void ServerManager::handleStopRequest()
 }
 
 
-void ServerManager::forwardProcessedEventToSubscribers(int room_number, const Event &event)
-{
-    Q_UNUSED(event);
-
-    if (m_event_to_room_map.contains(room_number)) {
-        Event storedEvent = m_event_to_room_map[room_number].dequeue();
-
-        if (m_subscribed_clients.contains(room_number)) {
-            QList<QTcpSocket*>& subscribers = m_subscribed_clients[room_number];
-
-            for (QTcpSocket* subscriber : subscribers) {
-                if (subscriber->state() == QTcpSocket::ConnectedState) {
-                    m_simple_server_instance.forward_data(storedEvent.getTimestamp(), storedEvent.getEventType(), storedEvent.getEventData(), storedEvent.getEventLocation(), subscriber);
-                }
-            }
-        }
-    }
-}
-
-
-QList<QTcpSocket*> ServerManager::getAllUniqueClients()
-{
-    QSet<QTcpSocket*> uniqueClients;
-
-    for(const auto& roomSubscribers : m_subscribed_clients)
-    {
-        for(QTcpSocket* subscriber : roomSubscribers)
-        {
-            uniqueClients.insert(subscriber);
-        }
-    }
-
-    return uniqueClients.toList();
-}
-
-void ServerManager::forwardAlertToAllSubscribers(const Event &event)
-{
-    QList<QTcpSocket*> allClients = getAllUniqueClients();
-
-    for(QTcpSocket* client : allClients)
-    {
-        if(client->state() == QTcpSocket::ConnectedState)
-        {
-            m_simple_server_instance.forward_data(event.getTimestamp(), event.getEventType(), event.getEventData(), event.getEventLocation(), client);
-        }
-    }
-}
