@@ -17,25 +17,17 @@ public:
     QString getEventType() const;
     QString getEventData() const;
     QString getEventLocation() const;
-
-    bool is_abnormal() const;
-    void set_abnormal(bool a_value);
+    void set_abnormal(const QString& a_value);
     
-
-    void setEventType(const QString& type);
-
-    // QString get_event_ID() const;
-    // void set_ID(const QString& ID);
-
-
 protected:
     QDateTime timestamp;
-    QString eventType;
+    mutable QString eventType;
     QString eventData;
     QString eventLocation;
-    bool m_is_abnormal;
 
 };
+
+bool is_abnormal(const QString& a_type);
 
 class PulseEvent : public Event
 {

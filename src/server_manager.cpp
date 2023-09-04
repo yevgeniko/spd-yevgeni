@@ -2,7 +2,8 @@
 #include "room_handler.hpp"
 #include "pulse_event_handler.hpp"
 
-ServerManager::ServerManager()
+ServerManager::ServerManager() :
+m_logger("log_file")
 {
     connect(&m_simple_server_instance, &SimpleServer::eventReceived, this, &ServerManager::handleReceivedEvent);
     connect(&m_simple_server_instance, &SimpleServer::roomRequestReceived, this, &ServerManager::handleRoomRequest);
@@ -18,6 +19,7 @@ void ServerManager::start_services()
 
 void ServerManager::handleReceivedEvent(const Event &event)
 {
+    m_logger.log_event(event);
     EventRouter(event);
 }
 
@@ -83,9 +85,11 @@ void ServerManager::addAlert(const Event& event)
 {
     if (m_current_client_socket && m_current_client_socket->state() == QTcpSocket::ConnectedState) 
     {
-       // m_simple_server_instance.forward_data(event.getTimestamp(), event.getEventType(), event.getEventData(), event.getEventLocation(), m_current_client_socket);
+        // m_simple_server_instance.forward_data(event.getTimestamp(), event.getEventType(), event.getEventData(), event.getEventLocation(), m_current_client_socket);
+        // QThread::msleep(50);
     }
 }
+
 
 void ServerManager::updateEventToRoomMap(int room_number, const Event& event) 
 {

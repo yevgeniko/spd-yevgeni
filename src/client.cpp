@@ -17,8 +17,13 @@ void Client::connect_to_server(const QHostAddress &address, quint16 port)
 
 void Client::handleNewData(QDateTime const& a_timeStamp, QString const& a_eventType, QString const& a_eventData, QString const& a_eventLocation) 
 {
-    Event e(a_timeStamp, a_eventType, a_eventData, a_eventLocation); // object dies?
-    m_ui.add_event(e);
+    if (is_abnormal(a_eventType))
+    {
+        qDebug() << "IN Client::handleNewData WITH ABNORMAL EVENT";
+    } 
+        Event e(a_timeStamp, a_eventType, a_eventData, a_eventLocation); // object dies?
+        m_ui.add_event(e);
+
 }
 
 void Client::requestRoomEvents()

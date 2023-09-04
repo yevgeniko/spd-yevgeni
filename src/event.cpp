@@ -5,8 +5,7 @@ Event::Event(const QDateTime& time, const QString& type, const QString& data, co
     : timestamp(time),
       eventType(type),
       eventData(data),
-      eventLocation(location),
-      m_is_abnormal(false)
+      eventLocation(location)
     {}
 
 Event& Event::operator=(const Event& other) 
@@ -42,32 +41,28 @@ QString Event::getEventLocation() const
     return eventLocation;
 }
 
-
-bool Event::is_abnormal() const
+void Event::set_abnormal(const QString& a_value)
 {
-    return m_is_abnormal;
+    eventType = a_value;
 }
 
-void Event::set_abnormal(bool a_value)
+bool is_abnormal(const QString& a_type)
 {
-    m_is_abnormal = a_value;
-}
+    if (a_type == "ABNORMAL PULSE" || a_type == "ABNORMAL BP" || a_type == "ABNORMAL SAT" || a_type == "ABNORMAL TEMP")
+    {
+        return true;
+    }
 
-void Event::setEventType(const QString& type)
-{
-    eventType = type;
+    return false;
 }
-
 
 PulseEvent::PulseEvent(const QDateTime& time, const QString& pulseData, const QString& location)
     : Event(time, "PULSE", pulseData, location)
 {}
 
-
 PressureEvent::PressureEvent(const QDateTime& time, const QString& pressureData, const QString& location)
     : Event(time, "BP", pressureData, location)
 {}
-
 
 SaturationEvent::SaturationEvent(const QDateTime& time, const QString& saturationData, const QString& location)
     : Event(time, "SAT", saturationData, location)

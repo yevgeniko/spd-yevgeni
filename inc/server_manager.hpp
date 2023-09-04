@@ -5,6 +5,7 @@
 #include <QMap>
 #include <QString>
 #include <QDebug>
+#include <QThread>
 
 #include "simple_server.hpp"
 #include "room_handler.hpp"
@@ -12,6 +13,7 @@
 #include "agent.hpp"
 #include "event_from_server.hpp"
 #include "event.hpp"
+#include "logger.hpp"
 
 using namespace dashboard;
 
@@ -40,6 +42,7 @@ private:
     QMap<int, std::shared_ptr<RoomHandler>> m_room_to_handlers_map;
     QTcpSocket* m_current_client_socket = nullptr;  // Store the single client's socket
     int m_current_subscribed_room = -1;
+    dashboard::Logger m_logger;
 
 };
 
