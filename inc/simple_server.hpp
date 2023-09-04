@@ -22,12 +22,12 @@ public:
 
 private slots:
     void on_new_connection();
-    void on_sensor_data_received();
-    void on_client_data_received(); 
+    void on_sensor_data_received(); // Added slot
+    void on_client_data_received(); // Added slot
     void on_client_connected(); 
 
 signals:
-    void eventReceived(Event &event);
+    void eventReceived(const Event &event);
     void roomRequestReceived(int roomNumber, QTcpSocket* clientSocket);
 
 
