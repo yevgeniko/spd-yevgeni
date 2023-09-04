@@ -7,15 +7,17 @@ PulseEventHandler::PulseEventHandler(qint16 lower_limit, qint16 higher_limit)
 
 void PulseEventHandler::handleEvent(const Event& event)
 {
-    qDebug() << "IN Pulse Event Handler with data:" << event.getEventData();
-    int room_number = event.getEventLocation().toInt();
-
-    if (event.getEventData().toInt() < m_lower_limit || event.getEventData().toInt() > m_higher_limit) {
+    if (event.getEventData().toInt() < m_lower_limit || 
+        event.getEventData().toInt() > m_higher_limit) 
+    {
+        const_cast<Event&>(event).set_abnormal("ABNORMAL PULSE");
         emit alertGenerated(event);  // Emit the alert signal
     }
 
+    int room_number = event.getEventLocation().toInt();
     emit eventProcessed(room_number, event); // Emit the processed event signal
 }
+
 
 BloodPressureEventHandler::BloodPressureEventHandler(qint16 lower_limit_systolic, qint16 higher_limit_systolic,
                                                      qint16 lower_limit_diastolic, qint16 higher_limit_diastolic)
@@ -32,6 +34,7 @@ void BloodPressureEventHandler::handleEvent(const Event& event)
     int diastolic = pressures[1].toInt();
 
     if (systolic < m_lower_limit || systolic > m_higher_limit || diastolic < m_lower_limit_diastolic || diastolic > m_higher_limit_diastolic) {
+        const_cast<Event&>(event).set_abnormal("ABNORMAL BP");
         emit alertGenerated(event);  // Emit the alert signal
     }
 
@@ -47,6 +50,7 @@ void SaturationEventHandler::handleEvent(const Event& event)
     int room_number = event.getEventLocation().toInt();
 
     if (event.getEventData().toInt() < m_lower_limit || event.getEventData().toInt() > m_higher_limit) {
+        const_cast<Event&>(event).set_abnormal("ABNORMAL SAT");
         emit alertGenerated(event);  // Emit the alert signal
     }
 
@@ -62,6 +66,7 @@ void TemperatureEventHandler::handleEvent(const Event& event)
     int room_number = event.getEventLocation().toInt();
 
     if (event.getEventData().toDouble() < m_lower_limit || event.getEventData().toDouble() > m_higher_limit) {
+        const_cast<Event&>(event).set_abnormal("ABNORMAL TEMP");
         emit alertGenerated(event);  // Emit the alert signal
     }
 
