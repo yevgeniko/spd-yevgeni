@@ -5,7 +5,7 @@
 PulseEventHandler::PulseEventHandler(qint16 lower_limit, qint16 higher_limit)
     : EventHandlerBase(lower_limit, higher_limit) {}
 
-void PulseEventHandler::handleEvent(const Event& event)
+void PulseEventHandler::handleEvent(Event& event)
 {
     qDebug() << "IN Pulse Event Handler with data:" << event.getEventData();
     int room_number = event.getEventLocation().toInt();
@@ -65,5 +65,5 @@ void TemperatureEventHandler::handleEvent(const Event& event)
         emit alertGenerated(event);  // Emit the alert signal
     }
 
-    emit eventProcessed(room_number, event); // Emit the processed event signal
+    emit eventProcessed(room_number, event);
 }

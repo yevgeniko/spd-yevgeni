@@ -17,9 +17,17 @@ public:
     QString getEventType() const;
     QString getEventData() const;
     QString getEventLocation() const;
+
     bool is_abnormal() const;
     void set_abnormal(bool a_value);
     
+
+    void setEventType(const QString& type);
+
+    // QString get_event_ID() const;
+    // void set_ID(const QString& ID);
+
+
 protected:
     QDateTime timestamp;
     QString eventType;

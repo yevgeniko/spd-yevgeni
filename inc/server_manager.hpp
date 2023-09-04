@@ -5,6 +5,9 @@
 #include <QMap>
 #include <QString>
 #include <QDebug>
+#include <QTimer>
+#include <QSet>
+
 
 #include "simple_server.hpp"
 #include "room_handler.hpp"
@@ -24,11 +27,11 @@ class ServerManager : public QObject
 public:
     ServerManager();
     void start_services();
-    void EventRouter(const Event &event);
+    void EventRouter(Event &event);
     void handleStopRequest();
 
 private slots:
-    void handleReceivedEvent(const Event &event);
+    void handleReceivedEvent(Event &event);
     void handleRoomRequest(int room_number, QTcpSocket* clientSocket);
     
 public slots:
@@ -40,6 +43,9 @@ private:
     QMap<int, std::shared_ptr<RoomHandler>> m_room_to_handlers_map;
     QTcpSocket* m_current_client_socket = nullptr;  // Store the single client's socket
     int m_current_subscribed_room = -1;
+
+    void forwardAlertToAllSubscribers(const Event &event);
+    QList<QTcpSocket*> getAllUniqueClients();
 
 };
 
