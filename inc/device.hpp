@@ -6,8 +6,10 @@
 #include <memory>
 #include "device_manager.hpp"
 
-class Device
+class Device : public QObject
 {
+    Q_OBJECT
+
 public:
     Device(const QString &a_id, const QString &a_t, const QString &a_r, const QString &a_log, const QString &a_config);
     virtual ~Device();
