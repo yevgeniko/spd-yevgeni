@@ -133,3 +133,4 @@ void ServerManager::handleAIPrediction(int prediction, int room)
     m_simple_server_instance.forward_data(ai_event.getTimestamp(), ai_event.getEventType(), ai_event.getEventData(), ai_event.getEventLocation(), m_current_client_socket);
 
 }
+
