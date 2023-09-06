@@ -28,10 +28,15 @@ private:
 
 class BloodPressureCuff : public Device
 {
+    Q_OBJECT
+
 public:
     BloodPressureCuff(const QString &a_id, const QString &a_room, const QString &a_log, const QString &a_config);
     std::pair<int, int> generate_pressure_reading(); 
     void monitor_pressure(); 
+
+private slots:
+    void update_distribution();
 
 
 private:
@@ -39,6 +44,7 @@ private:
     std::mt19937 m_gen;
     std::uniform_int_distribution<> m_systolic_dist;
     std::uniform_int_distribution<> m_diastolic_dist;
+    QTimer m_timer;
 };
 
 class Oximeter : public Device
@@ -68,8 +74,8 @@ public:
     Thermometer(const QString &a_id, const QString &a_room, const QString &a_log, const QString &a_config);
     double generate_temperature_reading();
     void monitor_temperature();
-private slots:
-    void update_distribution();
+// private slots:
+//     void update_distribution();
 
 private:
     QTimer m_timer;

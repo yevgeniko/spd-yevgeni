@@ -38,3 +38,337 @@
 [Wed Sep 6 18:37:10 2023] Room: 1 TEMP: 37.5676
 [Wed Sep 6 18:37:13 2023] Room: 1 PULSE: 112
 [Wed Sep 6 18:37:13 2023] Room: 1 SAT: %%SpO2 97
+[Wed Sep 6 20:03:46 2023] Room: 1 PULSE: 96
+[Wed Sep 6 20:03:47 2023] Room: 1 SAT: %%SpO2 95
+[Wed Sep 6 20:03:48 2023] Room: 1 BP: 133/80
+[Wed Sep 6 20:03:49 2023] Room: 1 TEMP: 36.0889
+[Wed Sep 6 20:03:56 2023] Room: 1 PULSE: 69
+[Wed Sep 6 20:03:57 2023] Room: 1 SAT: %%SpO2 94
+[Wed Sep 6 20:03:59 2023] Room: 1 BP: 115/61
+[Wed Sep 6 20:04:00 2023] Room: 1 TEMP: 36.0698
+[Wed Sep 6 20:04:06 2023] Room: 1 PULSE: 75
+[Wed Sep 6 20:04:07 2023] Room: 1 SAT: %%SpO2 97
+[Wed Sep 6 20:04:10 2023] Room: 1 BP: 115/68
+[Wed Sep 6 20:04:11 2023] Room: 1 TEMP: 36.561
+[Wed Sep 6 20:04:16 2023] Room: 1 PULSE: 60
+[Wed Sep 6 20:04:17 2023] Room: 1 SAT: %%SpO2 99
+[Wed Sep 6 20:04:21 2023] Room: 1 BP: 120/88
+[Wed Sep 6 20:04:22 2023] Room: 1 TEMP: 36.3794
+[Wed Sep 6 20:04:26 2023] Room: 1 PULSE: 84
+[Wed Sep 6 20:04:27 2023] Room: 1 SAT: %%SpO2 95
+[Wed Sep 6 20:04:32 2023] Room: 1 BP: 111/89
+[Wed Sep 6 20:04:33 2023] Room: 1 TEMP: 36.2493
+[Wed Sep 6 20:04:36 2023] Room: 1 PULSE: 78
+[Wed Sep 6 20:04:37 2023] Room: 1 SAT: %%SpO2 90
+[Wed Sep 6 20:04:43 2023] Room: 1 BP: 135/80
+[Wed Sep 6 20:04:44 2023] Room: 1 TEMP: 36.4735
+[Wed Sep 6 20:04:46 2023] Room: 1 PULSE: 56
+[Wed Sep 6 20:04:47 2023] Room: 1 SAT: %%SpO2 94
+[Wed Sep 6 20:04:54 2023] Room: 1 BP: 134/84
+[Wed Sep 6 20:04:55 2023] Room: 1 TEMP: 35.923
+[Wed Sep 6 20:04:56 2023] Room: 1 PULSE: 60
+[Wed Sep 6 20:04:57 2023] Room: 1 SAT: %%SpO2 88
+[Wed Sep 6 20:05:05 2023] Room: 1 BP: 125/64
+[Wed Sep 6 20:05:06 2023] Room: 1 PULSE: 80
+[Wed Sep 6 20:05:06 2023] Room: 1 TEMP: 35.862
+[Wed Sep 6 20:05:07 2023] Room: 1 SAT: %%SpO2 88
+[Wed Sep 6 20:05:16 2023] Room: 1 PULSE: 61
+[Wed Sep 6 20:05:16 2023] Room: 1 BP: 133/77
+[Wed Sep 6 20:05:17 2023] Room: 1 SAT: %%SpO2 86
+[Wed Sep 6 20:05:17 2023] Room: 1 TEMP: 35.6094
+[Wed Sep 6 20:05:26 2023] Room: 1 PULSE: 71
+[Wed Sep 6 20:05:27 2023] Room: 1 SAT: %%SpO2 84
+[Wed Sep 6 20:05:27 2023] Room: 1 BP: 119/65
+[Wed Sep 6 20:05:28 2023] Room: 1 TEMP: 35.441
+[Wed Sep 6 20:05:36 2023] Room: 1 PULSE: 68
+[Wed Sep 6 20:05:37 2023] Room: 1 SAT: %%SpO2 82
+[Wed Sep 6 20:05:38 2023] Room: 1 BP: 112/60
+[Wed Sep 6 20:05:39 2023] Room: 1 TEMP: 35.3315
+[Wed Sep 6 20:05:46 2023] Room: 1 PULSE: 75
+[Wed Sep 6 20:05:47 2023] Room: 1 SAT: %%SpO2 79
+[Wed Sep 6 20:05:49 2023] Room: 1 BP: 114/79
+[Wed Sep 6 20:05:50 2023] Room: 1 TEMP: 35.963
+[Wed Sep 6 20:05:56 2023] Room: 1 PULSE: 54
+[Wed Sep 6 20:05:57 2023] Room: 1 SAT: %%SpO2 75
+[Wed Sep 6 21:31:21 2023] Room: 1 PULSE: 74
+[Wed Sep 6 21:31:22 2023] Room: 1 SAT: %%SpO2 99
+[Wed Sep 6 21:31:23 2023] Room: 1 BP: 119/72
+[Wed Sep 6 21:31:24 2023] Room: 1 TEMP: 36.2068
+[Wed Sep 6 21:31:31 2023] Room: 1 PULSE: 100
+[Wed Sep 6 21:31:32 2023] Room: 1 SAT: %%SpO2 100
+[Wed Sep 6 21:31:34 2023] Room: 1 BP: 114/64
+[Wed Sep 6 21:31:35 2023] Room: 1 TEMP: 37.1501
+[Wed Sep 6 21:31:41 2023] Room: 1 PULSE: 70
+[Wed Sep 6 21:31:42 2023] Room: 1 SAT: %%SpO2 100
+[Wed Sep 6 21:31:45 2023] Room: 1 BP: 110/81
+[Wed Sep 6 21:31:46 2023] Room: 1 TEMP: 36.184
+[Wed Sep 6 21:31:51 2023] Room: 1 PULSE: 76
+[Wed Sep 6 21:31:52 2023] Room: 1 SAT: %%SpO2 100
+[Wed Sep 6 21:31:56 2023] Room: 1 BP: 113/65
+[Wed Sep 6 21:31:57 2023] Room: 1 TEMP: 36.9806
+[Wed Sep 6 21:32:01 2023] Room: 1 PULSE: 101
+[Wed Sep 6 21:32:02 2023] Room: 1 SAT: %%SpO2 99
+[Wed Sep 6 21:32:07 2023] Room: 1 BP: 127/65
+[Wed Sep 6 21:32:08 2023] Room: 1 TEMP: 36.5766
+[Wed Sep 6 21:32:11 2023] Room: 1 PULSE: 66
+[Wed Sep 6 21:32:12 2023] Room: 1 SAT: %%SpO2 96
+[Wed Sep 6 21:32:18 2023] Room: 1 BP: 133/89
+[Wed Sep 6 21:32:19 2023] Room: 1 TEMP: 36.7288
+[Wed Sep 6 21:32:21 2023] Room: 1 PULSE: 60
+[Wed Sep 6 21:32:22 2023] Room: 1 SAT: %%SpO2 97
+[Wed Sep 6 21:32:29 2023] Room: 1 BP: 121/66
+[Wed Sep 6 21:32:30 2023] Room: 1 TEMP: 37.0398
+[Wed Sep 6 21:32:31 2023] Room: 1 PULSE: 127
+[Wed Sep 6 21:32:32 2023] Room: 1 SAT: %%SpO2 96
+[Wed Sep 6 21:32:40 2023] Room: 1 BP: 139/70
+[Wed Sep 6 21:32:41 2023] Room: 1 PULSE: 99
+[Wed Sep 6 21:32:41 2023] Room: 1 TEMP: 36.6004
+[Wed Sep 6 21:32:42 2023] Room: 1 SAT: %%SpO2 93
+[Wed Sep 6 21:32:51 2023] Room: 1 BP: 112/71
+[Wed Sep 6 21:32:51 2023] Room: 1 PULSE: 112
+[Wed Sep 6 21:32:52 2023] Room: 1 TEMP: 36.0448
+[Wed Sep 6 21:32:52 2023] Room: 1 SAT: %%SpO2 92
+[Wed Sep 6 21:33:01 2023] Room: 1 PULSE: 138
+[Wed Sep 6 21:33:02 2023] Room: 1 SAT: %%SpO2 92
+[Wed Sep 6 21:33:02 2023] Room: 1 BP: 112/90
+[Wed Sep 6 21:33:03 2023] Room: 1 TEMP: 36.8129
+[Wed Sep 6 21:33:11 2023] Room: 1 PULSE: 99
+[Wed Sep 6 21:33:12 2023] Room: 1 SAT: %%SpO2 92
+[Wed Sep 6 21:33:13 2023] Room: 1 BP: 129/89
+[Wed Sep 6 21:33:14 2023] Room: 1 TEMP: 37.1479
+[Wed Sep 6 21:33:21 2023] Room: 1 PULSE: 116
+[Wed Sep 6 21:33:22 2023] Room: 1 SAT: %%SpO2 91
+[Wed Sep 6 21:33:24 2023] Room: 1 BP: 128/61
+[Wed Sep 6 21:33:25 2023] Room: 1 TEMP: 37.1447
+[Wed Sep 6 21:33:31 2023] Room: 1 PULSE: 122
+[Wed Sep 6 21:33:32 2023] Room: 1 SAT: %%SpO2 90
+[Wed Sep 6 21:33:35 2023] Room: 1 BP: 120/66
+[Wed Sep 6 21:33:36 2023] Room: 1 TEMP: 37.2158
+[Wed Sep 6 21:33:41 2023] Room: 1 PULSE: 52
+[Wed Sep 6 21:33:42 2023] Room: 1 SAT: %%SpO2 87
+[Wed Sep 6 21:33:46 2023] Room: 1 BP: 129/61
+[Wed Sep 6 21:33:47 2023] Room: 1 TEMP: 37.2643
+[Wed Sep 6 21:33:51 2023] Room: 1 PULSE: 49
+[Wed Sep 6 21:33:52 2023] Room: 1 SAT: %%SpO2 86
+[Wed Sep 6 21:33:57 2023] Room: 1 BP: 137/67
+[Wed Sep 6 21:33:58 2023] Room: 1 TEMP: 36.349
+[Wed Sep 6 21:34:01 2023] Room: 1 PULSE: 130
+[Wed Sep 6 21:34:02 2023] Room: 1 SAT: %%SpO2 85
+[Wed Sep 6 21:34:08 2023] Room: 1 BP: 133/63
+[Wed Sep 6 21:34:09 2023] Room: 1 TEMP: 37.3952
+[Wed Sep 6 21:34:11 2023] Room: 1 PULSE: 43
+[Wed Sep 6 21:34:12 2023] Room: 1 SAT: %%SpO2 85
+[Wed Sep 6 21:34:19 2023] Room: 1 BP: 139/83
+[Wed Sep 6 21:34:20 2023] Room: 1 TEMP: 36.4672
+[Wed Sep 6 21:34:21 2023] Room: 1 PULSE: 68
+[Wed Sep 6 21:34:22 2023] Room: 1 SAT: %%SpO2 83
+[Wed Sep 6 21:34:30 2023] Room: 1 BP: 116/72
+[Wed Sep 6 21:34:31 2023] Room: 1 PULSE: 112
+[Wed Sep 6 21:34:31 2023] Room: 1 TEMP: 37.236
+[Wed Sep 6 21:34:32 2023] Room: 1 SAT: %%SpO2 82
+[Wed Sep 6 21:34:41 2023] Room: 1 PULSE: 134
+[Wed Sep 6 21:34:41 2023] Room: 1 BP: 119/70
+[Wed Sep 6 21:34:42 2023] Room: 1 SAT: %%SpO2 83
+[Wed Sep 6 21:34:42 2023] Room: 1 TEMP: 37.4844
+[Wed Sep 6 21:34:51 2023] Room: 1 PULSE: 116
+[Wed Sep 6 21:34:52 2023] Room: 1 SAT: %%SpO2 80
+[Wed Sep 6 21:34:52 2023] Room: 1 BP: 122/64
+[Wed Sep 6 21:34:53 2023] Room: 1 TEMP: 37.0702
+[Wed Sep 6 21:35:01 2023] Room: 1 PULSE: 103
+[Wed Sep 6 21:35:02 2023] Room: 1 SAT: %%SpO2 81
+[Wed Sep 6 21:35:03 2023] Room: 1 BP: 112/67
+[Wed Sep 6 21:35:04 2023] Room: 1 TEMP: 36.404
+[Wed Sep 6 21:35:11 2023] Room: 1 PULSE: 72
+[Wed Sep 6 21:35:12 2023] Room: 1 SAT: %%SpO2 80
+[Wed Sep 6 21:35:14 2023] Room: 1 BP: 110/69
+[Wed Sep 6 21:35:15 2023] Room: 1 TEMP: 36.2385
+[Wed Sep 6 21:35:21 2023] Room: 1 PULSE: 43
+[Wed Sep 6 21:35:22 2023] Room: 1 SAT: %%SpO2 79
+[Wed Sep 6 21:35:25 2023] Room: 1 BP: 121/76
+[Wed Sep 6 21:35:26 2023] Room: 1 TEMP: 36.8621
+[Wed Sep 6 21:35:31 2023] Room: 1 PULSE: 44
+[Wed Sep 6 21:35:32 2023] Room: 1 SAT: %%SpO2 78
+[Wed Sep 6 21:35:36 2023] Room: 1 BP: 116/68
+[Wed Sep 6 21:35:37 2023] Room: 1 TEMP: 37.1129
+[Wed Sep 6 21:35:41 2023] Room: 1 PULSE: 101
+[Wed Sep 6 21:35:42 2023] Room: 1 SAT: %%SpO2 76
+[Wed Sep 6 21:49:27 2023] Room: 1 PULSE: 90
+[Wed Sep 6 21:49:27 2023] Room: 1 SAT: %%SpO2 98
+[Wed Sep 6 21:49:29 2023] Room: 1 BP: 127/76
+[Wed Sep 6 21:49:29 2023] Room: 1 TEMP: 36.3402
+[Wed Sep 6 21:49:37 2023] Room: 1 PULSE: 95
+[Wed Sep 6 21:49:37 2023] Room: 1 SAT: %%SpO2 98
+[Wed Sep 6 21:49:40 2023] Room: 1 BP: 119/51
+[Wed Sep 6 21:49:40 2023] Room: 1 TEMP: 36.8117
+[Wed Sep 6 21:49:47 2023] Room: 1 PULSE: 61
+[Wed Sep 6 21:49:47 2023] Room: 1 SAT: %%SpO2 96
+[Wed Sep 6 21:49:51 2023] Room: 1 BP: 84/49
+[Wed Sep 6 21:49:51 2023] Room: 1 TEMP: 36.5935
+[Wed Sep 6 21:49:57 2023] Room: 1 PULSE: 96
+[Wed Sep 6 21:49:57 2023] Room: 1 SAT: %%SpO2 95
+[Wed Sep 6 21:50:02 2023] Room: 1 BP: 50/56
+[Wed Sep 6 21:50:02 2023] Room: 1 TEMP: 36.1414
+[Wed Sep 6 21:50:07 2023] Room: 1 PULSE: 103
+[Wed Sep 6 21:50:07 2023] Room: 1 SAT: %%SpO2 95
+[Wed Sep 6 21:50:13 2023] Room: 1 BP: 41/40
+[Wed Sep 6 21:50:13 2023] Room: 1 TEMP: 36.4822
+[Wed Sep 6 21:50:17 2023] Room: 1 PULSE: 118
+[Wed Sep 6 21:50:17 2023] Room: 1 SAT: %%SpO2 93
+[Wed Sep 6 21:50:24 2023] Room: 1 BP: 58/44
+[Wed Sep 6 21:50:24 2023] Room: 1 TEMP: 36.5458
+[Wed Sep 6 21:50:27 2023] Room: 1 PULSE: 55
+[Wed Sep 6 21:50:27 2023] Room: 1 SAT: %%SpO2 94
+[Wed Sep 6 21:50:35 2023] Room: 1 BP: 32/42
+[Wed Sep 6 21:50:35 2023] Room: 1 TEMP: 36.2793
+[Wed Sep 6 21:50:37 2023] Room: 1 PULSE: 91
+[Wed Sep 6 21:50:37 2023] Room: 1 SAT: %%SpO2 92
+[Wed Sep 6 21:50:46 2023] Room: 1 BP: 34/44
+[Wed Sep 6 21:50:46 2023] Room: 1 TEMP: 36.4122
+[Wed Sep 6 21:50:47 2023] Room: 1 PULSE: 68
+[Wed Sep 6 21:50:47 2023] Room: 1 SAT: %%SpO2 92
+[Wed Sep 6 21:50:57 2023] Room: 1 PULSE: 62
+[Wed Sep 6 21:50:57 2023] Room: 1 BP: 44/38
+[Wed Sep 6 21:50:57 2023] Room: 1 SAT: %%SpO2 91
+[Wed Sep 6 21:50:57 2023] Room: 1 TEMP: 36.7724
+[Wed Sep 6 21:51:07 2023] Room: 1 PULSE: 72
+[Wed Sep 6 21:51:07 2023] Room: 1 SAT: %%SpO2 90
+[Wed Sep 6 21:51:08 2023] Room: 1 BP: 36/22
+[Wed Sep 6 21:51:08 2023] Room: 1 TEMP: 36.0638
+[Wed Sep 6 21:51:17 2023] Room: 1 PULSE: 60
+[Wed Sep 6 21:51:17 2023] Room: 1 SAT: %%SpO2 89
+[Wed Sep 6 21:51:19 2023] Room: 1 BP: 48/39
+[Wed Sep 6 21:51:19 2023] Room: 1 TEMP: 36.5261
+[Wed Sep 6 21:51:27 2023] Room: 1 PULSE: 62
+[Wed Sep 6 21:51:27 2023] Room: 1 SAT: %%SpO2 88
+[Wed Sep 6 21:51:30 2023] Room: 1 BP: 54/42
+[Wed Sep 6 21:51:30 2023] Room: 1 TEMP: 36.8743
+[Wed Sep 6 21:51:37 2023] Room: 1 PULSE: 46
+[Wed Sep 6 21:51:37 2023] Room: 1 SAT: %%SpO2 85
+[Wed Sep 6 21:51:41 2023] Room: 1 BP: 60/40
+[Wed Sep 6 21:51:41 2023] Room: 1 TEMP: 36.7513
+[Wed Sep 6 21:51:47 2023] Room: 1 PULSE: 103
+[Wed Sep 6 21:51:47 2023] Room: 1 SAT: %%SpO2 85
+[Wed Sep 6 21:51:52 2023] Room: 1 BP: 52/38
+[Wed Sep 6 21:51:52 2023] Room: 1 TEMP: 36.487
+[Wed Sep 6 21:51:57 2023] Room: 1 PULSE: 129
+[Wed Sep 6 21:51:57 2023] Room: 1 SAT: %%SpO2 85
+[Wed Sep 6 21:52:03 2023] Room: 1 BP: 32/46
+[Wed Sep 6 21:52:03 2023] Room: 1 TEMP: 36.048
+[Wed Sep 6 21:52:07 2023] Room: 1 PULSE: 98
+[Wed Sep 6 21:52:07 2023] Room: 1 SAT: %%SpO2 82
+[Wed Sep 6 21:52:14 2023] Room: 1 BP: 50/42
+[Wed Sep 6 21:52:14 2023] Room: 1 TEMP: 36.3618
+[Wed Sep 6 21:52:17 2023] Room: 1 PULSE: 110
+[Wed Sep 6 21:52:17 2023] Room: 1 SAT: %%SpO2 83
+[Wed Sep 6 21:52:25 2023] Room: 1 BP: 36/29
+[Wed Sep 6 21:52:25 2023] Room: 1 TEMP: 36.5588
+[Wed Sep 6 21:52:27 2023] Room: 1 PULSE: 58
+[Wed Sep 6 21:52:27 2023] Room: 1 SAT: %%SpO2 82
+[Wed Sep 6 21:52:36 2023] Room: 1 BP: 45/43
+[Wed Sep 6 21:52:36 2023] Room: 1 TEMP: 36.5261
+[Wed Sep 6 21:52:37 2023] Room: 1 PULSE: 140
+[Wed Sep 6 21:52:37 2023] Room: 1 SAT: %%SpO2 81
+[Wed Sep 6 21:52:47 2023] Room: 1 PULSE: 90
+[Wed Sep 6 21:52:47 2023] Room: 1 BP: 46/29
+[Wed Sep 6 21:52:47 2023] Room: 1 TEMP: 36.3449
+[Wed Sep 6 21:52:47 2023] Room: 1 SAT: %%SpO2 78
+[Wed Sep 6 21:52:57 2023] Room: 1 PULSE: 68
+[Wed Sep 6 21:52:57 2023] Room: 1 SAT: %%SpO2 78
+[Wed Sep 6 21:52:58 2023] Room: 1 BP: 38/32
+[Wed Sep 6 21:52:58 2023] Room: 1 TEMP: 36.8399
+[Wed Sep 6 21:53:07 2023] Room: 1 PULSE: 108
+[Wed Sep 6 21:53:07 2023] Room: 1 SAT: %%SpO2 76
+[Wed Sep 6 21:53:09 2023] Room: 1 BP: 56/46
+[Wed Sep 6 21:53:09 2023] Room: 1 TEMP: 36.6987
+[Wed Sep 6 21:53:17 2023] Room: 1 PULSE: 88
+[Wed Sep 6 21:53:17 2023] Room: 1 SAT: %%SpO2 77
+[Wed Sep 6 21:53:20 2023] Room: 1 BP: 59/23
+[Wed Sep 6 21:53:20 2023] Room: 1 TEMP: 36.532
+[Wed Sep 6 21:53:27 2023] Room: 1 PULSE: 59
+[Wed Sep 6 21:53:27 2023] Room: 1 SAT: %%SpO2 74
+[Wed Sep 6 21:53:31 2023] Room: 1 BP: 31/41
+[Wed Sep 6 21:53:31 2023] Room: 1 TEMP: 36.1241
+[Wed Sep 6 21:53:37 2023] Room: 1 PULSE: 126
+[Wed Sep 6 21:53:37 2023] Room: 1 SAT: %%SpO2 75
+[Wed Sep 6 21:53:42 2023] Room: 1 BP: 53/28
+[Wed Sep 6 21:53:42 2023] Room: 1 TEMP: 36.8509
+[Wed Sep 6 21:53:47 2023] Room: 1 PULSE: 66
+[Wed Sep 6 21:53:47 2023] Room: 1 SAT: %%SpO2 74
+[Wed Sep 6 21:53:53 2023] Room: 1 BP: 42/37
+[Wed Sep 6 21:53:53 2023] Room: 1 TEMP: 36.5125
+[Wed Sep 6 21:53:57 2023] Room: 1 PULSE: 74
+[Wed Sep 6 21:53:57 2023] Room: 1 SAT: %%SpO2 73
+[Wed Sep 6 21:54:04 2023] Room: 1 BP: 39/42
+[Wed Sep 6 21:54:04 2023] Room: 1 TEMP: 36.0065
+[Wed Sep 6 21:54:07 2023] Room: 1 PULSE: 56
+[Wed Sep 6 21:54:07 2023] Room: 1 SAT: %%SpO2 71
+[Wed Sep 6 21:54:15 2023] Room: 1 BP: 59/36
+[Wed Sep 6 21:54:15 2023] Room: 1 TEMP: 36.7907
+[Wed Sep 6 21:54:17 2023] Room: 1 PULSE: 126
+[Wed Sep 6 21:54:17 2023] Room: 1 SAT: %%SpO2 69
+[Wed Sep 6 21:54:26 2023] Room: 1 BP: 40/26
+[Wed Sep 6 21:54:26 2023] Room: 1 TEMP: 36.1742
+[Wed Sep 6 21:54:27 2023] Room: 1 PULSE: 77
+[Wed Sep 6 21:54:27 2023] Room: 1 SAT: %%SpO2 70
+[Wed Sep 6 21:54:37 2023] Room: 1 PULSE: 113
+[Wed Sep 6 21:54:37 2023] Room: 1 BP: 30/31
+[Wed Sep 6 21:54:37 2023] Room: 1 TEMP: 36.1431
+[Wed Sep 6 21:54:37 2023] Room: 1 SAT: %%SpO2 68
+[Wed Sep 6 21:54:47 2023] Room: 1 PULSE: 135
+[Wed Sep 6 21:54:47 2023] Room: 1 SAT: %%SpO2 67
+[Wed Sep 6 21:54:48 2023] Room: 1 BP: 32/37
+[Wed Sep 6 21:54:48 2023] Room: 1 TEMP: 36.2265
+[Wed Sep 6 21:54:57 2023] Room: 1 PULSE: 103
+[Wed Sep 6 21:54:57 2023] Room: 1 SAT: %%SpO2 66
+[Wed Sep 6 21:54:59 2023] Room: 1 BP: 49/37
+[Wed Sep 6 21:54:59 2023] Room: 1 TEMP: 36.4695
+[Wed Sep 6 21:55:07 2023] Room: 1 PULSE: 76
+[Wed Sep 6 21:55:07 2023] Room: 1 SAT: %%SpO2 66
+[Wed Sep 6 21:55:10 2023] Room: 1 BP: 49/41
+[Wed Sep 6 21:55:10 2023] Room: 1 TEMP: 36.1279
+[Wed Sep 6 22:16:42 2023] Room: 2 PULSE: 99
+[Wed Sep 6 22:16:42 2023] Room: 1 PULSE: 100
+[Wed Sep 6 22:16:42 2023] Room: 1 SAT: %%SpO2 99
+[Wed Sep 6 22:16:43 2023] Room: 2 SAT: %%SpO2 99
+[Wed Sep 6 22:16:43 2023] Room: 2 BP: 122/67
+[Wed Sep 6 22:16:44 2023] Room: 2 TEMP: 36.6172
+[Wed Sep 6 22:16:44 2023] Room: 1 BP: 130/89
+[Wed Sep 6 22:16:44 2023] Room: 1 TEMP: 36.5098
+[Wed Sep 6 22:16:52 2023] Room: 1 PULSE: 74
+[Wed Sep 6 22:16:52 2023] Room: 1 SAT: %%SpO2 99
+[Wed Sep 6 22:16:55 2023] Room: 1 BP: 129/76
+[Wed Sep 6 22:16:55 2023] Room: 1 TEMP: 36.7444
+[Wed Sep 6 22:16:57 2023] Room: 2 PULSE: 63
+[Wed Sep 6 22:16:58 2023] Room: 2 SAT: %%SpO2 99
+[Wed Sep 6 22:16:59 2023] Room: 2 BP: 103/58
+[Wed Sep 6 22:17:00 2023] Room: 2 TEMP: 36.4785
+[Wed Sep 6 22:17:02 2023] Room: 1 PULSE: 79
+[Wed Sep 6 22:17:02 2023] Room: 1 SAT: %%SpO2 98
+[Wed Sep 6 22:17:06 2023] Room: 1 BP: 112/74
+[Wed Sep 6 22:17:06 2023] Room: 1 TEMP: 36.2053
+[Wed Sep 6 22:17:12 2023] Room: 2 PULSE: 90
+[Wed Sep 6 22:17:12 2023] Room: 1 PULSE: 61
+[Wed Sep 6 22:17:12 2023] Room: 1 SAT: %%SpO2 97
+[Wed Sep 6 22:17:13 2023] Room: 2 SAT: %%SpO2 97
+[Wed Sep 6 22:17:15 2023] Room: 2 BP: 98/51
+[Wed Sep 6 22:17:16 2023] Room: 2 TEMP: 36.2139
+[Wed Sep 6 22:17:17 2023] Room: 1 BP: 107/55
+[Wed Sep 6 22:17:17 2023] Room: 1 TEMP: 36.1219
+[Wed Sep 6 22:17:22 2023] Room: 1 PULSE: 63
+[Wed Sep 6 22:17:22 2023] Room: 1 SAT: %%SpO2 95
+[Wed Sep 6 22:17:27 2023] Room: 2 PULSE: 52
+[Wed Sep 6 22:17:28 2023] Room: 2 SAT: %%SpO2 96
+[Wed Sep 6 22:17:28 2023] Room: 1 BP: 70/55
+[Wed Sep 6 22:17:28 2023] Room: 1 TEMP: 36.1547
+[Wed Sep 6 22:17:31 2023] Room: 2 BP: 105/78
+[Wed Sep 6 22:17:32 2023] Room: 2 TEMP: 36.4741
+[Wed Sep 6 22:17:32 2023] Room: 1 PULSE: 76
+[Wed Sep 6 22:17:32 2023] Room: 1 SAT: %%SpO2 93
+[Wed Sep 6 22:17:39 2023] Room: 1 BP: 64/68
+[Wed Sep 6 22:17:39 2023] Room: 1 TEMP: 36.5751
+[Wed Sep 6 22:17:42 2023] Room: 1 PULSE: 104
+[Wed Sep 6 22:17:42 2023] Room: 1 SAT: %%SpO2 94
+[Wed Sep 6 22:17:42 2023] Room: 2 PULSE: 51
+[Wed Sep 6 22:17:43 2023] Room: 2 SAT: %%SpO2 93
+[Wed Sep 6 22:17:47 2023] Room: 2 BP: 111/67
+[Wed Sep 6 22:17:48 2023] Room: 2 TEMP: 36.602

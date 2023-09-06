@@ -12,12 +12,13 @@ PulseSensor::PulseSensor(const QString &a_id, const QString &a_room, const QStri
 
 void PulseSensor::update_distribution()
 {
-    m_dist = std::uniform_int_distribution<>(m_dist.min() - 5, m_dist.max() - 5); // Modify the range as needed
+    m_dist = std::uniform_int_distribution<>(m_dist.min() - 10, m_dist.max() + 5);
     m_timer.start();
-    if(m_dist.min() <= 45){
+    if(m_dist.min() <= 30) {
         m_timer.stop();
     }
 }
+
 
 int PulseSensor::generate_pulse_reading()
 {
@@ -34,7 +35,22 @@ void PulseSensor::monitor_pulse()
 
 
 BloodPressureCuff::BloodPressureCuff(const QString &a_id, const QString &a_room, const QString &a_log, const QString &a_config)
-    : Device(a_id, "BloodPressureCuff", a_room, a_log, a_config), m_gen(m_rd()), m_systolic_dist(110, 140), m_diastolic_dist(60, 90) {}
+    : Device(a_id, "BloodPressureCuff", a_room, a_log, a_config), m_gen(m_rd()), m_systolic_dist(110, 140), m_diastolic_dist(60, 90)
+{
+    QTimer::singleShot(30000, this, &BloodPressureCuff::update_distribution);
+    m_timer.setInterval(10000);
+    QObject::connect(&m_timer, &QTimer::timeout, this, &BloodPressureCuff::update_distribution);
+}
+
+void BloodPressureCuff::update_distribution()
+{
+    m_systolic_dist = std::uniform_int_distribution<>(m_systolic_dist.min() - 10, m_systolic_dist.max() - 5);
+    m_diastolic_dist = std::uniform_int_distribution<>(m_diastolic_dist.min() - 5, m_diastolic_dist.max() - 3);
+    m_timer.start();
+    if(m_systolic_dist.min() <= 50 || m_diastolic_dist.min() <= 30) {
+        m_timer.stop();
+    }
+}
 
 std::pair<int, int> BloodPressureCuff::generate_pressure_reading()
 {
@@ -51,16 +67,16 @@ void BloodPressureCuff::monitor_pressure()
 
 
 Oximeter::Oximeter(const QString &a_id, const QString &a_room, const QString &a_log, const QString &a_config)
-    : Device(a_id, "Oximeter", a_room, a_log, a_config), m_gen(m_rd()), m_dist(94, 100)
+    : Device(a_id, "Oximeter", a_room, a_log, a_config), m_gen(m_rd()), m_dist(98, 100)
 {
-    QTimer::singleShot(60000, this, &Oximeter::update_distribution);
+    QTimer::singleShot(30000, this, &Oximeter::update_distribution);
     m_timer.setInterval(10000);
     QObject::connect(&m_timer, &QTimer::timeout, this, &Oximeter::update_distribution);
 }
 
 void Oximeter::update_distribution()
 {
-    m_dist = std::uniform_int_distribution<>(m_dist.min() - 2, m_dist.max() - 2); // Modify the range as needed
+    m_dist = std::uniform_int_distribution<>(m_dist.min() - 1, m_dist.max() - 1);
     m_timer.start();
     if(m_dist.min() <= 45){
         m_timer.stop();
@@ -84,21 +100,21 @@ void Oximeter::monitor_saturation()
 
 
 Thermometer::Thermometer(const QString &a_id, const QString &a_room, const QString &a_log, const QString &a_config)
-    : Device(a_id, "Thermometer", a_room, a_log, a_config), m_gen(m_rd()), m_dist(36.0, 37.4)
+    : Device(a_id, "Thermometer", a_room, a_log, a_config), m_gen(m_rd()), m_dist(36.0, 36.9)
 {
-    QTimer::singleShot(60000, this, &Thermometer::update_distribution);
-    m_timer.setInterval(10000);
-    QObject::connect(&m_timer, &QTimer::timeout, this, &Thermometer::update_distribution);
+    // QTimer::singleShot(60000, this, &Thermometer::update_distribution);
+    // m_timer.setInterval(10000);
+    // QObject::connect(&m_timer, &QTimer::timeout, this, &Thermometer::update_distribution);
 }
 
-void Thermometer::update_distribution()
-{
-    m_dist = std::uniform_real_distribution<>(m_dist.min() - 0.2, m_dist.max() - 0.2); 
-    m_timer.start();
-    if(m_dist.min() <= 35.0){
-        m_timer.stop();
-    }
-}
+// void Thermometer::update_distribution()
+// {
+//     m_dist = std::uniform_real_distribution<>(m_dist.min() - 0.2, m_dist.max() - 0.2); 
+//     m_timer.start();
+//     // if(m_dist.min() <= 35.0){
+//     //     m_timer.stop();
+//     // }
+// }
 double Thermometer::generate_temperature_reading()
 {
     return m_dist(m_gen);
@@ -112,24 +128,3 @@ void Thermometer::monitor_temperature()
 
     qDebug() << "temperature: " << temperature;
 }
-
-/*
-void Client::interval_requests()
-{
-    m_request_timer = std::make_unique<QTimer>();
-    connect(m_request_timer.get(), &QTimer::timeout, this, &Client::create_requests);
-
-    m_request_timer->start(1000);
-}
-
-void Client::create_requests()
-{
-        Request request;
-        request.request_type = "Send Data";
-        request.room_number = m_roomn;
-
-        m_manager.send_request(request);
-        qDebug() << "created request\n";    
-}
-
-*/
