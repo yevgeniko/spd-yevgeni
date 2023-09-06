@@ -12,18 +12,19 @@ public:
     Event& operator=(const Event& other);
 
 
-    // Getters
+
     QDateTime getTimestamp() const;
     QString getEventType() const;
     QString getEventData() const;
     QString getEventLocation() const;
     void set_abnormal(const QString& a_value);
+
     
 protected:
     QDateTime timestamp;
     mutable QString eventType;
     QString eventData;
-    QString eventLocation;
+    QString eventLocation; 
 
 };
 

@@ -2,6 +2,7 @@
 #define EVENT_HANDLER_BASE_HPP
 
 #include <QObject>
+#include <QMap>
 #include "event.hpp"
 #include "logger.hpp"
 

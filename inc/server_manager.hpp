@@ -14,6 +14,7 @@
 #include "event_from_server.hpp"
 #include "event.hpp"
 #include "logger.hpp"
+#include "ai.hpp"
 
 using namespace dashboard;
 
@@ -36,6 +37,8 @@ private slots:
 public slots:
     void addAlert(const Event& event);
     void updateEventToRoomMap(int room_number, const Event& event);
+    void handleAIPrediction(int prediction, int room);
+
 
 private:
     SimpleServer m_simple_server_instance;
@@ -43,6 +46,7 @@ private:
     QTcpSocket* m_current_client_socket = nullptr;  // Store the single client's socket
     int m_current_subscribed_room = -1;
     dashboard::Logger m_logger;
+    AI m_ai;
 
 };
 
