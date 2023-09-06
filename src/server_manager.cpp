@@ -58,8 +58,8 @@ void ServerManager::addAlert(const Event& event)
 
 void ServerManager::updateEventToRoomMap(int room_number, const Event& event) 
 {
-    qDebug() << "enqueued to event_to_room_map : " << event.getEventData();
     m_event_to_room_map[room_number].enqueue(event);
+    
 }
     //other sensor types as needed.
 
@@ -67,29 +67,21 @@ void ServerManager::updateEventToRoomMap(int room_number, const Event& event)
 
 void ServerManager::send_event(int room_number) 
 {
-    while(!m_event_to_room_map.value(room_number).empty()){
-        if (m_event_to_room_map.contains(room_number)) {
-            Event dequeued_Event = m_event_to_room_map[room_number].dequeue();
-            qDebug() << " sent event" << dequeued_Event.getEventType() << dequeued_Event.getEventType() << '\n'; 
-            m_simple_server_instance.forward_event_to_client(dequeued_Event);
-        }else{
-            qDebug() << " sent event function: not found. sending other one.  ";
-            
-            QString eventType = "ERROR";  
-            QString eventData = "0"; 
-            QString eventLocation = "NoWhere";  
-
-            QDateTime timestamp = QDateTime::currentDateTime();  
-
-            Event newEvent(timestamp, eventType, eventData, eventLocation);
-
-            m_simple_server_instance.forward_event_to_client(newEvent);
-        }
+    qDebug() << "\nRoom number accepterd by send_event function: " << room_number << '\n';
+    if(m_event_to_room_map.contains(room_number) && !m_event_to_room_map[room_number].isEmpty()){
+        Event dequeued_Event = m_event_to_room_map[room_number].dequeue();
+        qDebug() << " sent event" << dequeued_Event.getEventType() << dequeued_Event.getEventType() << '\n'; 
+        m_simple_server_instance.forward_event_to_client(dequeued_Event);
+        m_event_to_room_map[room_number].clear();
     }
+    // int alertsSent = 0;
     if (!m_alerts.isEmpty()) {
         Event alert_event = m_alerts.dequeue();
         m_simple_server_instance.forward_event_to_client(alert_event);
+        // alertsSent++;
     }
+    m_alerts.clear();
+
 }
 
 
