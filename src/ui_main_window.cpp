@@ -40,6 +40,7 @@ void UIMainWindow::init_rooms()
         m_rooms[index] = new UIRoomBt(this, index + 1);
         m_rooms[index]->setText(("room " + QString::number(index + 1)));
         m_rooms[index]->setGeometry(360 + (index*distance), 45, 80, 80);
+        m_rooms[index]->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
         connect(m_rooms[index], &UIRoomBt::button_clicked, this, &UIMainWindow::on_button_click);
         if(index == 1) {
             distance = 105;
