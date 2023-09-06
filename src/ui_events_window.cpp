@@ -25,18 +25,27 @@ UIEventWindow::~UIEventWindow()
 }
 
 void UIEventWindow::add_event(Event const &a_event)
+{ 
+    m_list_data.append(new UIEventData(this, "123", "name"
+                        , a_event.getTimestamp().toString("hh:mm:ss")
+                        , a_event.getEventType()
+                        , a_event.getEventData()
+                        , a_event.getEventLocation()));
+    for(auto &data: m_list_data) {
+        m_vlayout->addWidget(data);
+    }
+}
+
+void UIEventWindow::update_event(Event const &a_event, size_t const &a_position)
 {
-    m_list_data[0]->change_data("123", "name", a_event.getTimestamp().toString("hh:mm:ss") , a_event.getEventType()
+    m_list_data[a_position]->change_data("123", "name", a_event.getTimestamp().toString("hh:mm:ss") , a_event.getEventType()
                         , a_event.getEventData()
                         , a_event.getEventLocation());
-    // m_list_data.append(new UIEventData(this, "123", "name"
-    //                     , a_event.getTimestamp().toString("hh:mm:ss")
-    //                     , a_event.getEventType()
-    //                     , a_event.getEventData()
-    //                     , a_event.getEventLocation()));
-    // for(auto &data: m_list_data) {
-    //     m_vlayout->addWidget(data);
-    // }
+}
+
+void UIEventWindow::clear_data_list()
+{
+    m_list_data.clear();
 }
 
 void UIEventWindow::init_window()
