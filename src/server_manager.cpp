@@ -110,4 +110,3 @@ void ServerManager::handleStopRequest()
     m_current_subscribed_room = -1;
 }
 
-

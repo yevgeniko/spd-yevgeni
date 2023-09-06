@@ -7,7 +7,7 @@ Device::Device(const QString &a_id, const QString &a_t, const QString &a_r, cons
     m_manager = std::make_unique<DeviceManager>();
 }
 
-Device::~Device() = default;
+Device::~Device(){}
 
 void Device::publish_event(Event* a_event)
 {
