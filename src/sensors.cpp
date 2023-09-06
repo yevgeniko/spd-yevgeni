@@ -1,7 +1,7 @@
 #include "sensors.hpp"
 
 PulseSensor::PulseSensor(const QString &a_id, const QString &a_room, const QString &a_log, const QString &a_config)
-    : Device(a_id, "PulseSensor", a_room, a_log, a_config), m_gen(m_rd()), m_dist(80, 120) {}
+    : Device(a_id, "PulseSensor", a_room, a_log, a_config), m_gen(m_rd()), m_dist(60, 100) {}
 
 int PulseSensor::generate_pulse_reading()
 {
@@ -17,7 +17,7 @@ void PulseSensor::monitor_pulse()
 
 
 BloodPressureCuff::BloodPressureCuff(const QString &a_id, const QString &a_room, const QString &a_log, const QString &a_config)
-    : Device(a_id, "BloodPressureCuff", a_room, a_log, a_config), m_gen(m_rd()), m_systolic_dist(100, 140), m_diastolic_dist(60, 90) {}
+    : Device(a_id, "BloodPressureCuff", a_room, a_log, a_config), m_gen(m_rd()), m_systolic_dist(110, 140), m_diastolic_dist(60, 90) {}
 
 std::pair<int, int> BloodPressureCuff::generate_pressure_reading()
 {
@@ -34,7 +34,7 @@ void BloodPressureCuff::monitor_pressure()
 
 
 Oximeter::Oximeter(const QString &a_id, const QString &a_room, const QString &a_log, const QString &a_config)
-    : Device(a_id, "Oximeter", a_room, a_log, a_config), m_gen(m_rd()), m_dist(91, 100) {}
+    : Device(a_id, "Oximeter", a_room, a_log, a_config), m_gen(m_rd()), m_dist(94, 100) {}
 
 int Oximeter::generate_saturation_reading()
 {
@@ -51,7 +51,7 @@ void Oximeter::monitor_saturation()
 
 
 Thermometer::Thermometer(const QString &a_id, const QString &a_room, const QString &a_log, const QString &a_config)
-    : Device(a_id, "Thermometer", a_room, a_log, a_config), m_gen(m_rd()), m_dist(36.0, 38.9) {}
+    : Device(a_id, "Thermometer", a_room, a_log, a_config), m_gen(m_rd()), m_dist(36.0, 37.4) {}
 
 double Thermometer::generate_temperature_reading()
 {
