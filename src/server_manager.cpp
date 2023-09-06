@@ -1,12 +1,14 @@
 #include "server_manager.hpp"
 #include "room_handler.hpp"
 #include "pulse_event_handler.hpp"
+#include "ai.hpp"
 
 ServerManager::ServerManager() :
 m_logger("log_file")
 {
     connect(&m_simple_server_instance, &SimpleServer::eventReceived, this, &ServerManager::handleReceivedEvent);
     connect(&m_simple_server_instance, &SimpleServer::roomRequestReceived, this, &ServerManager::handleRoomRequest);
+    connect(&m_ai, &AI::predictionReady, this, &ServerManager::handleAIPrediction);
 }
 
 
@@ -20,6 +22,7 @@ void ServerManager::start_services()
 void ServerManager::handleReceivedEvent(const Event &event)
 {
     m_logger.log_event(event);
+    m_ai.buffer_event(event);
     EventRouter(event);
 }
 
@@ -44,6 +47,7 @@ void ServerManager::EventRouter(const Event &event)
             connect(handlers->pulseHandler.get(), &PulseEventHandler::eventProcessed, this, &ServerManager::updateEventToRoomMap);
             handlers->set_pulse_handler_flag(true);
         }
+        //m_ai.func(location, data)
         handlers->pulseHandler->handleEvent(event);
     }
 
@@ -111,3 +115,21 @@ void ServerManager::handleStopRequest()
 }
 
 
+void ServerManager::handleAIPrediction(int prediction, int room)
+{
+    QString predictionStr;
+    if (prediction == 0) {
+        predictionStr = "LOW RISK";
+    } else if (prediction == 1) {
+        predictionStr = "MEDIUM RISK";
+    } else if (prediction == 2) {
+        predictionStr = "HIGH RISK";
+    }
+
+    QDateTime current = QDateTime::currentDateTime();
+    QString roomStr = QString::number(room);
+
+    Event ai_event(current, "AI_EVENT", predictionStr, roomStr);
+    m_simple_server_instance.forward_data(ai_event.getTimestamp(), ai_event.getEventType(), ai_event.getEventData(), ai_event.getEventLocation(), m_current_client_socket);
+
+}
