@@ -3,39 +3,80 @@
 #include "pulse_event_handler.hpp"
 
 SimpleServer::SimpleServer()
-//:m_event("dfdggg", "ggfgg", "fgffh")
 {
     m_server.reset(new QTcpServer(this));
     m_forwarding_socket.reset(new QTcpSocket(this));
+    m_client_server.reset(new QTcpServer(this)); 
 
     connect(m_server.data(), &QTcpServer::newConnection, this, &SimpleServer::on_new_connection);
-    connect(m_forwarding_socket.data(), &QTcpSocket::readyRead, this, &SimpleServer::on_request_received);
-        if (!m_server->listen(QHostAddress::Any, 12345)) {
+    
+    if (!m_server->listen(QHostAddress::LocalHost, 12345)) {
         qCritical() << "Server could not start!";
     } else {
         qDebug() << "Server started!";
     }
+
+    // Start the client listener
+    start_client_listener(QHostAddress::LocalHost, 5555);
 }
+
 
 void SimpleServer::on_new_connection()
 {
     QTcpSocket *client_socket = m_server->nextPendingConnection();
-    // connect(m_forwarding_socket.data(), &QTcpSocket::readyRead, this, &SimpleServer::on_request_received);
-    connect(client_socket, &QTcpSocket::readyRead, this, &SimpleServer::on_data_received);
+    connect(client_socket, &QTcpSocket::readyRead, this, &SimpleServer::on_sensor_data_received);
     connect(client_socket, &QTcpSocket::disconnected, client_socket, &QTcpSocket::deleteLater);
 }
 
 
+void SimpleServer::start_client_listener(const QHostAddress &a_address, quint16 a_port) {
+    connect(m_client_server.data(), &QTcpServer::newConnection, this, &SimpleServer::on_client_connected);
+    if (!m_client_server->listen(a_address, a_port)) {
+        qCritical() << "Could not start client listener!";
+    } else {
+        qDebug() << "Started client listener!";
+    }
+}
 
-void SimpleServer::on_data_received()
+void SimpleServer::on_client_connected() {
+    m_forwarding_socket.reset(m_client_server->nextPendingConnection());
+    connect(m_forwarding_socket.data(), &QTcpSocket::readyRead, this, &SimpleServer::on_client_data_received);
+    qDebug() << "Client connected for forwarding!";
+}
+
+void SimpleServer::forward_data(const QDateTime &time_stamp, const QString &event_type, const QString &event_data, const QString &event_location, QTcpSocket *socket)
+{
+    QByteArray block;
+    QDataStream out(&block, QIODevice::WriteOnly);
+
+    out << (quint16)0;
+    out << time_stamp << event_type << event_data << event_location;
+
+    out.device()->seek(0);
+    out << (quint16)(block.size() - sizeof(quint16));
+
+    if(socket->state() == QTcpSocket::ConnectedState) {
+        socket->write(block);
+    } else {
+        qDebug() << "Failed to forward data because socket is not connected.";
+    }
+}
+
+
+void SimpleServer::on_sensor_data_received()
 {
     QTcpSocket *client_socket = qobject_cast<QTcpSocket *>(sender());
     if (!client_socket)
         return;
 
     QDataStream in(client_socket);
+
     quint16 block_size;
     in >> block_size;
+
+    if (client_socket->bytesAvailable() < block_size) {
+        return;  // We don't have the complete data yet.
+    }
 
     QDateTime time_stamp;
     QString event_type;
@@ -43,76 +84,47 @@ void SimpleServer::on_data_received()
     QString event_location;
     in >> time_stamp >> event_type >> event_data >> event_location;
 
-
-    qDebug() << "Received Event in SERVER:";
+    qDebug() << "Received Event in SERVER from sensor:";
     qDebug() << "Timestamp:" << time_stamp;
     qDebug() << "Event Type:" << event_type;
     qDebug() << "Event Data:" << event_data;
     qDebug() << "Event Location:" << event_location;
 
-
     Event event(time_stamp, event_type, event_data, event_location);
     emit eventReceived(event);
-    
 }
 
-
-
-void SimpleServer::connect_to_client_manager(const QHostAddress &address, quint16 port) 
-{
-    qDebug() << "Attempting to connect to ClientManager at" << address.toString() << "on port" << port;
-    m_forwarding_socket->connectToHost(address, port);
-}
-
-// Event SimpleServer::get_event()
-// {
-//     Event event = m_events.front();
-//     m_events.pop();
-//     return event;
-// }
-
-void SimpleServer::forward_event_to_client(const Event& a_dequeued_Event)
-{
-    qDebug() << "enterd forward_event_to_client()";
-    QByteArray block;
-    QDataStream out(&block, QIODevice::WriteOnly);
-
-    QDateTime time_stamp = a_dequeued_Event.getTimestamp();
-    QString event_type = a_dequeued_Event.getEventType(); 
-    QString event_data = a_dequeued_Event.getEventData();
-    QString event_location = a_dequeued_Event.getEventLocation();
-    QString event_ID = a_dequeued_Event.get_event_ID();
-
-
-    out << (quint16)0;
-    out << time_stamp << event_type << event_data << event_location << event_ID;
-
-    out.device()->seek(0);
-    out << (quint16)(block.size() - sizeof(quint16));
-
-    if(m_forwarding_socket->state() == QTcpSocket::ConnectedState) {
-    m_forwarding_socket->write(block);
-    } else {
-        qDebug() << "Failed to forward data because m_forwarding_socket is not connected.";
-    }
-    qDebug() << "forward data" << event_type << event_data << '\n';
-}
-
-void SimpleServer::on_request_received()
+void SimpleServer::on_client_data_received()
 {
     QTcpSocket *client_socket = qobject_cast<QTcpSocket *>(sender());
     if (!client_socket)
         return;
 
     QDataStream in(client_socket);
+
     quint16 block_size;
     in >> block_size;
 
-    Request request;
-    in >> request.request_type >> request.room_number;
+    if (client_socket->bytesAvailable() < block_size) {
+        return;  // We don't have the complete data yet.
+    }
 
-    qDebug() << "Received Request from Client Manager:";
-    qDebug() << "Room Number:" << request.room_number;
-    
-    emit requestReceived(request.room_number);
+    QDateTime time_stamp;
+    QString event_type;
+    QString event_data;
+    QString event_location;
+    in >> time_stamp >> event_type >> event_data >> event_location;
+
+    qDebug() << "Received Event in SERVER from client:";
+    qDebug() << "Timestamp:" << time_stamp;
+    qDebug() << "Event Type:" << event_type;
+    qDebug() << "Event Data:" << event_data;
+    qDebug() << "Event Location:" << event_location;
+
+    if(event_type == "ROOM_REQ") {
+        int room_number = event_data.toInt();
+        emit roomRequestReceived(room_number, client_socket); // Emit the room request signal with the socket
+        return;
+    }
+
 }

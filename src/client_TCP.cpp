@@ -1,99 +1,86 @@
 #include "client_TCP.hpp"
+#include "event.hpp"
 
-namespace spd {
-
-ClientTCP::ClientTCP() : m_server{std::make_unique<QTcpServer>(this)}, m_socket{nullptr} {
-    connect(m_server.get(), &QTcpServer::newConnection, this, &ClientTCP::onNewConnection);
-}
-
-ClientTCP::~ClientTCP() {
-    if (m_socket) {
-        m_socket->close();
-    }
-}
-
-void ClientTCP::onNewConnection() {
-    m_socket = m_server->nextPendingConnection();
-
-    if (!m_socket) return;
-
-    connect(m_socket, &QTcpSocket::readyRead, this, &ClientTCP::onDataReceived);
-    connect(m_socket, &QTcpSocket::connected, [=](){
-        qDebug() << "Connected to server!";
-    });
-    connect(m_socket, &QTcpSocket::disconnected, [=](){
-        qDebug() << "Disconnected from server!";
-    });
-    connect(m_socket, static_cast<void (QTcpSocket::*)(QTcpSocket::SocketError)>(&QTcpSocket::error), [=](QTcpSocket::SocketError error){
-        Q_UNUSED(error);
-        qDebug() << "Connection Error:" << m_socket->errorString();
-    });
-}
-
-
-void ClientTCP::startListening(const QString &address, quint16 port)
+ClientTCP::ClientTCP() :
+m_is_connected(false)
 {
-    if (!m_server->listen(QHostAddress(address), port)) {
-        qCritical() << "Client could not start listening!";
-    } else {
-        qDebug() << "Client started listening!";
-    }
+    m_socket.reset(new QTcpSocket(this));
+
+    connect(m_socket.data(), &QTcpSocket::readyRead, this, &ClientTCP::on_data_received);
+    connect(m_socket.data(), &QTcpSocket::connected, this, &ClientTCP::on_connected);
+    connect(m_socket.data(), &QTcpSocket::disconnected, this, &ClientTCP::on_disconnected);
 }
 
-void ClientTCP::onDataReceived()
+void ClientTCP::connectToServer(const QHostAddress &a_address, quint16 a_port)
 {
-    QDataStream in(m_socket);
-    quint16 blockSize = 0;
+    qDebug() << "Attempting to connect to server at" << a_address.toString() << "on port" << a_port;
+    m_socket->connectToHost(a_address, a_port);
+}
 
-    if (blockSize == 0) {
-        if (m_socket->bytesAvailable() < (int)sizeof(quint16)) {
-            return; 
-        }
-        in >> blockSize;
-    }
+void ClientTCP::on_data_received()
+{
+    QDataStream in(m_socket.data());
 
-    if (m_socket->bytesAvailable() < blockSize) {
-        qDebug() << "Not enough data available yet. Waiting for more...";
+    if(m_socket->bytesAvailable() < static_cast<qint64>(sizeof(quint16))) {
         return;
     }
 
-    QDateTime timeStamp;
-    QString eventType;
-    QString eventData;
-    QString eventLocation;
-    QString event_ID;
-    in >> timeStamp >> eventType >> eventData >> eventLocation >> event_ID;
+    quint16 block_size;
+    in >> block_size;
+
+    if(m_socket->bytesAvailable() < static_cast<qint64>(block_size)) {
+        return;
+    }
+    
+    QDateTime time_stamp;
+    QString event_type;
+    QString event_data;
+    QString event_location;
+    in >> time_stamp >> event_type >> event_data >> event_location;
 
     qDebug() << "Received Event in CLIENT:";
-    qDebug() << "Timestamp:" << timeStamp;
-    qDebug() << "Event Type:" << eventType;
-    qDebug() << "Event Data:" << eventData;
-    qDebug() << "Event Location:" << eventLocation;
-    qDebug() << "Event ID:" << event_ID;
+    qDebug() << "Timestamp:" << time_stamp;
+    qDebug() << "Event Type:" << event_type;
+    qDebug() << "Event Data:" << event_data;
+    qDebug() << "Event Location:" << event_location;
 
-
-    emit newDataReceived(timeStamp, eventType, eventData, eventLocation);
+    emit newDataReceived(time_stamp, event_type, event_data, event_location);
 }
 
 
-void ClientTCP::send_request(const Request& a_request)
+void ClientTCP::on_connected()
 {
-    if (!m_socket) {
-        qDebug() << "Socket not connected.";
-        return;
-    }
-
-    QByteArray data;
-    QDataStream out(&data, QIODevice::WriteOnly);
-
-    out << a_request.request_type << a_request.room_number;
-
-    quint16 blockSize = data.size();
-    m_socket->write(reinterpret_cast<const char*>(&blockSize), sizeof(quint16));
-    m_socket->write(data);
-    qDebug() << " request is sent \n";    
-
+    qDebug() << "Connected to server!";
+    m_is_connected = true;
 }
 
+void ClientTCP::on_disconnected()
+{
+    qDebug() << "Disconnected from server!";
+    m_is_connected = false;
+}
 
-} // namespace spd
+void ClientTCP::sendRoomRequest(const Event &requestEvent)
+{
+    QByteArray block;
+    QDataStream out(&block, QIODevice::WriteOnly);
+    
+    out << (quint16)0;
+    out << requestEvent.getTimestamp() << requestEvent.getEventType() << requestEvent.getEventData() << requestEvent.getEventLocation();
+
+    out.device()->seek(0);
+    out << (quint16)(block.size() - sizeof(quint16));
+
+    m_socket->write(block);
+}
+
+// void ClientTCP::requestInitialRoomEvents()
+// {
+//     qDebug() << "Connection established. Requesting initial room events.";
+//     emit initialRoomRequestReady();
+// }
+
+bool ClientTCP::get_is_connected()
+{
+    return m_is_connected;
+}

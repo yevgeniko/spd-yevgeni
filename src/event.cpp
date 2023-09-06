@@ -1,4 +1,5 @@
 #include "event.hpp"
+#include <QDataStream>
 
 Event::Event(const QDateTime& time, const QString& type, const QString& data, const QString& location)
     : timestamp(time),
@@ -15,7 +16,6 @@ Event& Event::operator=(const Event& other)
         eventType = other.eventType;
         eventData = other.eventData;
         eventLocation = other.eventLocation;
-        m_event_ID = other.m_event_ID;
     }
     return *this;
 }
@@ -41,17 +41,33 @@ QString Event::getEventLocation() const
     return eventLocation;
 }
 
-QString Event::get_event_ID() const
+void Event::set_abnormal(const QString& a_value)
 {
-    return m_event_ID;
+    eventType = a_value;
+}
+
+bool is_abnormal(const QString& a_type)
+{
+    if (a_type == "ABNORMAL PULSE" || a_type == "ABNORMAL BP" || a_type == "ABNORMAL SAT" || a_type == "ABNORMAL TEMP")
+    {
+        return true;
+    }
+
+    return false;
 }
 
 PulseEvent::PulseEvent(const QDateTime& time, const QString& pulseData, const QString& location)
-    : Event(time, "Pulse", pulseData, location)
+    : Event(time, "PULSE", pulseData, location)
 {}
 
+PressureEvent::PressureEvent(const QDateTime& time, const QString& pressureData, const QString& location)
+    : Event(time, "BP", pressureData, location)
+{}
 
-void Event::set_ID(const QString& ID)
-{
-    m_event_ID = ID;
-}
+SaturationEvent::SaturationEvent(const QDateTime& time, const QString& saturationData, const QString& location)
+    : Event(time, "SAT", saturationData, location)
+{}
+
+TemperatureEvent::TemperatureEvent(const QDateTime& time, const QString& temperatureData, const QString& location)
+    : Event(time, "TEMP", temperatureData, location)
+{}

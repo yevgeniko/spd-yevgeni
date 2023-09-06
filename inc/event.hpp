@@ -17,18 +17,17 @@ public:
     QString getEventType() const;
     QString getEventData() const;
     QString getEventLocation() const;
-    QString get_event_ID() const;
-
-    void set_ID(const QString& ID);
-
+    void set_abnormal(const QString& a_value);
+    
 protected:
     QDateTime timestamp;
-    QString eventType;
+    mutable QString eventType;
     QString eventData;
     QString eventLocation;
-    QString m_event_ID;
 
 };
+
+bool is_abnormal(const QString& a_type);
 
 class PulseEvent : public Event
 {
@@ -36,12 +35,22 @@ public:
     PulseEvent(const QDateTime& time, const QString& pulseData, const QString& location);
 };
 
+class PressureEvent : public Event
+{
+public:
+    PressureEvent(const QDateTime& time, const QString& pressureData, const QString& location);
+};
 
-struct Request {
-    
-    QString request_type;
-    int room_number;
+class SaturationEvent : public Event
+{
+public:
+    SaturationEvent(const QDateTime& time, const QString& saturationData, const QString& location);
+};
 
+class TemperatureEvent : public Event
+{
+public:
+    TemperatureEvent(const QDateTime& time, const QString& temperatureData, const QString& location);
 };
 
 

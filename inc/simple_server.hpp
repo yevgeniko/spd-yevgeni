@@ -10,29 +10,33 @@
 #include <QScopedPointer>
 #include "event.hpp"
 
-class SimpleServer : public QObject {
+class SimpleServer : public QObject
+{
     Q_OBJECT
 
 public:
     SimpleServer();
-    void connect_to_client_manager(const QHostAddress &a_address, quint16 a_port);
+    void start_client_listener(const QHostAddress &a_address, quint16 a_port); 
     Event get_event() const;
-    void forward_event_to_client(const Event& a_dequeued_Event);
-
+    void forward_data(const QDateTime &time_stamp, const QString &event_type, const QString &event_data, const QString &event_location, QTcpSocket *socket);
 
 private slots:
     void on_new_connection();
-    void on_data_received();
-    void on_request_received();
+    void on_sensor_data_received(); // Added slot
+    void on_client_data_received(); // Added slot
+    void on_client_connected(); 
 
 signals:
     void eventReceived(const Event &event);
-    void requestReceived(int room_number);
+    void roomRequestReceived(int roomNumber, QTcpSocket* clientSocket);
+
 
 private:
     QScopedPointer<QTcpServer> m_server;
+    QScopedPointer<QTcpServer> m_client_server; 
     QScopedPointer<QTcpSocket> m_forwarding_socket;
-    //Event m_event;
+    QMap<QTcpSocket*, quint16> m_blockSizeState;
+    QMap<int, QTcpSocket*> m_pendingRequests;
 };
 
 #endif // SIMPLE_SERVER_HPP
