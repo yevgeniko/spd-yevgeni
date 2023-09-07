@@ -102,14 +102,15 @@ void Client::handle_abnormal_event(Event const &a_event)
 
     qDebug() << "IN Client::handleNewData WITH ABNORMAL EVENT";
     
-    size_t postition = is_new_abnormal(a_event);
+    // size_t postition = is_new_abnormal(a_event);
 
-    if(postition == 0) {
-        m_start_time = std::chrono::high_resolution_clock::now();
-        m_ui.add_abnorml_event(a_event);
-    } else {
-        m_ui.update_abnorml_event(a_event, postition - 1);
-    }
+    // if(postition == 0) {
+    //     m_start_time = std::chrono::high_resolution_clock::now();
+    //     m_ui.add_abnorml_event(a_event);
+    // } else {
+    //     m_ui.update_abnorml_event(a_event, postition - 1);
+    // }
+    m_ui.add_abnorml_event(a_event);
 }
 
 void Client::handle_event(Event const &a_event)
@@ -119,7 +120,7 @@ void Client::handle_event(Event const &a_event)
     // } else {
     //     m_ui.update_event(a_event, m_hash_type[a_event.getEventType()]);
     // }
-    
+    is_new_type(a_event.getEventType());
     m_ui.update_event(a_event, m_hash_type[a_event.getEventType()]);
 }
 

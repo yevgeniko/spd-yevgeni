@@ -45,10 +45,14 @@ void UI::update_event(Event const &a_event, size_t const &a_podition)
 
 void UI::add_abnorml_event(Event const &a_event)
 {
+
 }
 
 void UI::update_abnorml_event(Event const &a_event, size_t const &a_podition)
 {
+    if(m_window_num == 0) {
+        m_main_window->abnormal_event(a_event.getEventLocation().toInt());
+    }
 }
 
 void UI::switch_to_main_screen() 

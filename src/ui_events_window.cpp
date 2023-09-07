@@ -20,16 +20,17 @@ UIEventWindow::UIEventWindow(QWidget* parent)
 
 UIEventWindow::~UIEventWindow()
 {
-    // for(auto & data: m_list_data) {
-    //     delete data;
-    // }
-    // delete m_hlayout_bt;
-    // delete m_back_bt;
-    // delete m_vlayout;
+    for(auto & data: m_list_data) {
+        delete data;
+    }
 
-    // delete m_location;
-    // delete m_id;
-    // delete m_name;
+    delete m_location;
+    delete m_id;
+    delete m_name;
+
+    delete m_back_bt;
+    delete m_hlayout_bt;
+    delete m_vlayout;
 }
 
 void UIEventWindow::add_event(Event const &a_event)
@@ -58,20 +59,7 @@ void UIEventWindow::update_event(Event const &a_event, size_t const &a_position)
 
 void UIEventWindow::clear_data_list()
 {
-    // m_list_data.clear();
-    // QLayoutItem *child;
-    // while ((child = m_vlayout->takeAt(0)) != nullptr) {
-    // QWidget *widgetToRemove = child->widget();
-    // if (widgetToRemove) {
-    //     m_vlayout->removeWidget(widgetToRemove);
-    //     delete widgetToRemove;
-    // }
-    // delete child;
-    // }
-    // m_list_data.append(new UIEventData());
-    // m_hlayout_bt->addWidget(m_back_bt ,0 , Qt::AlignLeft);
-    // m_vlayout->addWidget(m_list_data[0], 0, Qt::AlignLeft);
-    // m_is_empty = true;
+
 }
 
 void UIEventWindow::init_window()
@@ -93,7 +81,7 @@ void UIEventWindow::init_window()
     connect(m_back_bt, &QPushButton::clicked, [this]() {
         emit on_button_click();
     });
-    for(size_t index; index < 4; ++index) {
+    for(size_t index = 0; index < 4; ++index) {
         m_list_data.append(new UIEventData(this));
     }
     for(auto& event: m_list_data) {
