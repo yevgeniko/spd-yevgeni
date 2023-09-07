@@ -20,11 +20,14 @@ public:
     UIMainWindow(QWidget* parent = nullptr);
     ~UIMainWindow();
 
+    void abnormal_event(size_t const& a_room_num);
+
 private:
    void init_window();
    void init_rooms();
 private:
     QList<UIRoomBt*> m_rooms;
+    bool m_is_abnormal;
 };
     
 } // namespace spd

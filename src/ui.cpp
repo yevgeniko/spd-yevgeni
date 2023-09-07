@@ -11,13 +11,13 @@
 #include "const_and_enums.hpp"
 #include "ui_main_window.hpp"
 #include "ui_room_bt.hpp"
-#include "ui_events_window.hpp"
 
 namespace spd {
 
 
 UI::UI(QWidget* parent)
-: QWidget(parent)
+: QWidget{parent}
+, m_window_num{0}
 {
     init_window();
     init_screens();
@@ -34,20 +34,38 @@ UI::~UI()
 
 
 void UI::add_event(Event const &a_event)
-{
+{ 
     m_event_window->add_event(a_event);
+}
+
+void UI::update_event(Event const &a_event, size_t const &a_podition)
+{
+    m_event_window->update_event(a_event, a_podition);
+}
+
+void UI::add_abnorml_event(Event const &a_event)
+{
+
+}
+
+void UI::update_abnorml_event(Event const &a_event, size_t const &a_podition)
+{
+    if(m_window_num == 0) {
+        m_main_window->abnormal_event(a_event.getEventLocation().toInt());
+    }
 }
 
 void UI::switch_to_main_screen() 
 {
     emit set_room_num(0);
-    m_stacked_widget->setCurrentIndex(0);
+    change_window(0);
+    m_event_window->clear_data_list();
 }
 
 void UI::switch_to_event_screen(size_t const& a_roomn)
 {
     emit set_room_num(a_roomn);
-    m_stacked_widget->setCurrentIndex(1);
+    change_window(1);
 }
 
 void UI::init_screens()
@@ -72,6 +90,12 @@ void UI::init_window()
 {
     setFixedSize(WINDOW_WIDTH, WINDOW_HEIGHT);
     setWindowTitle(WINDOW_TITLE);
+}
+
+void UI::change_window(int const& a_win_num)
+{
+    m_window_num = a_win_num;
+    m_stacked_widget->setCurrentIndex(a_win_num);
 }
 
 } // namespace spd

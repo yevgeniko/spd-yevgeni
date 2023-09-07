@@ -9,6 +9,7 @@ namespace spd {
     
 spd::UIMainWindow::UIMainWindow(QWidget* parent)
 : QWidget(parent)
+, m_is_abnormal{false}
 {
     resize(parent->size());
     init_window();
@@ -19,6 +20,16 @@ UIMainWindow::~UIMainWindow()
 {
     for(auto &room: m_rooms) {
         delete room;
+    }
+}
+
+void UIMainWindow::abnormal_event(size_t const &a_room_num)
+{
+    if(!m_is_abnormal) {
+        m_rooms[a_room_num]->setStyleSheet("background-color: red;");
+        m_is_abnormal = true;
+    } else {
+        m_rooms[a_room_num]->setStyleSheet("background-color: transparent;");
     }
 }
 
@@ -40,6 +51,7 @@ void UIMainWindow::init_rooms()
         m_rooms[index] = new UIRoomBt(this, index + 1);
         m_rooms[index]->setText(("room " + QString::number(index + 1)));
         m_rooms[index]->setGeometry(360 + (index*distance), 45, 80, 80);
+        m_rooms[index]->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
         connect(m_rooms[index], &UIRoomBt::button_clicked, this, &UIMainWindow::on_button_click);
         if(index == 1) {
             distance = 105;

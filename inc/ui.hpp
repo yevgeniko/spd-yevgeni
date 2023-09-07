@@ -8,6 +8,7 @@
 #include <QDebug>
 #include <QStackedWidget>
 #include <QWidget>
+
 #include "ui_main_window.hpp"
 #include "ui_events_window.hpp"
 #include "event.hpp"
@@ -29,15 +30,21 @@ public:
     ~UI();
 
     void add_event(Event const& a_event);
+    void update_event(Event const& a_event, size_t const& a_podition);
+
+    void add_abnorml_event(Event const& a_event);
+    void update_abnorml_event(Event const& a_event, size_t const& a_podition);
 
 private:
     void init_screens();
     void init_window();
+    void change_window(int const& a_win_num);
 
 private:
     QStackedWidget* m_stacked_widget;
     UIMainWindow* m_main_window;
     UIEventWindow* m_event_window;
+    int m_window_num;
 };
     
 } // namespace spd
