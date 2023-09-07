@@ -34,8 +34,14 @@ private:
     QHBoxLayout *m_hlayout_bt;
     QPushButton *m_back_bt;
 
+    QLabel * m_location;
+    QLabel * m_id;
+    QLabel * m_name;
+
+
 private:
     QList<UIEventData*> m_list_data;
+    bool m_is_empty;
 
 };
 

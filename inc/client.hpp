@@ -43,6 +43,10 @@ private:
     size_t is_new_abnormal(Event const& a_abnormal);
     bool is_timer_ended();
 
+    void handle_abnormal_event(Event const& a_event);
+    void handle_event(Event const& a_event);
+    void handle_ai_event(Event const& a_event);
+
 private:
     ClientTCP m_manager;
     UI m_ui;

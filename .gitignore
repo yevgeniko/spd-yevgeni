@@ -132,3 +132,9 @@ qmake
 
 Makefile
 
+tests/server/moc_event_handler_base.cpp
+tests/server/moc_pulse_event_handler.cpp
+.vscode/settings.json
+tests/server/log_file_Log.txt
+tests/client/moc_ui_room.cpp
+tests/client/moc_ui_room_window.cpp

@@ -22,25 +22,14 @@ void Client::connect_to_server(const QHostAddress &address, quint16 port)
 void Client::handleNewData(QDateTime const& a_timeStamp, QString const& a_eventType, QString const& a_eventData, QString const& a_eventLocation) 
 {
     Event e(a_timeStamp, a_eventType, a_eventData, a_eventLocation);
-    if (is_abnormal(a_eventType)) {
+    if(a_eventType == AI_EVENT ) {
+        handle_ai_event(e);
 
-        qDebug() << "IN Client::handleNewData WITH ABNORMAL EVENT";
+    } else if(is_abnormal(a_eventType) && QString::number(m_room_number) == a_eventLocation) {
+        handle_abnormal_event(e);
         
-        size_t postition = is_new_abnormal(e);
-
-        if(postition == 0) {
-            m_start_time = std::chrono::high_resolution_clock::now();
-            m_ui.add_abnorml_event(e);
-        } else {
-            m_ui.update_abnorml_event(e, postition - 1);
-        }
-    } else {
-        if(is_new_type(a_eventType)) {
-            m_ui.add_event(e);
-        } else {
-            m_ui.update_event(e, m_hash_type[a_eventType]);
-        }
-        m_ui.add_event(e);
+    } else if(QString::number(m_room_number) == a_eventLocation) {
+        handle_event(e);
     }
     if(is_timer_ended()) {
         m_list_abnormal.clear();
@@ -94,7 +83,7 @@ size_t spd::Client::is_new_abnormal(Event const &a_abnormal)
             return posistion;
         }
     }
-    return posistion;
+    return 0;
 }
 
 bool Client::is_timer_ended()
@@ -106,6 +95,37 @@ bool Client::is_timer_ended()
         return true;
     }
     return false;
+}
+
+void Client::handle_abnormal_event(Event const &a_event)
+{
+
+    qDebug() << "IN Client::handleNewData WITH ABNORMAL EVENT";
+    
+    size_t postition = is_new_abnormal(a_event);
+
+    if(postition == 0) {
+        m_start_time = std::chrono::high_resolution_clock::now();
+        m_ui.add_abnorml_event(a_event);
+    } else {
+        m_ui.update_abnorml_event(a_event, postition - 1);
+    }
+}
+
+void Client::handle_event(Event const &a_event)
+{
+    // if(is_new_type(a_event.getEventType())) {
+    //     m_ui.add_event(a_event);
+    // } else {
+    //     m_ui.update_event(a_event, m_hash_type[a_event.getEventType()]);
+    // }
+    
+    m_ui.update_event(a_event, m_hash_type[a_event.getEventType()]);
+}
+
+void Client::handle_ai_event(Event const &a_event)
+{
+    qDebug() << "IN Client::handleNewData WITH AI EVENT";
 }
 
 }

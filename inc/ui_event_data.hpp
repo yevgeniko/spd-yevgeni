@@ -12,25 +12,19 @@ namespace spd {
 class UIEventData : public QColumnView {
 public:
     UIEventData(QWidget* parent = nullptr);
-    UIEventData(QWidget* parent, QString const& a_id, QString const& a_name, QString const& a_timet, QString const& a_type, QString const& a_data, QString const& a_location);
+    UIEventData(QWidget* parent, QString const& a_timet, QString const& a_type, QString const& a_data);
     ~UIEventData();
 
-    void change_data(QString const& a_id, QString const& a_name, QString const& a_timet, QString const& a_type, QString const& a_data, QString const& a_location);
+    void change_data(QString const& a_timet, QString const& a_type, QString const& a_data);
     
 private:
-    void init_event(QString const& a_id, QString const& a_name, QString const& a_timet, QString const& a_type, QString const& a_data, QString const& a_location);
+    void init_event(QString const& a_timet, QString const& a_type, QString const& a_data);
+
 private:
-    QHBoxLayout *m_vlayout;
-
-    QVBoxLayout *m_patient_data;
-    QLabel * m_id;
-    QLabel * m_name;
-
     QVBoxLayout *m_event_data;
     QLabel * m_time_stamp;
     QLabel * m_type;
     QLabel * m_data;
-    QLabel * m_location;
 };
 } // namespace spd
 
